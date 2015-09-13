@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		651B2C791BA52DB900434B86 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 651B2C781BA52DB900434B86 /* main.cpp */; };
+		651B2C801BA53AF700434B86 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 651B2C7F1BA53AF700434B86 /* OpenGL.framework */; };
+		651B2C851BA53ED300434B86 /* libglfw3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 651B2C831BA53CC100434B86 /* libglfw3.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +27,9 @@
 /* Begin PBXFileReference section */
 		651B2C751BA52DB900434B86 /* wizards-court */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "wizards-court"; sourceTree = BUILT_PRODUCTS_DIR; };
 		651B2C781BA52DB900434B86 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		651B2C7F1BA53AF700434B86 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		651B2C811BA53BD300434B86 /* X11 */ = {isa = PBXFileReference; lastKnownFileType = folder; name = X11; path = ../../../../opt/X11; sourceTree = "<group>"; };
+		651B2C831BA53CC100434B86 /* libglfw3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libglfw3.a; path = ../../../../usr/local/lib/libglfw3.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -32,6 +37,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				651B2C851BA53ED300434B86 /* libglfw3.a in Frameworks */,
+				651B2C801BA53AF700434B86 /* OpenGL.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -41,6 +48,9 @@
 		651B2C6C1BA52DB800434B86 = {
 			isa = PBXGroup;
 			children = (
+				651B2C831BA53CC100434B86 /* libglfw3.a */,
+				651B2C811BA53BD300434B86 /* X11 */,
+				651B2C7F1BA53AF700434B86 /* OpenGL.framework */,
 				651B2C771BA52DB900434B86 /* wizards-court */,
 				651B2C761BA52DB900434B86 /* Products */,
 			);
@@ -205,6 +215,24 @@
 		651B2C7D1BA52DB900434B86 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					/usr/local/include,
+					/usr/local/lib,
+				);
+				LIBRARY_SEARCH_PATHS = /usr/local/lib;
+				OTHER_LDFLAGS = (
+					"-framework",
+					OpenGL,
+					"-framework",
+					Cocoa,
+					"-framework",
+					CoreVideo,
+					"-framework",
+					IOKit,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -212,6 +240,24 @@
 		651B2C7E1BA52DB900434B86 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					/usr/local/include,
+					/usr/local/lib,
+				);
+				LIBRARY_SEARCH_PATHS = /usr/local/lib;
+				OTHER_LDFLAGS = (
+					"-framework",
+					OpenGL,
+					"-framework",
+					Cocoa,
+					"-framework",
+					CoreVideo,
+					"-framework",
+					IOKit,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
