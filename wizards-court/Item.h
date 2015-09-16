@@ -11,18 +11,22 @@
 
 #include <stdio.h>
 #include <vector>
-#include "vertex.h"
+#include "Vertex.h"
 #include "TextureCoordinate.h"
+#include "Face.h"
 
 class Item {
 public:
     std::vector<Vertex> vertices;
     std::vector<TextureCoordinate> textureCoordinates;
+    std::vector<Face> faces;
     Item();
     void AddVertex(Vertex);
+    void AddFace(Face);
     void AddTextureCoodinate(TextureCoordinate);
     std::vector<Vertex> GetVertices();
     std::vector<TextureCoordinate> GetTextureCoordinates();
+    std::vector<Face> GetFaces();
 };
 
 

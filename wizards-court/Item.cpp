@@ -23,10 +23,18 @@ void Item::AddTextureCoodinate(TextureCoordinate t){
     textureCoordinates.push_back(t);
 }
 
+void Item::AddFace(Face f){
+    faces.push_back(f);
+}
+
 std::vector<Vertex> Item::GetVertices(){
     return vertices;
 }
 
 std::vector<TextureCoordinate> Item::GetTextureCoordinates(){
     return textureCoordinates;
+}
+
+std::vector<Face> Item::GetFaces(){
+    return faces;
 }

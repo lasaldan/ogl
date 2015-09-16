@@ -37,11 +37,11 @@ void ObjParser::parseFile(string path) {
             
             // Look for a texture coordinate on this line
             if(buffer[0] == 'v' && buffer[1] == 't')
-                cout << "textur:" << buffer << endl;
+                item->AddTextureCoodinate(parseTextureCoordinate(buffer));
             
             // Look for a face definition on this line
             if(buffer[0] == 'f' && buffer[1] == ' ')
-                cout << "face:" << buffer << endl;
+                item->AddFace(parseFace(buffer));
         }
         objFile.close();
     }
@@ -74,4 +74,36 @@ Vertex ObjParser::parseVertex(string line) {
              
     Vertex v = Vertex(x, y, z);
     return v;
+}
+
+TextureCoordinate ObjParser::parseTextureCoordinate(string line) {
+    float x, y;
+    size_t start, end;
+    
+    start = line.find(" ");
+    line[start++] = 'X';
+    end = line.find(" ");
+    
+    x = stof(line.substr(start, end-start));
+    
+    start = end;
+    end = line.length()-1;
+    
+    y = stof(line.substr(start, end-start));
+    
+    TextureCoordinate t = TextureCoordinate(x, y);
+    return t;
+}
+
+Face ObjParser::parseFace(string line) {
+    int vert, texCoord;
+    size_t start, end;
+    
+    // set vert and texCoord
+    
+    Face f = Face();
+    f.addVertex(item->vertices[2]);
+    f.addTextureCoordinate(item->textureCoordinates[2]);
+    
+    return f;
 }

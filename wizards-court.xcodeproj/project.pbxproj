@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6500BFF21BA9F67D005607A5 /* Face.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6500BFF01BA9F67D005607A5 /* Face.cpp */; };
 		650EE7161BA926FC009988E0 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 650EE7151BA926FB009988E0 /* Cocoa.framework */; };
 		650EE7181BA92705009988E0 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 650EE7171BA92705009988E0 /* GLUT.framework */; };
 		650EE71C1BA92F69009988E0 /* Vertex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 650EE71B1BA92F69009988E0 /* Vertex.cpp */; };
@@ -30,6 +31,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		6500BFF01BA9F67D005607A5 /* Face.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Face.cpp; sourceTree = "<group>"; };
+		6500BFF11BA9F67D005607A5 /* Face.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Face.h; sourceTree = "<group>"; };
 		650EE7151BA926FB009988E0 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		650EE7171BA92705009988E0 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
 		650EE7191BA927EB009988E0 /* project2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = project2.h; sourceTree = "<group>"; };
@@ -87,17 +90,19 @@
 		651B2C771BA52DB900434B86 /* wizards-court */ = {
 			isa = PBXGroup;
 			children = (
-				651B2C781BA52DB900434B86 /* project2.cpp */,
-				650EE71B1BA92F69009988E0 /* Vertex.cpp */,
 				650EE7191BA927EB009988E0 /* project2.h */,
+				651B2C781BA52DB900434B86 /* project2.cpp */,
 				650EE71A1BA92EEE009988E0 /* Vertex.h */,
-				650EE7201BA93C98009988E0 /* TextureCoordinate.cpp */,
+				650EE71B1BA92F69009988E0 /* Vertex.cpp */,
+				6500BFF11BA9F67D005607A5 /* Face.h */,
+				6500BFF01BA9F67D005607A5 /* Face.cpp */,
 				650EE7211BA93C98009988E0 /* TextureCoordinate.h */,
-				650EE71D1BA934E2009988E0 /* Item.cpp */,
-				650EE7231BA94132009988E0 /* ObjParser.cpp */,
-				650EE7241BA94132009988E0 /* ObjParser.h */,
-				650EE7261BA94727009988E0 /* CrayonBox.obj */,
+				650EE7201BA93C98009988E0 /* TextureCoordinate.cpp */,
 				650EE71E1BA934E2009988E0 /* Item.h */,
+				650EE71D1BA934E2009988E0 /* Item.cpp */,
+				650EE7241BA94132009988E0 /* ObjParser.h */,
+				650EE7231BA94132009988E0 /* ObjParser.cpp */,
+				650EE7261BA94727009988E0 /* CrayonBox.obj */,
 			);
 			path = "wizards-court";
 			sourceTree = "<group>";
@@ -158,6 +163,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6500BFF21BA9F67D005607A5 /* Face.cpp in Sources */,
 				650EE71F1BA934E2009988E0 /* Item.cpp in Sources */,
 				651B2C791BA52DB900434B86 /* project2.cpp in Sources */,
 				650EE71C1BA92F69009988E0 /* Vertex.cpp in Sources */,

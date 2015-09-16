@@ -9,13 +9,18 @@
 #ifndef __wizards_court__TextureCoordinate__
 #define __wizards_court__TextureCoordinate__
 
+
+#include <stdlib.h>
+#include <string>
+using namespace std;
+
 class TextureCoordinate {
     private:
         float x;
         float y;
     public:
         TextureCoordinate(float, float);
-        std::string print();
+        string print();
         float getX();
         float getY();
         float getZ();

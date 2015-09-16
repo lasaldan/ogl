@@ -20,6 +20,8 @@ public:
 private:
     void parseFile(std::string);
     Vertex parseVertex(std::string);
+    TextureCoordinate parseTextureCoordinate(std::string);
+    Face parseFace(std::string);
 };
 
 #endif /* defined(__wizards_court__ObjReader__) */

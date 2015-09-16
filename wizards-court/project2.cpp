@@ -61,6 +61,8 @@ void drawScene() {
     glEnd();
     
     cout << crayonBox.GetVertices().size() << endl;
+    cout << crayonBox.GetTextureCoordinates().size() << endl;
+    cout << crayonBox.GetFaces().size() << endl;
     
     /*  don't wait!
      *  start processing buffered OpenGL routines
