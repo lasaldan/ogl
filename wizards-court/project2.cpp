@@ -46,15 +46,18 @@ void drawScene() {
      *  (0.25, 0.25, 0.0) and (0.75, 0.75, 0.0)
      */
     glColor3f (1.0, 1.0, 1.0);
-    glBegin(GL_POLYGON);
+    //glBegin(GL_POLYGON);
+    glBegin(GL_QUADS);
     
-    //for(int i=0; i<crayonBox.vertices.size(); i++) {
-    //    glVertex3f(crayonBox.vertices[i].x, crayonBox.vertices[i].y, crayonBox.vertices[i].z);
-    //}
+    for(int i=0; i<crayonBox.vertices.size(); i++) {
+        glVertex3f(crayonBox.vertices[i].x, crayonBox.vertices[i].y, crayonBox.vertices[i].z);
+    }
+    /*
     glVertex3f (0.25, 0.25, 0.0);
     glVertex3f (0.75, 0.25, 0.0);
     glVertex3f (0.75, 0.75, 0.0);
     glVertex3f (0.25, 0.75, 0.0);
+     */
     glEnd();
     
     cout << crayonBox.GetVertices().size() << endl;
@@ -66,8 +69,8 @@ void drawScene() {
 }
 
 void setCamera() {
-    glTranslatef(0.0f,-0.75f, -2.0f);
-    glRotatef(0.0f, 0.0f, 1.0f, 0.0f);
+    glTranslatef(0.0f,-0.75f, -12.0f);
+    glRotatef(60.0f, 0.0f, 1.0f, 0.0f);
 }
 
 void display() {
