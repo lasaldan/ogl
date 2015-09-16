@@ -7,9 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		651B2C791BA52DB900434B86 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 651B2C781BA52DB900434B86 /* main.cpp */; };
+		650EE7161BA926FC009988E0 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 650EE7151BA926FB009988E0 /* Cocoa.framework */; };
+		650EE7181BA92705009988E0 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 650EE7171BA92705009988E0 /* GLUT.framework */; };
+		650EE71C1BA92F69009988E0 /* Vertex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 650EE71B1BA92F69009988E0 /* Vertex.cpp */; };
+		650EE71F1BA934E2009988E0 /* Item.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 650EE71D1BA934E2009988E0 /* Item.cpp */; };
+		650EE7221BA93C98009988E0 /* TextureCoordinate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 650EE7201BA93C98009988E0 /* TextureCoordinate.cpp */; };
+		650EE7251BA94132009988E0 /* ObjParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 650EE7231BA94132009988E0 /* ObjParser.cpp */; };
+		651B2C791BA52DB900434B86 /* project2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 651B2C781BA52DB900434B86 /* project2.cpp */; };
 		651B2C801BA53AF700434B86 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 651B2C7F1BA53AF700434B86 /* OpenGL.framework */; };
-		651B2C851BA53ED300434B86 /* libglfw3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 651B2C831BA53CC100434B86 /* libglfw3.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,8 +30,20 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		650EE7151BA926FB009988E0 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		650EE7171BA92705009988E0 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
+		650EE7191BA927EB009988E0 /* project2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = project2.h; sourceTree = "<group>"; };
+		650EE71A1BA92EEE009988E0 /* Vertex.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Vertex.h; sourceTree = "<group>"; };
+		650EE71B1BA92F69009988E0 /* Vertex.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Vertex.cpp; sourceTree = "<group>"; };
+		650EE71D1BA934E2009988E0 /* Item.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Item.cpp; sourceTree = "<group>"; };
+		650EE71E1BA934E2009988E0 /* Item.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Item.h; sourceTree = "<group>"; };
+		650EE7201BA93C98009988E0 /* TextureCoordinate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TextureCoordinate.cpp; sourceTree = "<group>"; };
+		650EE7211BA93C98009988E0 /* TextureCoordinate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextureCoordinate.h; sourceTree = "<group>"; };
+		650EE7231BA94132009988E0 /* ObjParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjParser.cpp; sourceTree = "<group>"; };
+		650EE7241BA94132009988E0 /* ObjParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjParser.h; sourceTree = "<group>"; };
+		650EE7261BA94727009988E0 /* CrayonBox.obj */ = {isa = PBXFileReference; lastKnownFileType = text; path = CrayonBox.obj; sourceTree = "<group>"; };
 		651B2C751BA52DB900434B86 /* wizards-court */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "wizards-court"; sourceTree = BUILT_PRODUCTS_DIR; };
-		651B2C781BA52DB900434B86 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		651B2C781BA52DB900434B86 /* project2.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = project2.cpp; sourceTree = "<group>"; };
 		651B2C7F1BA53AF700434B86 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		651B2C811BA53BD300434B86 /* X11 */ = {isa = PBXFileReference; lastKnownFileType = folder; name = X11; path = ../../../../opt/X11; sourceTree = "<group>"; };
 		651B2C831BA53CC100434B86 /* libglfw3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libglfw3.a; path = ../../../../usr/local/lib/libglfw3.a; sourceTree = "<group>"; };
@@ -37,7 +54,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				651B2C851BA53ED300434B86 /* libglfw3.a in Frameworks */,
+				650EE7181BA92705009988E0 /* GLUT.framework in Frameworks */,
+				650EE7161BA926FC009988E0 /* Cocoa.framework in Frameworks */,
 				651B2C801BA53AF700434B86 /* OpenGL.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -48,6 +66,8 @@
 		651B2C6C1BA52DB800434B86 = {
 			isa = PBXGroup;
 			children = (
+				650EE7171BA92705009988E0 /* GLUT.framework */,
+				650EE7151BA926FB009988E0 /* Cocoa.framework */,
 				651B2C831BA53CC100434B86 /* libglfw3.a */,
 				651B2C811BA53BD300434B86 /* X11 */,
 				651B2C7F1BA53AF700434B86 /* OpenGL.framework */,
@@ -67,7 +87,17 @@
 		651B2C771BA52DB900434B86 /* wizards-court */ = {
 			isa = PBXGroup;
 			children = (
-				651B2C781BA52DB900434B86 /* main.cpp */,
+				651B2C781BA52DB900434B86 /* project2.cpp */,
+				650EE71B1BA92F69009988E0 /* Vertex.cpp */,
+				650EE7191BA927EB009988E0 /* project2.h */,
+				650EE71A1BA92EEE009988E0 /* Vertex.h */,
+				650EE7201BA93C98009988E0 /* TextureCoordinate.cpp */,
+				650EE7211BA93C98009988E0 /* TextureCoordinate.h */,
+				650EE71D1BA934E2009988E0 /* Item.cpp */,
+				650EE7231BA94132009988E0 /* ObjParser.cpp */,
+				650EE7241BA94132009988E0 /* ObjParser.h */,
+				650EE7261BA94727009988E0 /* CrayonBox.obj */,
+				650EE71E1BA934E2009988E0 /* Item.h */,
 			);
 			path = "wizards-court";
 			sourceTree = "<group>";
@@ -128,7 +158,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				651B2C791BA52DB900434B86 /* main.cpp in Sources */,
+				650EE71F1BA934E2009988E0 /* Item.cpp in Sources */,
+				651B2C791BA52DB900434B86 /* project2.cpp in Sources */,
+				650EE71C1BA92F69009988E0 /* Vertex.cpp in Sources */,
+				650EE7251BA94132009988E0 /* ObjParser.cpp in Sources */,
+				650EE7221BA93C98009988E0 /* TextureCoordinate.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -216,6 +250,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
@@ -241,6 +276,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
@@ -281,6 +317,7 @@
 				651B2C7E1BA52DB900434B86 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
