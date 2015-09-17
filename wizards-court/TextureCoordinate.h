@@ -15,15 +15,15 @@
 using namespace std;
 
 class TextureCoordinate {
-    private:
-        float x;
-        float y;
-    public:
-        TextureCoordinate(float, float);
-        string print();
-        float getX();
-        float getY();
-        float getZ();
+private:
+public:
+    float x;
+    float y;
+    TextureCoordinate(float, float);
+    string print();
+    float getX();
+    float getY();
+    float getZ();
 };
 
 #endif /* defined(__wizards_court__TextureCoordinate__) */

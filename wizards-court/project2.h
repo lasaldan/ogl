@@ -14,6 +14,10 @@
 static int viewport;
 Item crayonBox;
 Item crayon1;
+Item crayon2;
+Item crayon3;
+
+GLuint texture[4];
 
 void createWindow();
 void display();
@@ -21,5 +25,6 @@ void initializeSettings();
 void setCamera();
 void drawScene();
 void importModels();
+void loadTextures();
 
 #endif

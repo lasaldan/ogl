@@ -12,13 +12,11 @@
 #include "Vertex.h"
 using namespace std;
 
-ObjParser::ObjParser(string path, Item *i) {
-    item = i;
-    parseFile(path);
+ObjParser::ObjParser() {
 }
 
-void ObjParser::parseFile(string path) {
-    
+void ObjParser::parseFile(string path, Item* i) {
+    item = i;
     ifstream objFile;
     string buffer;
     
@@ -71,7 +69,8 @@ Vertex ObjParser::parseVertex(string line) {
     end = line.length()-1;
              
     z = stof(line.substr(start, end-start));
-             
+    
+    //cout << "vertex [ " << x << "," << y << "," << z << "]" << endl;
     Vertex v = Vertex(x, y, z);
     return v;
 }
@@ -91,19 +90,39 @@ TextureCoordinate ObjParser::parseTextureCoordinate(string line) {
     
     y = stof(line.substr(start, end-start));
     
+    
+    //cout << "texCor [ " << x << "," << y << "]" << endl;
+    
     TextureCoordinate t = TextureCoordinate(x, y);
     return t;
 }
 
 Face ObjParser::parseFace(string line) {
-    int vert, texCoord;
-    size_t start, end;
-    
-    // set vert and texCoord
     
     Face f = Face();
-    f.addVertex(item->vertices[2]);
-    f.addTextureCoordinate(item->textureCoordinates[2]);
+    
+    while (line.find("/") != string::npos) {
+        int vert, texCoord;
+        size_t start, end;
+        
+        // set vert and texCoord
+        start = line.find(" ");
+        line[start++] = 'X';
+        end = line.find("/");
+        
+        vert = stof(line.substr(start, end-start));
+        
+        line[end++] = 'X';
+        start = end;
+        end = line.find("/");
+        line[end] = 'X';
+        
+        texCoord = stof(line.substr(start, end-start));
+        
+        f.addVertex(item->vertices[vert-1]);
+        f.addTextureCoordinate(item->textureCoordinates[texCoord-1]);
+    }
+    
     
     return f;
 }

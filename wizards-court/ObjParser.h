@@ -16,9 +16,9 @@ class ObjParser {
 private:
     Item *item;
 public:
-    ObjParser(std::string, Item*);
+    ObjParser();
+    void parseFile(std::string, Item*);
 private:
-    void parseFile(std::string);
     Vertex parseVertex(std::string);
     TextureCoordinate parseTextureCoordinate(std::string);
     Face parseFace(std::string);

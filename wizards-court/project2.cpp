@@ -14,6 +14,8 @@
 #include <OpenGL/glu.h>
 #include <vector>
 #include "project2.h"
+#include "SOIL.h"
+
 using namespace std;
 
 int main (int argc, char **argv)
@@ -23,6 +25,7 @@ int main (int argc, char **argv)
     glutDisplayFunc(display);
     initializeSettings();
     importModels();
+    loadTextures();
     
     glutMainLoop();
     
@@ -31,59 +34,102 @@ int main (int argc, char **argv)
     return 0;		
 }
 
+void loadTextures() {
+    /* load an image file directly as a new OpenGL texture */
+    texture[0] = SOIL_load_OGL_texture("/Users/Daniel/workspace/wizards-court/wizards-court/textures/box.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+    texture[1] = SOIL_load_OGL_texture("/Users/Daniel/workspace/wizards-court/wizards-court/textures/blue.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+    texture[2] = SOIL_load_OGL_texture("/Users/Daniel/workspace/wizards-court/wizards-court/textures/green.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+    texture[3] = SOIL_load_OGL_texture("/Users/Daniel/workspace/wizards-court/wizards-court/textures/purple.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+    
+    if(texture[0] == 0)
+        cout << "Failed to load texture." << endl;
+    else
+        cout << "Loaded" << endl;
+
+
+    // Typical Texture Generation Using Data From The Bitmap
+    glBindTexture(GL_TEXTURE_2D, texture[0]);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);                                    // Return Success
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glEnable(GL_TEXTURE_2D);
+    glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);}
+
 void importModels() {
     crayonBox = Item();
     crayon1 = Item();
     
-    ObjParser parser("/Users/Daniel/workspace/wizards-court/wizards-court/CrayonBox.obj", &crayonBox);
+    ObjParser parser = ObjParser();
+    parser.parseFile("/Users/Daniel/workspace/wizards-court/wizards-court/models/CrayonBox_simple.obj", &crayonBox);
+    parser.parseFile("/Users/Daniel/workspace/wizards-court/wizards-court/models/Crayon.obj", &crayon1);
+    parser.parseFile("/Users/Daniel/workspace/wizards-court/wizards-court/models/Crayon.obj", &crayon2);
+    parser.parseFile("/Users/Daniel/workspace/wizards-court/wizards-court/models/Crayon.obj", &crayon3);
 }
 
+
 void drawScene() {
-    /*  clear all pixels  */
     glClear (GL_COLOR_BUFFER_BIT);
     
-    /*  draw white polygon (rectangle) with corners at
-     *  (0.25, 0.25, 0.0) and (0.75, 0.75, 0.0)
-     */
-    glColor3f (1.0, 1.0, 1.0);
-    //glBegin(GL_POLYGON);
-    glBegin(GL_QUADS);
-    
-    for(int i=0; i<crayonBox.vertices.size(); i++) {
-        glVertex3f(crayonBox.vertices[i].x, crayonBox.vertices[i].y, crayonBox.vertices[i].z);
+    for(int i=0; i<crayonBox.faces.size(); i++) {
+        glBegin(GL_POLYGON);
+        for(int j=0; j<crayonBox.faces[i].vertices.size(); j++) {
+            glTexCoord2f(crayonBox.faces[i].textureCoordinates[j].x, crayonBox.faces[i].textureCoordinates[j].y);
+            glVertex3f(crayonBox.faces[i].vertices[j].x-2, crayonBox.faces[i].vertices[j].y, crayonBox.faces[i].vertices[j].z+1);
+        }
+        glEnd();
     }
-    /*
-    glVertex3f (0.25, 0.25, 0.0);
-    glVertex3f (0.75, 0.25, 0.0);
-    glVertex3f (0.75, 0.75, 0.0);
-    glVertex3f (0.25, 0.75, 0.0);
-     */
-    glEnd();
     
-    cout << crayonBox.GetVertices().size() << endl;
-    cout << crayonBox.GetTextureCoordinates().size() << endl;
-    cout << crayonBox.GetFaces().size() << endl;
+    glBindTexture(GL_TEXTURE_2D, texture[1]);
     
-    /*  don't wait!
-     *  start processing buffered OpenGL routines
-     */
+    for(int i=0; i<crayon1.faces.size(); i++) {
+        glBegin(GL_POLYGON);
+        for(int j=0; j<crayon1.faces[i].vertices.size(); j++) {
+            glTexCoord2f(crayon1.faces[i].textureCoordinates[j].x, crayon1.faces[i].textureCoordinates[j].y);
+            glVertex3f(crayon1.faces[i].vertices[j].x+1, crayon1.faces[i].vertices[j].y, crayon1.faces[i].vertices[j].z - .2);
+        }
+        glEnd();
+    }
+    
+    glBindTexture(GL_TEXTURE_2D, texture[2]);
+    
+    for(int i=0; i<crayon2.faces.size(); i++) {
+        glBegin(GL_POLYGON);
+        for(int j=0; j<crayon2.faces[i].vertices.size(); j++) {
+            glTexCoord2f(crayon2.faces[i].textureCoordinates[j].x, crayon2.faces[i].textureCoordinates[j].y);
+            glVertex3f(crayon2.faces[i].vertices[j].x+3, crayon2.faces[i].vertices[j].y, crayon2.faces[i].vertices[j].z - .2);
+        }
+        glEnd();
+    }
+    
+    glBindTexture(GL_TEXTURE_2D, texture[3]);
+    
+    for(int i=0; i<crayon3.faces.size(); i++) {
+        glBegin(GL_POLYGON);
+        for(int j=0; j<crayon3.faces[i].vertices.size(); j++) {
+            glTexCoord2f(crayon3.faces[i].textureCoordinates[j].x, crayon3.faces[i].textureCoordinates[j].y);
+            glVertex3f(crayon3.faces[i].vertices[j].x+5, crayon3.faces[i].vertices[j].y, crayon3.faces[i].vertices[j].z - .2);
+        }
+        glEnd();
+    }
+    
     glFlush ();
 }
 
 void setCamera() {
-    glTranslatef(0.0f,-0.75f, -12.0f);
-    glRotatef(60.0f, 0.0f, 1.0f, 0.0f);
+    glTranslatef(0.0f, 0.0f, -10.0f); // Local: +l/-r , -u/+d , +f/-b
+    glRotatef(160.0f, 0.0f, 1.0f, 0.0f);
 }
 
 void display() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
-    
-    glPushMatrix();
-    glTranslatef(0.0f, 10.0f, 0.0f);
-    glPopMatrix();
+//    
+//    glMatrixMode(GL_MODELVIEW);
+//    glLoadIdentity();
+//    
+//    glPushMatrix();
+//    glTranslatef(0.0f, 0.0f, 0.0f);
+//    glPopMatrix();
     
     setCamera();
     
@@ -95,7 +141,7 @@ void display() {
 void createWindow()
 {
     glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
-    glutInitWindowPosition (10, 10);
+    glutInitWindowPosition (100, 100);
     glutInitWindowSize (512, 512);
     viewport = glutCreateWindow ("Crayons");
 }

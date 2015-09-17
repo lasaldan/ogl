@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		6500BFF21BA9F67D005607A5 /* Face.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6500BFF01BA9F67D005607A5 /* Face.cpp */; };
+		6500BFF81BAA9280005607A5 /* libSOIL.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6500BFF71BAA9280005607A5 /* libSOIL.dylib */; };
+		6500BFFA1BAA94FC005607A5 /* libSOIL.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6500BFF91BAA94FC005607A5 /* libSOIL.a */; };
 		650EE7161BA926FC009988E0 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 650EE7151BA926FB009988E0 /* Cocoa.framework */; };
 		650EE7181BA92705009988E0 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 650EE7171BA92705009988E0 /* GLUT.framework */; };
 		650EE71C1BA92F69009988E0 /* Vertex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 650EE71B1BA92F69009988E0 /* Vertex.cpp */; };
@@ -33,6 +35,10 @@
 /* Begin PBXFileReference section */
 		6500BFF01BA9F67D005607A5 /* Face.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Face.cpp; sourceTree = "<group>"; };
 		6500BFF11BA9F67D005607A5 /* Face.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Face.h; sourceTree = "<group>"; };
+		6500BFF71BAA9280005607A5 /* libSOIL.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libSOIL.dylib; path = ../libSOIL/libSOIL.dylib; sourceTree = "<group>"; };
+		6500BFF91BAA94FC005607A5 /* libSOIL.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSOIL.a; path = ../libSOIL/libSOIL.a; sourceTree = "<group>"; };
+		6500BFFD1BAA9704005607A5 /* models */ = {isa = PBXFileReference; lastKnownFileType = folder; path = models; sourceTree = "<group>"; };
+		6500BFFE1BAA970F005607A5 /* textures */ = {isa = PBXFileReference; lastKnownFileType = folder; path = textures; sourceTree = "<group>"; };
 		650EE7151BA926FB009988E0 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		650EE7171BA92705009988E0 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
 		650EE7191BA927EB009988E0 /* project2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = project2.h; sourceTree = "<group>"; };
@@ -49,7 +55,6 @@
 		651B2C781BA52DB900434B86 /* project2.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = project2.cpp; sourceTree = "<group>"; };
 		651B2C7F1BA53AF700434B86 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		651B2C811BA53BD300434B86 /* X11 */ = {isa = PBXFileReference; lastKnownFileType = folder; name = X11; path = ../../../../opt/X11; sourceTree = "<group>"; };
-		651B2C831BA53CC100434B86 /* libglfw3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libglfw3.a; path = ../../../../usr/local/lib/libglfw3.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +62,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6500BFFA1BAA94FC005607A5 /* libSOIL.a in Frameworks */,
+				6500BFF81BAA9280005607A5 /* libSOIL.dylib in Frameworks */,
 				650EE7181BA92705009988E0 /* GLUT.framework in Frameworks */,
 				650EE7161BA926FC009988E0 /* Cocoa.framework in Frameworks */,
 				651B2C801BA53AF700434B86 /* OpenGL.framework in Frameworks */,
@@ -69,9 +76,10 @@
 		651B2C6C1BA52DB800434B86 = {
 			isa = PBXGroup;
 			children = (
+				6500BFF91BAA94FC005607A5 /* libSOIL.a */,
+				6500BFF71BAA9280005607A5 /* libSOIL.dylib */,
 				650EE7171BA92705009988E0 /* GLUT.framework */,
 				650EE7151BA926FB009988E0 /* Cocoa.framework */,
-				651B2C831BA53CC100434B86 /* libglfw3.a */,
 				651B2C811BA53BD300434B86 /* X11 */,
 				651B2C7F1BA53AF700434B86 /* OpenGL.framework */,
 				651B2C771BA52DB900434B86 /* wizards-court */,
@@ -90,6 +98,8 @@
 		651B2C771BA52DB900434B86 /* wizards-court */ = {
 			isa = PBXGroup;
 			children = (
+				6500BFFD1BAA9704005607A5 /* models */,
+				6500BFFE1BAA970F005607A5 /* textures */,
 				650EE7191BA927EB009988E0 /* project2.h */,
 				651B2C781BA52DB900434B86 /* project2.cpp */,
 				650EE71A1BA92EEE009988E0 /* Vertex.h */,
@@ -263,7 +273,10 @@
 					/usr/local/include,
 					/usr/local/lib,
 				);
-				LIBRARY_SEARCH_PATHS = /usr/local/lib;
+				LIBRARY_SEARCH_PATHS = (
+					/usr/local/lib,
+					/Users/Daniel/workspace/libSOIL,
+				);
 				OTHER_LDFLAGS = (
 					"-framework",
 					OpenGL,
@@ -289,7 +302,10 @@
 					/usr/local/include,
 					/usr/local/lib,
 				);
-				LIBRARY_SEARCH_PATHS = /usr/local/lib;
+				LIBRARY_SEARCH_PATHS = (
+					/usr/local/lib,
+					/Users/Daniel/workspace/libSOIL,
+				);
 				OTHER_LDFLAGS = (
 					"-framework",
 					OpenGL,
