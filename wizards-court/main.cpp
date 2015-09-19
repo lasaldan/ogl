@@ -36,7 +36,7 @@ int main (int argc, char **argv)
 
 void loadTextures() {
     /* load an image file directly as a new OpenGL texture */
-    texture[0] = SOIL_load_OGL_texture("/Users/Daniel/workspace/wizards-court/wizards-court/textures/box.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+    texture[0] = SOIL_load_OGL_texture("/Users/Daniel/workspace/wizards-court/wizards-court/textures/crayon_box.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
     texture[1] = SOIL_load_OGL_texture("/Users/Daniel/workspace/wizards-court/wizards-court/textures/blue.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
     texture[2] = SOIL_load_OGL_texture("/Users/Daniel/workspace/wizards-court/wizards-court/textures/green.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
     texture[3] = SOIL_load_OGL_texture("/Users/Daniel/workspace/wizards-court/wizards-court/textures/purple.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
@@ -59,9 +59,11 @@ void loadTextures() {
 void importModels() {
     crayonBox = Item();
     crayon1 = Item();
+    crayon2 = Item();
+    crayon3 = Item();
     
     ObjParser parser = ObjParser();
-    parser.parseFile("/Users/Daniel/workspace/wizards-court/wizards-court/models/CrayonBox_simple.obj", &crayonBox);
+    parser.parseFile("/Users/Daniel/workspace/wizards-court/wizards-court/models/CrayonBox_square.obj", &crayonBox);
     parser.parseFile("/Users/Daniel/workspace/wizards-court/wizards-court/models/Crayon.obj", &crayon1);
     parser.parseFile("/Users/Daniel/workspace/wizards-court/wizards-court/models/Crayon.obj", &crayon2);
     parser.parseFile("/Users/Daniel/workspace/wizards-court/wizards-court/models/Crayon.obj", &crayon3);
@@ -75,7 +77,7 @@ void drawScene() {
         glBegin(GL_POLYGON);
         for(int j=0; j<crayonBox.faces[i].vertices.size(); j++) {
             glTexCoord2f(crayonBox.faces[i].textureCoordinates[j].x, crayonBox.faces[i].textureCoordinates[j].y);
-            glVertex3f(crayonBox.faces[i].vertices[j].x-2, crayonBox.faces[i].vertices[j].y, crayonBox.faces[i].vertices[j].z+1);
+            glVertex3f(crayonBox.faces[i].vertices[j].x-2, crayonBox.faces[i].vertices[j].y, crayonBox.faces[i].vertices[j].z-2);
         }
         glEnd();
     }
@@ -117,19 +119,19 @@ void drawScene() {
 }
 
 void setCamera() {
-    glTranslatef(0.0f, 0.0f, -10.0f); // Local: +l/-r , -u/+d , +f/-b
-    glRotatef(160.0f, 0.0f, 1.0f, 0.0f);
+    glTranslatef(0.0f, 0.0f, -12.0f); // Local: +l/-r , -u/+d , +f/-b
+    glRotatef(-20.0f, 0.0f, 1.0f, 0.0f);
 }
 
 void display() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-//    
-//    glMatrixMode(GL_MODELVIEW);
-//    glLoadIdentity();
-//    
-//    glPushMatrix();
-//    glTranslatef(0.0f, 0.0f, 0.0f);
-//    glPopMatrix();
+    
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    
+    glPushMatrix();
+    glTranslatef(0.0f, 0.0f, 0.0f);
+    glPopMatrix();
     
     setCamera();
     
