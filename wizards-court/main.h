@@ -10,14 +10,19 @@
 #define wizards_court_project2_h
 
 #include "ObjParser.h"
+#include "Controller.h"
 
 static int viewport;
-Item crayonBox;
-Item crayon1;
-Item crayon2;
-Item crayon3;
+Item parking_lot;
+Item car;
+Item tire1;
+Item tire2;
+Item tire3;
+Item tire4;
 
 GLuint texture[4];
+
+Controller controller;
 
 void createWindow();
 void display();
@@ -26,5 +31,7 @@ void setCamera();
 void drawScene();
 void importModels();
 void loadTextures();
+void handleEvents();
+void drawItem(Item, GLuint);
 
 #endif

@@ -13,7 +13,7 @@
 #include <GLUT/glut.h>
 #include <OpenGL/glu.h>
 #include <vector>
-#include "project2.h"
+#include "main.h"
 #include "SOIL.h"
 
 using namespace std;
@@ -26,6 +26,7 @@ int main (int argc, char **argv)
     initializeSettings();
     importModels();
     loadTextures();
+    controller = Controller();
     
     glutMainLoop();
     
@@ -36,10 +37,9 @@ int main (int argc, char **argv)
 
 void loadTextures() {
     /* load an image file directly as a new OpenGL texture */
-    texture[0] = SOIL_load_OGL_texture("/Users/Daniel/workspace/wizards-court/wizards-court/textures/crayon_box.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
-    texture[1] = SOIL_load_OGL_texture("/Users/Daniel/workspace/wizards-court/wizards-court/textures/blue.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
-    texture[2] = SOIL_load_OGL_texture("/Users/Daniel/workspace/wizards-court/wizards-court/textures/green.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
-    texture[3] = SOIL_load_OGL_texture("/Users/Daniel/workspace/wizards-court/wizards-court/textures/purple.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+    texture[0] = SOIL_load_OGL_texture("/Users/Daniel/workspace/wizards-court/wizards-court/textures/parking_lot.bmp", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+    texture[1] = SOIL_load_OGL_texture("/Users/Daniel/workspace/wizards-court/wizards-court/textures/tire.bmp", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+    texture[2] = SOIL_load_OGL_texture("/Users/Daniel/workspace/wizards-court/wizards-court/textures/car.bmp", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
     
     if(texture[0] == 0)
         cout << "Failed to load texture." << endl;
@@ -57,70 +57,69 @@ void loadTextures() {
     glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);}
 
 void importModels() {
-    crayonBox = Item();
-    crayon1 = Item();
-    crayon2 = Item();
-    crayon3 = Item();
+    parking_lot = Item();
+    car = Item();
+    tire1 = Item();
+    tire2 = Item();
+    tire3 = Item();
+    tire4 = Item();
     
     ObjParser parser = ObjParser();
-    parser.parseFile("/Users/Daniel/workspace/wizards-court/wizards-court/models/CrayonBox_square.obj", &crayonBox);
-    parser.parseFile("/Users/Daniel/workspace/wizards-court/wizards-court/models/Crayon.obj", &crayon1);
-    parser.parseFile("/Users/Daniel/workspace/wizards-court/wizards-court/models/Crayon.obj", &crayon2);
-    parser.parseFile("/Users/Daniel/workspace/wizards-court/wizards-court/models/Crayon.obj", &crayon3);
+    parser.parseFile("/Users/Daniel/workspace/wizards-court/wizards-court/models/ParkingLot.obj", &parking_lot);
+    parser.parseFile("/Users/Daniel/workspace/wizards-court/wizards-court/models/car.obj", &car);
+    parser.parseFile("/Users/Daniel/workspace/wizards-court/wizards-court/models/tire.obj", &tire1);
+    parser.parseFile("/Users/Daniel/workspace/wizards-court/wizards-court/models/tire.obj", &tire2);
+    parser.parseFile("/Users/Daniel/workspace/wizards-court/wizards-court/models/tire.obj", &tire3);
+    parser.parseFile("/Users/Daniel/workspace/wizards-court/wizards-court/models/tire.obj", &tire4);
+}
+
+void drawItem(Item item, GLuint textureId) {
+    glBindTexture(GL_TEXTURE_2D, textureId);
+    for(int i=0; i<item.faces.size(); i++) {
+        glBegin(GL_POLYGON);
+        for(int j=0; j<item.faces[i].vertices.size(); j++) {
+            glTexCoord2f(item.faces[i].textureCoordinates[j].x, item.faces[i].textureCoordinates[j].y);
+            glVertex3f(item.faces[i].vertices[j].x, item.faces[i].vertices[j].y, item.faces[i].vertices[j].z);
+        }
+        glEnd();
+    }
 }
 
 
 void drawScene() {
     glClear (GL_COLOR_BUFFER_BIT);
     
-    for(int i=0; i<crayonBox.faces.size(); i++) {
-        glBegin(GL_POLYGON);
-        for(int j=0; j<crayonBox.faces[i].vertices.size(); j++) {
-            glTexCoord2f(crayonBox.faces[i].textureCoordinates[j].x, crayonBox.faces[i].textureCoordinates[j].y);
-            glVertex3f(crayonBox.faces[i].vertices[j].x-2, crayonBox.faces[i].vertices[j].y, crayonBox.faces[i].vertices[j].z-2);
-        }
-        glEnd();
-    }
-    
-    glBindTexture(GL_TEXTURE_2D, texture[1]);
-    
-    for(int i=0; i<crayon1.faces.size(); i++) {
-        glBegin(GL_POLYGON);
-        for(int j=0; j<crayon1.faces[i].vertices.size(); j++) {
-            glTexCoord2f(crayon1.faces[i].textureCoordinates[j].x, crayon1.faces[i].textureCoordinates[j].y);
-            glVertex3f(crayon1.faces[i].vertices[j].x+1, crayon1.faces[i].vertices[j].y, crayon1.faces[i].vertices[j].z - .2);
-        }
-        glEnd();
-    }
-    
-    glBindTexture(GL_TEXTURE_2D, texture[2]);
-    
-    for(int i=0; i<crayon2.faces.size(); i++) {
-        glBegin(GL_POLYGON);
-        for(int j=0; j<crayon2.faces[i].vertices.size(); j++) {
-            glTexCoord2f(crayon2.faces[i].textureCoordinates[j].x, crayon2.faces[i].textureCoordinates[j].y);
-            glVertex3f(crayon2.faces[i].vertices[j].x+3, crayon2.faces[i].vertices[j].y, crayon2.faces[i].vertices[j].z - .2);
-        }
-        glEnd();
-    }
-    
-    glBindTexture(GL_TEXTURE_2D, texture[3]);
-    
-    for(int i=0; i<crayon3.faces.size(); i++) {
-        glBegin(GL_POLYGON);
-        for(int j=0; j<crayon3.faces[i].vertices.size(); j++) {
-            glTexCoord2f(crayon3.faces[i].textureCoordinates[j].x, crayon3.faces[i].textureCoordinates[j].y);
-            glVertex3f(crayon3.faces[i].vertices[j].x+5, crayon3.faces[i].vertices[j].y, crayon3.faces[i].vertices[j].z - .2);
-        }
-        glEnd();
-    }
+    drawItem( parking_lot, texture[0]);
+    drawItem( car, texture[2]);
+    drawItem( tire1, texture[1]);
+    drawItem( tire2, texture[1]);
+    drawItem( tire3, texture[1]);
+    drawItem( tire4, texture[1]);
     
     glFlush ();
 }
 
 void setCamera() {
-    glTranslatef(0.0f, 0.0f, -12.0f); // Local: +l/-r , -u/+d , +f/-b
+    glTranslatef(0.0f, -2.0f, -2.0f); // Local: +l/-r , -u/+d , +f/-b
     glRotatef(-20.0f, 0.0f, 1.0f, 0.0f);
+}
+
+void handleEvents() {
+    while (SDL_PollEvent(&controller.sdlEvent)){
+        //If user closes the window
+        if (controller.sdlEvent.type == SDL_QUIT){
+            cout << "Quit" << endl;
+        }
+        //If user presses any key
+        if (controller.sdlEvent.type == SDL_KEYDOWN){
+            cout << "Key" << endl;
+        }
+        //If user clicks the mouse
+        if (controller.sdlEvent.type == SDL_MOUSEBUTTONDOWN){
+            cout << "mouse" << endl;
+        }
+    }
+
 }
 
 void display() {
@@ -133,8 +132,9 @@ void display() {
     glTranslatef(0.0f, 0.0f, 0.0f);
     glPopMatrix();
     
-    setCamera();
+    handleEvents();
     
+    setCamera();
     drawScene();
     
     glutSwapBuffers();
