@@ -16,8 +16,9 @@
 		650EE71F1BA934E2009988E0 /* Item.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 650EE71D1BA934E2009988E0 /* Item.cpp */; };
 		650EE7221BA93C98009988E0 /* TextureCoordinate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 650EE7201BA93C98009988E0 /* TextureCoordinate.cpp */; };
 		650EE7251BA94132009988E0 /* ObjParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 650EE7231BA94132009988E0 /* ObjParser.cpp */; };
-		651B2C791BA52DB900434B86 /* project2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 651B2C781BA52DB900434B86 /* project2.cpp */; };
 		651B2C801BA53AF700434B86 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 651B2C7F1BA53AF700434B86 /* OpenGL.framework */; };
+		654A17281BAE332F009500DC /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 654A17261BAE332F009500DC /* main.cpp */; };
+		654A172B1BAE333D009500DC /* Controller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 654A17291BAE333D009500DC /* Controller.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -41,7 +42,6 @@
 		6500BFFE1BAA970F005607A5 /* textures */ = {isa = PBXFileReference; lastKnownFileType = folder; path = textures; sourceTree = "<group>"; };
 		650EE7151BA926FB009988E0 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		650EE7171BA92705009988E0 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
-		650EE7191BA927EB009988E0 /* project2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = project2.h; sourceTree = "<group>"; };
 		650EE71A1BA92EEE009988E0 /* Vertex.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Vertex.h; sourceTree = "<group>"; };
 		650EE71B1BA92F69009988E0 /* Vertex.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Vertex.cpp; sourceTree = "<group>"; };
 		650EE71D1BA934E2009988E0 /* Item.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Item.cpp; sourceTree = "<group>"; };
@@ -50,11 +50,13 @@
 		650EE7211BA93C98009988E0 /* TextureCoordinate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextureCoordinate.h; sourceTree = "<group>"; };
 		650EE7231BA94132009988E0 /* ObjParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjParser.cpp; sourceTree = "<group>"; };
 		650EE7241BA94132009988E0 /* ObjParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjParser.h; sourceTree = "<group>"; };
-		650EE7261BA94727009988E0 /* CrayonBox.obj */ = {isa = PBXFileReference; lastKnownFileType = text; path = CrayonBox.obj; sourceTree = "<group>"; };
 		651B2C751BA52DB900434B86 /* wizards-court */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "wizards-court"; sourceTree = BUILT_PRODUCTS_DIR; };
-		651B2C781BA52DB900434B86 /* project2.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = project2.cpp; sourceTree = "<group>"; };
 		651B2C7F1BA53AF700434B86 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		651B2C811BA53BD300434B86 /* X11 */ = {isa = PBXFileReference; lastKnownFileType = folder; name = X11; path = ../../../../opt/X11; sourceTree = "<group>"; };
+		654A17261BAE332F009500DC /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		654A17271BAE332F009500DC /* main.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = main.h; sourceTree = "<group>"; };
+		654A17291BAE333D009500DC /* Controller.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Controller.cpp; sourceTree = "<group>"; };
+		654A172A1BAE333D009500DC /* Controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Controller.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,8 +102,8 @@
 			children = (
 				6500BFFD1BAA9704005607A5 /* models */,
 				6500BFFE1BAA970F005607A5 /* textures */,
-				650EE7191BA927EB009988E0 /* project2.h */,
-				651B2C781BA52DB900434B86 /* project2.cpp */,
+				654A17261BAE332F009500DC /* main.cpp */,
+				654A17271BAE332F009500DC /* main.h */,
 				650EE71A1BA92EEE009988E0 /* Vertex.h */,
 				650EE71B1BA92F69009988E0 /* Vertex.cpp */,
 				6500BFF11BA9F67D005607A5 /* Face.h */,
@@ -112,7 +114,8 @@
 				650EE71D1BA934E2009988E0 /* Item.cpp */,
 				650EE7241BA94132009988E0 /* ObjParser.h */,
 				650EE7231BA94132009988E0 /* ObjParser.cpp */,
-				650EE7261BA94727009988E0 /* CrayonBox.obj */,
+				654A17291BAE333D009500DC /* Controller.cpp */,
+				654A172A1BAE333D009500DC /* Controller.h */,
 			);
 			path = "wizards-court";
 			sourceTree = "<group>";
@@ -175,8 +178,9 @@
 			files = (
 				6500BFF21BA9F67D005607A5 /* Face.cpp in Sources */,
 				650EE71F1BA934E2009988E0 /* Item.cpp in Sources */,
-				651B2C791BA52DB900434B86 /* project2.cpp in Sources */,
+				654A172B1BAE333D009500DC /* Controller.cpp in Sources */,
 				650EE71C1BA92F69009988E0 /* Vertex.cpp in Sources */,
+				654A17281BAE332F009500DC /* main.cpp in Sources */,
 				650EE7251BA94132009988E0 /* ObjParser.cpp in Sources */,
 				650EE7221BA93C98009988E0 /* TextureCoordinate.cpp in Sources */,
 			);
