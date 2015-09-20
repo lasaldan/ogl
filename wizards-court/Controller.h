@@ -10,7 +10,7 @@
 #define __wizards_court__Controller__
 
 #include <stdio.h>
-#include "SDL2/SDL.h"
+#include <SDL2/SDL.h>
 
 class Controller {
 public:
