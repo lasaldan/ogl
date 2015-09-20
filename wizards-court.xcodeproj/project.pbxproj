@@ -19,6 +19,7 @@
 		651B2C801BA53AF700434B86 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 651B2C7F1BA53AF700434B86 /* OpenGL.framework */; };
 		654A17281BAE332F009500DC /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 654A17261BAE332F009500DC /* main.cpp */; };
 		654A172B1BAE333D009500DC /* Controller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 654A17291BAE333D009500DC /* Controller.cpp */; };
+		6594EE2D1BAE35F9007C3D66 /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6594EE2C1BAE35F8007C3D66 /* SDL2.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -57,6 +58,8 @@
 		654A17271BAE332F009500DC /* main.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = main.h; sourceTree = "<group>"; };
 		654A17291BAE333D009500DC /* Controller.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Controller.cpp; sourceTree = "<group>"; };
 		654A172A1BAE333D009500DC /* Controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Controller.h; sourceTree = "<group>"; };
+		6594EE2A1BAE3493007C3D66 /* Frameworks */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Frameworks; path = ../../../../Library/Frameworks; sourceTree = "<group>"; };
+		6594EE2C1BAE35F8007C3D66 /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2.framework; path = ../../../../Library/Frameworks/SDL2.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +69,7 @@
 			files = (
 				6500BFFA1BAA94FC005607A5 /* libSOIL.a in Frameworks */,
 				6500BFF81BAA9280005607A5 /* libSOIL.dylib in Frameworks */,
+				6594EE2D1BAE35F9007C3D66 /* SDL2.framework in Frameworks */,
 				650EE7181BA92705009988E0 /* GLUT.framework in Frameworks */,
 				650EE7161BA926FC009988E0 /* Cocoa.framework in Frameworks */,
 				651B2C801BA53AF700434B86 /* OpenGL.framework in Frameworks */,
@@ -78,6 +82,8 @@
 		651B2C6C1BA52DB800434B86 = {
 			isa = PBXGroup;
 			children = (
+				6594EE2C1BAE35F8007C3D66 /* SDL2.framework */,
+				6594EE2A1BAE3493007C3D66 /* Frameworks */,
 				6500BFF91BAA94FC005607A5 /* libSOIL.a */,
 				6500BFF71BAA9280005607A5 /* libSOIL.dylib */,
 				650EE7171BA92705009988E0 /* GLUT.framework */,
@@ -270,6 +276,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(LOCAL_LIBRARY_DIR)/Frameworks",
+				);
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -290,6 +300,8 @@
 					CoreVideo,
 					"-framework",
 					IOKit,
+					"-framework",
+					SDL2,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -299,6 +311,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(LOCAL_LIBRARY_DIR)/Frameworks",
+				);
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -319,6 +335,8 @@
 					CoreVideo,
 					"-framework",
 					IOKit,
+					"-framework",
+					SDL2,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
