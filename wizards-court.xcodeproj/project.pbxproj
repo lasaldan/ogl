@@ -21,6 +21,9 @@
 		654A17281BAE332F009500DC /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 654A17261BAE332F009500DC /* main.cpp */; };
 		654A172B1BAE333D009500DC /* Controller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 654A17291BAE333D009500DC /* Controller.cpp */; };
 		6594EE2D1BAE35F9007C3D66 /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6594EE2C1BAE35F8007C3D66 /* SDL2.framework */; };
+		65CBB53B1BB1A9FB00FFFDC2 /* Camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65CBB5391BB1A9FB00FFFDC2 /* Camera.cpp */; };
+		65CBB53E1BB1AA0900FFFDC2 /* Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65CBB53C1BB1AA0900FFFDC2 /* Scene.cpp */; };
+		65CBB5411BB1AA7A00FFFDC2 /* PositionedItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65CBB53F1BB1AA7A00FFFDC2 /* PositionedItem.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -63,6 +66,12 @@
 		654A172A1BAE333D009500DC /* Controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Controller.h; sourceTree = "<group>"; };
 		6594EE2A1BAE3493007C3D66 /* Frameworks */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Frameworks; path = ../../../../Library/Frameworks; sourceTree = "<group>"; };
 		6594EE2C1BAE35F8007C3D66 /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2.framework; path = ../../../../Library/Frameworks/SDL2.framework; sourceTree = "<group>"; };
+		65CBB5391BB1A9FB00FFFDC2 /* Camera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Camera.cpp; sourceTree = "<group>"; };
+		65CBB53A1BB1A9FB00FFFDC2 /* Camera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Camera.h; sourceTree = "<group>"; };
+		65CBB53C1BB1AA0900FFFDC2 /* Scene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Scene.cpp; sourceTree = "<group>"; };
+		65CBB53D1BB1AA0900FFFDC2 /* Scene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Scene.h; sourceTree = "<group>"; };
+		65CBB53F1BB1AA7A00FFFDC2 /* PositionedItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PositionedItem.cpp; sourceTree = "<group>"; };
+		65CBB5401BB1AA7A00FFFDC2 /* PositionedItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PositionedItem.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,8 +122,14 @@
 				6500BFFE1BAA970F005607A5 /* textures */,
 				654A17261BAE332F009500DC /* main.cpp */,
 				654A17271BAE332F009500DC /* main.h */,
-				650031AC1BB11D41003D9259 /* Game.cpp */,
 				650031AD1BB11D41003D9259 /* Game.h */,
+				650031AC1BB11D41003D9259 /* Game.cpp */,
+				65CBB53A1BB1A9FB00FFFDC2 /* Camera.h */,
+				65CBB5391BB1A9FB00FFFDC2 /* Camera.cpp */,
+				65CBB5401BB1AA7A00FFFDC2 /* PositionedItem.h */,
+				65CBB53F1BB1AA7A00FFFDC2 /* PositionedItem.cpp */,
+				65CBB53D1BB1AA0900FFFDC2 /* Scene.h */,
+				65CBB53C1BB1AA0900FFFDC2 /* Scene.cpp */,
 				650EE71A1BA92EEE009988E0 /* Vertex.h */,
 				650EE71B1BA92F69009988E0 /* Vertex.cpp */,
 				6500BFF11BA9F67D005607A5 /* Face.h */,
@@ -190,10 +205,13 @@
 				6500BFF21BA9F67D005607A5 /* Face.cpp in Sources */,
 				650EE71F1BA934E2009988E0 /* Item.cpp in Sources */,
 				654A172B1BAE333D009500DC /* Controller.cpp in Sources */,
+				65CBB5411BB1AA7A00FFFDC2 /* PositionedItem.cpp in Sources */,
 				650031AE1BB11D41003D9259 /* Game.cpp in Sources */,
+				65CBB53B1BB1A9FB00FFFDC2 /* Camera.cpp in Sources */,
 				650EE71C1BA92F69009988E0 /* Vertex.cpp in Sources */,
 				654A17281BAE332F009500DC /* main.cpp in Sources */,
 				650EE7251BA94132009988E0 /* ObjParser.cpp in Sources */,
+				65CBB53E1BB1AA0900FFFDC2 /* Scene.cpp in Sources */,
 				650EE7221BA93C98009988E0 /* TextureCoordinate.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

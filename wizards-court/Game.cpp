@@ -20,8 +20,8 @@ int Game::Run() {
         return -1;
     }
     
-    ImportModels();
     LoadTextures();
+    ImportModels();
     
     SDL_Event Event;
     
@@ -105,7 +105,7 @@ void Game::Render() {
     
     SetCamera();
     
-    DrawScene();
+    scene.DrawScene();
     
     SDL_GL_SwapWindow(viewport);
 }
@@ -142,44 +142,37 @@ void Game::LoadTextures() {
     glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);}
 
 void Game::ImportModels() {
-    parking_lot = Item();
-    car = Item();
-    tire1 = Item();
-    tire2 = Item();
-    tire3 = Item();
-    tire4 = Item();
     
     ObjParser parser = ObjParser();
+    
+    Item parking_lot = Item();
     parser.parseFile("/Users/Daniel/workspace/wizards-court/wizards-court/models/ParkingLot.obj", &parking_lot);
+    parking_lot.SetTexture(texture[0]);
+    
+    Item car = Item();
     parser.parseFile("/Users/Daniel/workspace/wizards-court/wizards-court/models/car.obj", &car);
+    car.SetTexture(texture[2]);
+    
+    Item tire1 = Item();
     parser.parseFile("/Users/Daniel/workspace/wizards-court/wizards-court/models/tire.obj", &tire1);
+    tire1.SetTexture(texture[1]);
+    
+    Item tire2 = Item();
     parser.parseFile("/Users/Daniel/workspace/wizards-court/wizards-court/models/tire.obj", &tire2);
+    tire2.SetTexture(texture[1]);
+    
+    Item tire3 = Item();
     parser.parseFile("/Users/Daniel/workspace/wizards-court/wizards-court/models/tire.obj", &tire3);
+    tire3.SetTexture(texture[1]);
+    
+    Item tire4 = Item();
     parser.parseFile("/Users/Daniel/workspace/wizards-court/wizards-court/models/tire.obj", &tire4);
-}
-
-void Game::DrawItem(Item item, GLuint textureId) {
-    glBindTexture(GL_TEXTURE_2D, textureId);
-    for(int i=0; i<item.faces.size(); i++) {
-        glBegin(GL_POLYGON);
-        for(int j=0; j<item.faces[i].vertices.size(); j++) {
-            glTexCoord2f(item.faces[i].textureCoordinates[j].x, item.faces[i].textureCoordinates[j].y);
-            glVertex3f(item.faces[i].vertices[j].x, item.faces[i].vertices[j].y, item.faces[i].vertices[j].z);
-        }
-        glEnd();
-    }
-}
-
-
-void Game::DrawScene() {
-    glClear (GL_COLOR_BUFFER_BIT);
+    tire4.SetTexture(texture[1]);
     
-    DrawItem( parking_lot, texture[0]);
-    DrawItem( car, texture[2]);
-    DrawItem( tire1, texture[1]);
-    DrawItem( tire2, texture[1]);
-    DrawItem( tire3, texture[1]);
-    DrawItem( tire4, texture[1]);
-    
-    glFlush ();
+    scene.AddItem(parking_lot);
+    scene.AddItem(car);
+    scene.AddItem(tire1);
+    scene.AddItem(tire2);
+    scene.AddItem(tire3);
+    scene.AddItem(tire4);
 }

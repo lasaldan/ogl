@@ -20,10 +20,12 @@ public:
     std::vector<Vertex> vertices;
     std::vector<TextureCoordinate> textureCoordinates;
     std::vector<Face> faces;
+    unsigned int texture;
     Item();
     void AddVertex(Vertex);
     void AddFace(Face);
     void AddTextureCoodinate(TextureCoordinate);
+    void SetTexture(unsigned int);
     std::vector<Vertex> GetVertices();
     std::vector<TextureCoordinate> GetTextureCoordinates();
     std::vector<Face> GetFaces();

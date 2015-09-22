@@ -23,6 +23,10 @@ void Item::AddTextureCoodinate(TextureCoordinate t){
     textureCoordinates.push_back(t);
 }
 
+void Item::SetTexture(unsigned int i) {
+    texture = i;
+}
+
 void Item::AddFace(Face f){
     faces.push_back(f);
 }

@@ -14,6 +14,7 @@
 #include <OpenGL/gl3.h>
 #include <OpenGL/glu.h>
 #include "SOIL.h"
+#include "Scene.h"
 #include "Item.h"
 #include "ObjParser.h"
 
@@ -29,12 +30,7 @@ private:
     SDL_Window* viewport;
     SDL_GLContext context;
     GLuint texture[4];
-    Item parking_lot;
-    Item car;
-    Item tire1;
-    Item tire2;
-    Item tire3;
-    Item tire4;
+    Scene scene;
     
 public:
     Game();
