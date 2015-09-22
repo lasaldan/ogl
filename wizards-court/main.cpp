@@ -7,19 +7,103 @@
 //
 
 #include <iostream>
-#include <stdio.h>
 #include <stdlib.h>
 #include <OpenGL/gl3.h>
 #include <GLUT/glut.h>
 #include <OpenGL/glu.h>
 #include <vector>
 #include "main.h"
+#include "Game.h"
 #include "SOIL.h"
 
 using namespace std;
 
+
 int main (int argc, char **argv)
 {
+    Game game = Game();
+    return game.Run();
+    
+    /*
+    CApp::CApp() {
+        Running = true;
+    }
+    
+    int CApp::OnExecute() {
+        if(OnInit() == false) {
+            return -1;
+        }
+        
+        SDL_Event Event;
+        
+        while(Running) {
+            while(SDL_PollEvent(&Event)) {
+                OnEvent(&Event);
+            }
+            
+            OnLoop();
+            OnRender();
+        }
+        
+        OnCleanup();
+        
+        return 0;
+    }
+    
+    int main(int argc, char* argv[]) {
+        CApp theApp;
+        
+        return theApp.OnExecute();
+    }
+     */
+    
+    /*
+    SDL_Window* window = NULL;
+    
+    //The surface contained by the window
+    SDL_Surface* screenSurface = NULL;
+    
+    //Initialize SDL
+    if( SDL_Init( SDL_INIT_VIDEO ) < 0 )
+    {
+        printf( "SDL could not initialize! SDL_Error: %s\n", SDL_GetError() );
+    }
+    else
+    {
+        //Create window
+        window = SDL_CreateWindow( "Parking Lot", 50, 50, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
+        if( window == NULL )
+        {
+            printf( "Window could not be created! SDL_Error: %s\n", SDL_GetError() );
+        }
+        else
+        {
+            //Get window surface
+            screenSurface = SDL_GetWindowSurface( window );
+            
+            //Fill the surface white
+            SDL_FillRect( screenSurface, NULL, SDL_MapRGB( screenSurface->format, 0xFF, 0xFF, 0xFF ) );
+            
+            //Update the surface
+            SDL_UpdateWindowSurface( window );
+            
+            
+            
+            //Wait two seconds
+            SDL_Delay( 2000 );
+        }
+    }
+    
+    //Destroy window
+    SDL_DestroyWindow( window );
+    
+    //Quit SDL subsystems
+    SDL_Quit();
+    
+    return 0;
+     */
+    /*
+    
     glutInit(&argc, argv);
     createWindow();
     glutDisplayFunc(display);
@@ -32,7 +116,8 @@ int main (int argc, char **argv)
     
     glutDestroyWindow(viewport);
     exit(0);
-    return 0;		
+    return 0;	
+     */
 }
 
 void loadTextures() {

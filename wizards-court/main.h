@@ -11,6 +11,10 @@
 
 #include "ObjParser.h"
 #include "Controller.h"
+#include <stdio.h>
+#include <SDL2/SDL.h>
+
+
 
 static int viewport;
 Item parking_lot;

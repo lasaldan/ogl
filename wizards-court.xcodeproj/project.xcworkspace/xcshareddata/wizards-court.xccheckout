@@ -7,7 +7,7 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>1A9B2AEC-0C79-48B6-B8C9-25AD960E6589</string>
 	<key>IDESourceControlProjectName</key>
-	<string>wizards-court</string>
+	<string>project</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>0662AB40A227B19817D125F89651DBFC9614FBA6</key>
@@ -16,7 +16,7 @@
 		<string>https://github.com/smibarber/libSOIL</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>wizards-court.xcodeproj</string>
+	<string>wizards-court.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>0662AB40A227B19817D125F89651DBFC9614FBA6</key>
