@@ -106,10 +106,6 @@ void setCamera() {
 
 void handleEvents() {
     while (SDL_PollEvent(&controller.sdlEvent)){
-        //If user closes the window
-        if (controller.sdlEvent.type == SDL_QUIT){
-            cout << "Quit" << endl;
-        }
         //If user presses any key
         if (controller.sdlEvent.type == SDL_KEYDOWN){
             cout << "Key" << endl;
@@ -140,16 +136,63 @@ void display() {
     glutSwapBuffers();
 }
 
+
+int   x_axis  = 0;
+int   y_axis  = 0;
+int   z_axis  = 0;
+int   button1 = 0;
+int   button2 = 0;
+int   button3 = 0;
+int   button4 = 0;
+int   button5 = 0;
+void updateFlags(unsigned int buttonmask, int x, int y, int z)
+{
+    x_axis  = x;
+    y_axis  = y;
+    z_axis  = z;
+    
+    if (buttonmask & 0x01)  button1 = 1;
+    else  button1 = 0;
+    if (buttonmask & 0x02)  button2 = 1;
+    else  button2 = 0;
+    if (buttonmask & 0x04)  button3 = 1;
+    else  button3 = 0;
+    if (buttonmask & 0x08)  button4 = 1;
+    else  button4 = 0;
+    if (buttonmask & 0x10)  button5 = 1;
+    else  button5 = 0;
+    
+    if(button1)
+        cout << "button 1 down" << endl;
+    if(button2)
+        cout << "button 2 down" << endl;
+    if(button3)
+        cout << "button 3 down" << endl;
+    if(button4)
+        cout << "button 4 down" << endl;
+    if(button5)
+        cout << "button 5 down" << endl;
+    
+    if (x != 3 || y != -3) {
+        cout << "x: " << x << "y: " << y << "z: " << z << endl;
+    }
+}
+
+
 void createWindow()
 {
+
     glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
     glutInitWindowPosition (100, 100);
-    glutInitWindowSize (512, 512);
-    viewport = glutCreateWindow ("Crayons");
+    glutInitWindowSize (900, 900);
+    viewport = glutCreateWindow ("Parking Lot");
 }
 
 void initializeSettings()
 {
+    printf(" joystick %i - buttons %i - axes %i \n", glutDeviceGet(GLUT_HAS_JOYSTICK), glutDeviceGet(GLUT_JOYSTICK_BUTTONS), glutDeviceGet(GLUT_JOYSTICK_AXES));
+
+    glutJoystickFunc(updateFlags, 25);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     gluPerspective(90.0, 1.0, 0.1, 100);

@@ -17,6 +17,7 @@ public:
     SDL_Event sdlEvent;
     Controller();
     void Event();
+    void updateFlags(unsigned int buttonmask, int x, int y, int z);
     void OnEvent(SDL_Event* Event);
     void OnLButtonDown(int, int);
 };
