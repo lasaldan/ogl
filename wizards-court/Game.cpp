@@ -69,9 +69,7 @@ bool Game::Init() {
     
     context = SDL_GL_CreateContext(viewport);
     
-    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-    
-    glViewport(SCREEN_LOCATION_X, SCREEN_LOCATION_Y, SCREEN_WIDTH, SCREEN_HEIGHT);
+    glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT); // the first parameters adjust location of viewport in window
     
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
@@ -103,7 +101,7 @@ void Game::Render() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
     
-    SetCamera();
+    camera.AdjustCamera();
     
     scene.DrawScene();
     
@@ -115,10 +113,6 @@ void Game::Cleanup() {
     SDL_Quit();
 }
 
-void Game::SetCamera() {
-    glTranslatef(0.0f, -2.0f, 2.0f); // Local: +l/-r , -u/+d , +f/-b
-    glRotatef(-20.0f, 0.0f, 1.0f, 0.0f);
-}
 
 void Game::LoadTextures() {
     /* load an image file directly as a new OpenGL texture */
@@ -175,4 +169,8 @@ void Game::ImportModels() {
     scene.AddItem(tire2);
     scene.AddItem(tire3);
     scene.AddItem(tire4);
+    
+    // Translate Car
+    Vertex v = Vertex(0.1,0,0);
+    scene.GetPositionedItem(1).GetMatrix().SetTranslation(v);
 }

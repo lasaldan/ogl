@@ -11,17 +11,16 @@
 
 #include <stdio.h>
 #include "Item.h"
+#include "TransformationMatrix.h"
 
 class PositionedItem {
 private:
-    float x;
-    float y;
-    float z;
-    float rotation;
+    TransformationMatrix matrix;
     Item item;
 public:
     PositionedItem(Item);
     Item GetItem();
+    TransformationMatrix& GetMatrix();
 };
 
 #endif /* defined(__wizards_court__PositionedItem__) */

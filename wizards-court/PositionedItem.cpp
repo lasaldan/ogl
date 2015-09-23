@@ -9,13 +9,14 @@
 #include "PositionedItem.h"
 
 PositionedItem::PositionedItem(Item i) {
-    x = 0;
-    y = 0;
-    z = 0;
-    rotation = 0;
+    matrix = TransformationMatrix();
     item = i;
 }
 
 Item PositionedItem::GetItem() {
     return item;
+}
+
+TransformationMatrix& PositionedItem::GetMatrix() {
+    return matrix;
 }

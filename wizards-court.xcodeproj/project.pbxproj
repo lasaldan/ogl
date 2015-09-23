@@ -21,6 +21,7 @@
 		654A17281BAE332F009500DC /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 654A17261BAE332F009500DC /* main.cpp */; };
 		654A172B1BAE333D009500DC /* Controller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 654A17291BAE333D009500DC /* Controller.cpp */; };
 		6594EE2D1BAE35F9007C3D66 /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6594EE2C1BAE35F8007C3D66 /* SDL2.framework */; };
+		6597CF421BB26BD80095EA9B /* TransformationMatrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6597CF401BB26BD70095EA9B /* TransformationMatrix.cpp */; };
 		65CBB53B1BB1A9FB00FFFDC2 /* Camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65CBB5391BB1A9FB00FFFDC2 /* Camera.cpp */; };
 		65CBB53E1BB1AA0900FFFDC2 /* Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65CBB53C1BB1AA0900FFFDC2 /* Scene.cpp */; };
 		65CBB5411BB1AA7A00FFFDC2 /* PositionedItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65CBB53F1BB1AA7A00FFFDC2 /* PositionedItem.cpp */; };
@@ -66,6 +67,8 @@
 		654A172A1BAE333D009500DC /* Controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Controller.h; sourceTree = "<group>"; };
 		6594EE2A1BAE3493007C3D66 /* Frameworks */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Frameworks; path = ../../../../Library/Frameworks; sourceTree = "<group>"; };
 		6594EE2C1BAE35F8007C3D66 /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2.framework; path = ../../../../Library/Frameworks/SDL2.framework; sourceTree = "<group>"; };
+		6597CF401BB26BD70095EA9B /* TransformationMatrix.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TransformationMatrix.cpp; sourceTree = "<group>"; };
+		6597CF411BB26BD80095EA9B /* TransformationMatrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransformationMatrix.h; sourceTree = "<group>"; };
 		65CBB5391BB1A9FB00FFFDC2 /* Camera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Camera.cpp; sourceTree = "<group>"; };
 		65CBB53A1BB1A9FB00FFFDC2 /* Camera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Camera.h; sourceTree = "<group>"; };
 		65CBB53C1BB1AA0900FFFDC2 /* Scene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Scene.cpp; sourceTree = "<group>"; };
@@ -142,6 +145,8 @@
 				650EE7231BA94132009988E0 /* ObjParser.cpp */,
 				654A17291BAE333D009500DC /* Controller.cpp */,
 				654A172A1BAE333D009500DC /* Controller.h */,
+				6597CF401BB26BD70095EA9B /* TransformationMatrix.cpp */,
+				6597CF411BB26BD80095EA9B /* TransformationMatrix.h */,
 			);
 			path = "wizards-court";
 			sourceTree = "<group>";
@@ -203,6 +208,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6500BFF21BA9F67D005607A5 /* Face.cpp in Sources */,
+				6597CF421BB26BD80095EA9B /* TransformationMatrix.cpp in Sources */,
 				650EE71F1BA934E2009988E0 /* Item.cpp in Sources */,
 				654A172B1BAE333D009500DC /* Controller.cpp in Sources */,
 				65CBB5411BB1AA7A00FFFDC2 /* PositionedItem.cpp in Sources */,

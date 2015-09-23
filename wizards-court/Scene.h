@@ -24,6 +24,7 @@ public:
     Scene();
     void DrawScene();
     void DrawItem(PositionedItem);
+    PositionedItem& GetPositionedItem(int);
     void AddItem(Item);
 };
 

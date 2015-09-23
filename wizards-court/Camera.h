@@ -10,5 +10,14 @@
 #define __wizards_court__Camera__
 
 #include <stdio.h>
+#include <OpenGL/gl3.h>
+#include <OpenGL/glu.h>
+
+class Camera {
+public:
+    Camera();
+    void AdjustCamera();
+};
+
 
 #endif /* defined(__wizards_court__Camera__) */

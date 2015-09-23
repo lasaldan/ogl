@@ -16,6 +16,7 @@
 #include "SOIL.h"
 #include "Scene.h"
 #include "Item.h"
+#include "Camera.h"
 #include "ObjParser.h"
 
 const int SCREEN_WIDTH = 640;
@@ -31,6 +32,7 @@ private:
     SDL_GLContext context;
     GLuint texture[4];
     Scene scene;
+    Camera camera;
     
 public:
     Game();

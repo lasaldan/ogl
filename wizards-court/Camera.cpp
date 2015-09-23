@@ -7,3 +7,12 @@
 //
 
 #include "Camera.h"
+
+Camera::Camera() {
+    
+}
+
+void Camera::AdjustCamera() {
+    //glTranslatef(0.0f, -2.0f, -2.0f); // Local: +l/-r , -u/+d , +f/-b
+    //glRotatef(-20.0f, 0.0f, 1.0f, 0.0f);
+}

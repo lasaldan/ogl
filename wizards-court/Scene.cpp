@@ -25,10 +25,15 @@ void Scene::DrawItem(PositionedItem posItem) {
         glBegin(GL_POLYGON);
         for(int j=0; j<item.faces[i].vertices.size(); j++) {
             glTexCoord2f(item.faces[i].textureCoordinates[j].x, item.faces[i].textureCoordinates[j].y);
-            glVertex3f(item.faces[i].vertices[j].x, item.faces[i].vertices[j].y, item.faces[i].vertices[j].z);
+            Vertex translated = posItem.GetMatrix().Transform(item.faces[i].vertices[j]);;
+            glVertex3f(translated.x, translated.y, translated.z);
         }
         glEnd();
     }
+}
+
+PositionedItem& Scene::GetPositionedItem(int i) {
+    return Items[i];
 }
 
 
