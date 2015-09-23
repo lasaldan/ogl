@@ -49,6 +49,7 @@ private:
     void ImportModels();
     void LoadTextures();
     void SetCamera();
+    void LoadAssets();
 };
 
 #endif /* defined(__wizards_court__Game__) */

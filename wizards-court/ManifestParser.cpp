@@ -23,8 +23,22 @@ using namespace std;
 ManifestParser::ManifestParser() {
 }
 
-void ManifestParser::parseFile(string path, Item* i) {
-    item = i;
+ManifestParser::ManifestParser(string path) {
+    parseFile(path);
+}
+
+map<string, string>
+ManifestParser::GetModels() {
+    return Models;
+}
+
+map<string, string>
+ManifestParser::GetTextures() {
+    return Textures;
+}
+
+
+void ManifestParser::parseFile(string path) {
     ifstream objFile;
     string buffer;
     
@@ -34,20 +48,10 @@ void ManifestParser::parseFile(string path, Item* i) {
     {
         while ( getline (objFile, buffer) )
         {
-            if(buffer.length() < 2) // ignore all short lines
+            if(buffer[0] == '#') // ignore comments
                 continue;
             
-            // Look for a vertex definition on this line
-            if(buffer[0] == 'v' && buffer[1] == ' ')
-                item->AddVertex(parseVertex(buffer));
-            
-            // Look for a texture coordinate on this line
-            if(buffer[0] == 'v' && buffer[1] == 't')
-                item->AddTextureCoodinate(parseTextureCoordinate(buffer));
-            
-            // Look for a face definition on this line
-            if(buffer[0] == 'f' && buffer[1] == ' ')
-                item->AddFace(parseFace(buffer));
+            parseLine(buffer);
         }
         objFile.close();
     }
@@ -57,28 +61,27 @@ void ManifestParser::parseFile(string path, Item* i) {
     objFile.close();
 }
 
-Vertex ManifestParser::parseItem(string line) {
-    float x, y, z;
+void ManifestParser::parseLine(string line) {
+    string varname, model, texture;
     size_t start, end;
     
-    start = line.find(" ");
-    line[start++] = 'X';
+    // Find Variable Name (first token)
+    start = 0;
     end = line.find(" ");
+    varname = stof(line.substr(start, end-start));
     
-    x = stof(line.substr(start, end-start));
-    
+    // Find Model file path (second token)
     start = end;
-    line[start++] = 'X';
+    line[start++] = '`';
     end = line.find(" ");
+    model = stof(line.substr(start, end-start));
     
-    y = stof(line.substr(start, end-start));
-    
+    // Find Texture file path (third token)
     start = end;
     end = line.length()-1;
+    texture = stof(line.substr(start, end-start));
     
-    z = stof(line.substr(start, end-start));
-    
-    //cout << "vertex [ " << x << "," << y << "," << z << "]" << endl;
-    Vertex v = Vertex(x, y, z);
-    return v;
+    // Insert assets into Manifest variables
+    Models.insert(varname, model);
+    Textures.insert(varname, texture);
 }

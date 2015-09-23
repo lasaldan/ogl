@@ -10,13 +10,24 @@
 #define __wizards_court__ManifestParser__
 
 #include <stdio.h>
+#include <map>
 #include <iostream>
 
 class ManifestParser{
     
+private:
+    std::map<std::string, std::string> Models;
+    std::map<std::string, std::string> Textures;
+    
+public:
+    ManifestParser(std::string path);
     ManifestParser();
-    void parseFile(std::string path, Item* i);
-    void parseItem(string line);
+    std::map<std::string, std::string> GetModels();
+    std::map<std::string, std::string> GetTextures();
+    void parseFile(std::string path);
+    
+private:
+    void parseLine(std::string line);
     
 };
 

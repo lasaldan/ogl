@@ -20,8 +20,7 @@ int Game::Run() {
         return -1;
     }
     
-    LoadTextures();
-    ImportModels();
+    LoadAssets();
     
     SDL_Event Event;
     
@@ -113,6 +112,9 @@ void Game::Cleanup() {
     SDL_Quit();
 }
 
+void Game::LoadAssets() {
+    
+}
 
 void Game::LoadTextures() {
     /* load an image file directly as a new OpenGL texture */
