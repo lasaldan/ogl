@@ -32,21 +32,22 @@ void Scene::DrawItem(PositionedItem posItem) {
     }
 }
 
-PositionedItem& Scene::GetPositionedItem(int i) {
-    return Items[i];
+PositionedItem& Scene::Get(string i) {
+    return Items.at(i);
 }
 
 
 void Scene::DrawScene() {
     glClear (GL_COLOR_BUFFER_BIT);
     
-    for (vector<PositionedItem>::iterator it = Items.begin() ; it != Items.end(); ++it)
-        DrawItem(*it);
+    for (map<string, PositionedItem>::iterator it = Items.begin() ; it != Items.end(); ++it)
+        DrawItem(it->second);
     
     glFlush ();
 }
 
-void Scene::AddItem(Item item) {
+PositionedItem& Scene::AddItem(string name, Item item) {
     PositionedItem pi = PositionedItem(item);
-    Items.push_back( pi );
+    Items.insert( pair<string, PositionedItem>(name, pi) );
+    return Items.at(name);
 }

@@ -1,7 +1,7 @@
 #varname model texture
 parkingLot models/ParkingLot.obj textures/parking_lot.bmp
-car models/car textures/car.bmp
-tire1 models/tire.obj textures/tire.bmp
-tire2 models/tire.obj textures/tire.bmp
-tire3 models/tire.obj textures/tire.bmp
-tire4 models/tire.obj textures/tire.bmp
+car models/car.obj textures/car.bmp
+tire_front_driver models/tire.obj textures/tire.bmp
+tire_front_passenger models/tire.obj textures/tire.bmp
+tire_rear_driver models/tire.obj textures/tire.bmp
+tire_rear_passenger models/tire.obj textures/tire.bmp

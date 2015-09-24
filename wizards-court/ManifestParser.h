@@ -10,6 +10,7 @@
 #define __wizards_court__ManifestParser__
 
 #include <stdio.h>
+#include <string>
 #include <map>
 #include <iostream>
 

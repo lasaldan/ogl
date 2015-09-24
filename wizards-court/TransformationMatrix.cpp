@@ -39,6 +39,9 @@ void TransformationMatrix::SetRotation(float x, float y, float z){
     
 }
 void TransformationMatrix::SetScale(float s){
+    matrixData[0][0] = s;
+    matrixData[1][1] = s;
+    matrixData[2][2] = s;
     
 }
 void TransformationMatrix::AddTranslation(float x, float y, float z){

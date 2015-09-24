@@ -9,10 +9,10 @@
 #include "Camera.h"
 
 Camera::Camera() {
-    
+    angle=0;
 }
 
 void Camera::AdjustCamera() {
-    //glTranslatef(0.0f, -2.0f, -2.0f); // Local: +l/-r , -u/+d , +f/-b
-    //glRotatef(-20.0f, 0.0f, 1.0f, 0.0f);
+    glTranslatef(0.0f, -1.0f, -2.0f); // Local: +l/-r , -u/+d , +f/-b
+    glRotatef(angle--, 0.0f, 1.0f, 0.0f);
 }

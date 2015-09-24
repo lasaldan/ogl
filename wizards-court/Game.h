@@ -17,6 +17,7 @@
 #include "Scene.h"
 #include "Item.h"
 #include "Camera.h"
+#include "ManifestParser.h"
 #include "ObjParser.h"
 
 const int SCREEN_WIDTH = 640;
@@ -24,13 +25,14 @@ const int SCREEN_HEIGHT = 480;
 const int SCREEN_LOCATION_X = 50;
 const int SCREEN_LOCATION_Y = 50;
 
+const string RESOURCE_ROOT = "/Users/Daniel/workspace/wizards-court/wizards-court/";
+
 class Game {
     
 private:
     bool Running;
     SDL_Window* viewport;
     SDL_GLContext context;
-    GLuint texture[4];
     Scene scene;
     Camera camera;
     
@@ -40,15 +42,11 @@ public:
     
 private:
     bool Init();
+    void InitializeScene();
     void HandleEvent(SDL_Event&);
     void Update();
     void Render();
     void Cleanup();
-    void DrawScene();
-    void DrawItem(Item, GLuint);
-    void ImportModels();
-    void LoadTextures();
-    void SetCamera();
     void LoadAssets();
 };
 

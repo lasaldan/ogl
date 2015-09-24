@@ -14,6 +14,7 @@
 #include <OpenGL/glu.h>
 
 class Camera {
+    float angle;
 public:
     Camera();
     void AdjustCamera();

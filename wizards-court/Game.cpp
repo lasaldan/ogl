@@ -21,6 +21,7 @@ int Game::Run() {
     }
     
     LoadAssets();
+    InitializeScene();
     
     SDL_Event Event;
     
@@ -38,29 +39,35 @@ int Game::Run() {
     return 0;
 }
 
+void Game::InitializeScene() {
+    Vertex car_location = Vertex(0,.05,0);
+    scene.Get("car").GetMatrix().SetTranslation(car_location);
+    
+    Vertex tire_1_loc = Vertex(-.38,.155,-.55);
+    scene.Get("tire_front_driver").GetMatrix().SetTranslation(tire_1_loc);
+    scene.Get("tire_front_driver").GetMatrix().SetScale(-.25);
+    
+    Vertex tire_2_loc = Vertex(-.38,.155,.49);
+    scene.Get("tire_rear_driver").GetMatrix().SetTranslation(tire_2_loc);
+    scene.Get("tire_rear_driver").GetMatrix().SetScale(-.25);
+    
+    Vertex tire_3_loc = Vertex(.38,.155,-.55);
+    scene.Get("tire_front_passenger").GetMatrix().SetTranslation(tire_3_loc);
+    scene.Get("tire_front_passenger").GetMatrix().SetScale(.25);
+    
+    Vertex tire_4_loc = Vertex(.38,.155,.49);
+    scene.Get("tire_rear_passenger").GetMatrix().SetTranslation(tire_4_loc);
+    scene.Get("tire_rear_passenger").GetMatrix().SetScale(.25);
+
+    
+
+}
+
 bool Game::Init() {
     if(SDL_Init(SDL_INIT_EVERYTHING) < 0) {
         return false;
     }
-    
-    SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
-    SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);
-    SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8);
-    SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE, 8);
-    
-    SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 16);
-    SDL_GL_SetAttribute(SDL_GL_BUFFER_SIZE, 32);
-    
-    SDL_GL_SetAttribute(SDL_GL_ACCUM_RED_SIZE, 8);
-    SDL_GL_SetAttribute(SDL_GL_ACCUM_GREEN_SIZE, 8);
-    SDL_GL_SetAttribute(SDL_GL_ACCUM_BLUE_SIZE, 8);
-    SDL_GL_SetAttribute(SDL_GL_ACCUM_ALPHA_SIZE, 8);
-    
-    SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
-    
-    SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, 2);
-    
-    //SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE | SDL_GL_DOUBLEBUFFER | SDL_WINDOW_OPENG
+
     if((viewport = SDL_CreateWindow("Parking Lot", SCREEN_LOCATION_X, SCREEN_LOCATION_Y, SCREEN_WIDTH, SCREEN_HEIGHT, 0 | SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE)) == NULL) {
         return false;
     }
@@ -113,66 +120,31 @@ void Game::Cleanup() {
 }
 
 void Game::LoadAssets() {
-    
-}
+    ManifestParser assets = ManifestParser(RESOURCE_ROOT + "manifest/objects.manifest");
+    ObjParser parser = ObjParser();
 
-void Game::LoadTextures() {
-    /* load an image file directly as a new OpenGL texture */
-    texture[0] = SOIL_load_OGL_texture("/Users/Daniel/workspace/wizards-court/wizards-court/textures/parking_lot.bmp", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
-    texture[1] = SOIL_load_OGL_texture("/Users/Daniel/workspace/wizards-court/wizards-court/textures/tire.bmp", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
-    texture[2] = SOIL_load_OGL_texture("/Users/Daniel/workspace/wizards-court/wizards-court/textures/car.bmp", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+    map<string, GLuint> textures;
+
     
-    if(texture[0] == 0)
-        cout << "Failed to load texture." << endl;
-    else
-        cout << "Loaded" << endl;
+    //for (map<string,string>::iterator it=assets.GetTextures().begin(); it!=assets.GetTextures().end(); ++it) {
+    for (auto& it: assets.GetTextures()) {
+        GLuint tex = SOIL_load_OGL_texture((RESOURCE_ROOT + it.second).c_str(), SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+        pair<string, GLuint> p = pair<string, GLuint>(it.first, tex);
+        textures.insert( p );
+    }
     
-    
-    // Typical Texture Generation Using Data From The Bitmap
-    glBindTexture(GL_TEXTURE_2D, texture[0]);
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);                                    // Return Success
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
     glEnable(GL_TEXTURE_2D);
-    glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);}
+    glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
 
-void Game::ImportModels() {
-    
-    ObjParser parser = ObjParser();
-    
-    Item parking_lot = Item();
-    parser.parseFile("/Users/Daniel/workspace/wizards-court/wizards-court/models/ParkingLot.obj", &parking_lot);
-    parking_lot.SetTexture(texture[0]);
-    
-    Item car = Item();
-    parser.parseFile("/Users/Daniel/workspace/wizards-court/wizards-court/models/car.obj", &car);
-    car.SetTexture(texture[2]);
-    
-    Item tire1 = Item();
-    parser.parseFile("/Users/Daniel/workspace/wizards-court/wizards-court/models/tire.obj", &tire1);
-    tire1.SetTexture(texture[1]);
-    
-    Item tire2 = Item();
-    parser.parseFile("/Users/Daniel/workspace/wizards-court/wizards-court/models/tire.obj", &tire2);
-    tire2.SetTexture(texture[1]);
-    
-    Item tire3 = Item();
-    parser.parseFile("/Users/Daniel/workspace/wizards-court/wizards-court/models/tire.obj", &tire3);
-    tire3.SetTexture(texture[1]);
-    
-    Item tire4 = Item();
-    parser.parseFile("/Users/Daniel/workspace/wizards-court/wizards-court/models/tire.obj", &tire4);
-    tire4.SetTexture(texture[1]);
-    
-    scene.AddItem(parking_lot);
-    scene.AddItem(car);
-    scene.AddItem(tire1);
-    scene.AddItem(tire2);
-    scene.AddItem(tire3);
-    scene.AddItem(tire4);
-    
-    // Translate Car
-    Vertex v = Vertex(0.1,0,0);
-    scene.GetPositionedItem(1).GetMatrix().SetTranslation(v);
+    //for(map<string,string>::iterator it=assets.GetModels().begin(); it!=assets.GetModels().end(); ++it) {
+    for (auto& it: assets.GetModels()) {
+        Item temp = Item();
+        parser.parseFile((RESOURCE_ROOT + it.second), &temp);
+        temp.SetTexture(textures.at(it.first));
+        scene.AddItem(it.first, temp);
+    }
 }

@@ -17,6 +17,7 @@
 
 #include <iostream>
 #include <fstream>
+#include <string>
 #include "ManifestParser.h"
 using namespace std;
 
@@ -68,20 +69,20 @@ void ManifestParser::parseLine(string line) {
     // Find Variable Name (first token)
     start = 0;
     end = line.find(" ");
-    varname = stof(line.substr(start, end-start));
+    varname = line.substr(start, end-start);
     
     // Find Model file path (second token)
     start = end;
     line[start++] = '`';
     end = line.find(" ");
-    model = stof(line.substr(start, end-start));
+    model = line.substr(start, end-start);
     
     // Find Texture file path (third token)
-    start = end;
-    end = line.length()-1;
-    texture = stof(line.substr(start, end-start));
+    start = ++end;
+    end = line.length();
+    texture = line.substr(start, end-start);
     
     // Insert assets into Manifest variables
-    Models.insert(varname, model);
-    Textures.insert(varname, texture);
+    Models.insert(pair<string, string>(varname, model));
+    Textures.insert(pair<string, string>(varname, texture));
 }

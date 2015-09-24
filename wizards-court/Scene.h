@@ -16,16 +16,17 @@
 #include <SDL2/SDL.h>
 #include <OpenGL/gl3.h>
 #include <OpenGL/glu.h>
+#include <map>
 
 class Scene {
 private:
-    std::vector<PositionedItem> Items;
+    std::map<string, PositionedItem> Items;
 public:
     Scene();
     void DrawScene();
     void DrawItem(PositionedItem);
-    PositionedItem& GetPositionedItem(int);
-    void AddItem(Item);
+    PositionedItem& Get(string);
+    PositionedItem& AddItem(string, Item);
 };
 
 #endif /* defined(__wizards_court__Scene__) */
