@@ -97,6 +97,9 @@ void Game::HandleEvent(SDL_Event &e) {
     if (e.type == SDL_KEYDOWN){
         Running = false;
     }
+    if (e.type == SDL_QUIT) {
+        Running =  false;
+    }
 }
 
 void Game::Update() {
