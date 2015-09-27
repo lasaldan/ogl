@@ -20,3 +20,20 @@ Item PositionedItem::GetItem() {
 TransformationMatrix& PositionedItem::GetMatrix() {
     return matrix;
 }
+
+void PositionedItem::Translate(float x, float y, float z) {
+    matrix.Translate(x, y, z);
+}
+
+void PositionedItem::RotateX(float deg) {
+    matrix.RotateX(deg);
+}
+void PositionedItem::RotateY(float deg) {
+    matrix.RotateY(deg);
+}
+void PositionedItem::RotateZ(float deg) {
+    matrix.RotateZ(deg);
+}
+void PositionedItem::Scale(float s) {
+    matrix.Scale(s);
+}

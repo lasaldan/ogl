@@ -12,6 +12,9 @@
 #include <stdio.h>
 #include <vector>
 #include "Vertex.h"
+#include <math.h>       /* sin */
+
+#define PI 3.14159265358979
 using namespace std;
 
 class TransformationMatrix {
@@ -19,16 +22,17 @@ private:
     vector< vector< float > > matrixData;
 public:
     TransformationMatrix();
-    TransformationMatrix GetMatrix();
-    TransformationMatrix Cross(TransformationMatrix);
-    TransformationMatrix Dot(TransformationMatrix);
-    void SetTranslation(Vertex);
-    void SetRotation(float, float, float);
-    void SetScale(float);
-    void AddTranslation(float, float, float);
-    void AddRotation(float, float, float);
-    void AddScale(float);
+    vector< vector< float > > GetMatrix();
+    vector< vector< float > > Cross(TransformationMatrix);
+    vector< vector< float > > Dot(TransformationMatrix);
+    vector< vector< float > > Multiply(TransformationMatrix);
+    void Translate(float, float, float);
+    void RotateX(float);
+    void RotateY(float);
+    void RotateZ(float);
+    void Scale(float);
     Vertex Transform(Vertex);
+    void setValue(int, int, float);
 };
 
 

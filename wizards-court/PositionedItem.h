@@ -21,6 +21,11 @@ public:
     PositionedItem(Item);
     Item GetItem();
     TransformationMatrix& GetMatrix();
+    void Translate(float x, float y, float z);
+    void Scale(float x);
+    void RotateX(float deg);
+    void RotateY(float deg);
+    void RotateZ(float deg);
 };
 
 #endif /* defined(__wizards_court__PositionedItem__) */

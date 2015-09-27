@@ -20,8 +20,8 @@
 #include "ManifestParser.h"
 #include "ObjParser.h"
 
-const int SCREEN_WIDTH = 640;
-const int SCREEN_HEIGHT = 480;
+const int SCREEN_WIDTH = 1024;
+const int SCREEN_HEIGHT = 768;
 const int SCREEN_LOCATION_X = 50;
 const int SCREEN_LOCATION_Y = 50;
 

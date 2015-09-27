@@ -40,25 +40,24 @@ int Game::Run() {
 }
 
 void Game::InitializeScene() {
-    Vertex car_location = Vertex(0,.05,0);
-    scene.Get("car").GetMatrix().SetTranslation(car_location);
+    scene.Get("car").Translate(0, .05, 0);
     
-    Vertex tire_1_loc = Vertex(-.38,.155,-.55);
-    scene.Get("tire_front_driver").GetMatrix().SetTranslation(tire_1_loc);
-    scene.Get("tire_front_driver").GetMatrix().SetScale(-.25);
+    scene.Get("tire_front_driver").Translate(-.38,.155,-.55);
+    scene.Get("tire_front_driver").Scale(-.25);
+    scene.Get("tire_front_driver").RotateY(25);
     
-    Vertex tire_2_loc = Vertex(-.38,.155,.49);
-    scene.Get("tire_rear_driver").GetMatrix().SetTranslation(tire_2_loc);
-    scene.Get("tire_rear_driver").GetMatrix().SetScale(-.25);
+    scene.Get("tire_rear_driver").Translate(-.38, .155, .49);
+    scene.Get("tire_rear_driver").Scale(-.25);
     
-    Vertex tire_3_loc = Vertex(.38,.155,-.55);
-    scene.Get("tire_front_passenger").GetMatrix().SetTranslation(tire_3_loc);
-    scene.Get("tire_front_passenger").GetMatrix().SetScale(.25);
+    scene.Get("tire_front_passenger").Translate(.38,.155,-.55);
+    scene.Get("tire_front_passenger").Scale(.25);
+    scene.Get("tire_front_passenger").RotateY(25);
     
-    Vertex tire_4_loc = Vertex(.38,.155,.49);
-    scene.Get("tire_rear_passenger").GetMatrix().SetTranslation(tire_4_loc);
-    scene.Get("tire_rear_passenger").GetMatrix().SetScale(.25);
+    scene.Get("tire_rear_passenger").Translate(.38, .155, .49);
+    scene.Get("tire_rear_passenger").Scale(.25);
 
+    scene.Get("parking_lot").RotateY(60);
+    scene.Get("parking_lot").Translate(2.3,0,7.5);
     
 
 }
