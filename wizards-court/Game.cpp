@@ -13,6 +13,7 @@
 Game::Game() {
     viewport = NULL;
     Running = true;
+    tireRotation = 0;
 }
 
 int Game::Run() {
@@ -44,14 +45,12 @@ void Game::InitializeScene() {
     
     scene.Get("tire_front_driver").Translate(-.38,.155,-.55);
     scene.Get("tire_front_driver").Scale(-.25);
-    scene.Get("tire_front_driver").RotateY(25);
     
     scene.Get("tire_rear_driver").Translate(-.38, .155, .49);
     scene.Get("tire_rear_driver").Scale(-.25);
     
     scene.Get("tire_front_passenger").Translate(.38,.155,-.55);
     scene.Get("tire_front_passenger").Scale(.25);
-    scene.Get("tire_front_passenger").RotateY(25);
     
     scene.Get("tire_rear_passenger").Translate(.38, .155, .49);
     scene.Get("tire_rear_passenger").Scale(.25);
@@ -89,6 +88,11 @@ bool Game::Init() {
     
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
     
+    
+    SDL_JoystickEventState(SDL_ENABLE);
+    joystick = SDL_JoystickOpen(0);
+    joystick1 = SDL_JoystickOpen(1);
+    
     return true;
 }
 
@@ -96,13 +100,42 @@ void Game::HandleEvent(SDL_Event &e) {
     if (e.type == SDL_KEYDOWN){
         Running = false;
     }
-    if (e.type == SDL_QUIT) {
+    else if (e.type == SDL_QUIT) {
         Running =  false;
+    }
+    else if(e.type == SDL_JOYBUTTONDOWN) {
+        cout << "Pressing Button: [" << e.jbutton.button << "]" << endl;
+    }
+    else if(e.type == SDL_JOYAXISMOTION) {
+        cout << "moving joystick" << e.jaxis.axis << endl;
+    }
+    else if(e.type == SDL_JOYHATMOTION) {
+
+        if(e.jhat.value & SDL_HAT_LEFT) {
+            inputs = (0 | DPAD_LEFT);
+        }
+        
+        if(e.jhat.value & SDL_HAT_RIGHT) {
+            inputs = (0 | DPAD_RIGHT);
+        }
+        
+        if(e.jhat.value == 0) {
+            inputs = 0;
+        }
     }
 }
 
 void Game::Update() {
-    
+    if(inputs & DPAD_LEFT && tireRotation > -30) {
+        tireRotation -= 3;
+        scene.Get("tire_front_driver").RotateY(-3);
+        scene.Get("tire_front_passenger").RotateY(-3);
+    }
+    else if(inputs & DPAD_RIGHT && tireRotation < 30) {
+        tireRotation += 3;
+        scene.Get("tire_front_driver").RotateY(3);
+        scene.Get("tire_front_passenger").RotateY(3);
+    }
 }
 
 void Game::Render() {
