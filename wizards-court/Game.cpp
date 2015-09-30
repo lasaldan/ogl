@@ -142,7 +142,8 @@ void Game::Render() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
     
-    camera.AdjustCamera();
+    // Handle camera inputs
+    //camera.AdjustCamera();
     
     scene.DrawScene();
     
