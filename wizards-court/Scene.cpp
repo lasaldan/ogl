@@ -26,7 +26,7 @@ void Scene::DrawItem(PositionedItem posItem) {
         for(int j=0; j<item.faces[i].vertices.size(); j++) {
             glTexCoord2f(item.faces[i].textureCoordinates[j].x, item.faces[i].textureCoordinates[j].y);
             Vertex translated = posItem.GetMatrix().Transform(item.faces[i].vertices[j]);;
-            glVertex3f(translated.x, translated.y, translated.z);
+            glVertex3f(translated.x+1, translated.y-1, translated.z-2);
         }
         glEnd();
     }

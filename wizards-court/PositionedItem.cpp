@@ -9,7 +9,7 @@
 #include "PositionedItem.h"
 
 PositionedItem::PositionedItem(Item i) {
-    matrix = TransformationMatrix();
+    matrix = Transformation();
     item = i;
 }
 
@@ -17,7 +17,7 @@ Item PositionedItem::GetItem() {
     return item;
 }
 
-TransformationMatrix& PositionedItem::GetMatrix() {
+Transformation& PositionedItem::GetMatrix() {
     return matrix;
 }
 

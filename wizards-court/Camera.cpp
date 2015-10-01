@@ -13,7 +13,7 @@ using namespace std;
 Camera::Camera() {
     //glTranslatef(0.0f, -1.0f, -2.0f); // Local: +l/-r , -u/+d , +f/-b
     //glRotatef(0, 0.0f, 1.0f, 0.0f);
-    
+    /*
     lookFrom = vector<float>(3);
     lookFrom[0] = 2; lookFrom[1] = 0; lookFrom[2] = 2;
     
@@ -24,7 +24,7 @@ Camera::Camera() {
     up[0] = 0; up[1] = 1; up[2] = 0;
     
     RebuildMatrix();
-    
+    */
 }
 
 void Camera::setFromLocation(vector<float> loc) {

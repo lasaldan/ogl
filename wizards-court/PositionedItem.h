@@ -11,16 +11,16 @@
 
 #include <stdio.h>
 #include "Item.h"
-#include "TransformationMatrix.h"
+#include "Transformation.h"
 
 class PositionedItem {
 private:
-    TransformationMatrix matrix;
+    Transformation matrix;
     Item item;
 public:
     PositionedItem(Item);
     Item GetItem();
-    TransformationMatrix& GetMatrix();
+    Transformation& GetMatrix();
     void Translate(float x, float y, float z);
     void Scale(float x);
     void RotateX(float deg);
