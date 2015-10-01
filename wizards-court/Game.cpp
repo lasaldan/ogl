@@ -45,6 +45,7 @@ void Game::InitializeScene() {
     
     scene.Get("tire_front_driver").Translate(1.52,-.62,2.2);
     scene.Get("tire_front_driver").Scale(-.25);
+    scene.Get("tire_front_driver").RotateY(-20);
     
     scene.Get("tire_rear_driver").Translate(1.52, -.62, -1.96);
     scene.Get("tire_rear_driver").Scale(-.25);
@@ -56,7 +57,7 @@ void Game::InitializeScene() {
     scene.Get("tire_rear_passenger").Scale(.25);
 
     scene.Get("parking_lot").RotateY(60);
-    scene.Get("parking_lot").Translate(2.3,0,7.5);
+    scene.Get("parking_lot").Translate(-5.2,0,6);
     
 
 }
