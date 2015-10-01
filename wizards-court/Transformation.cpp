@@ -64,7 +64,7 @@ Matrix Transformation::Scale(float s){
 
 Matrix Transformation::CalculateTransformation() {
     //transformationMatrix = rotateX.Multiply(rotateY).Multiply(rotateZ).Multiply(scale).Multiply(translate);
-    transformationMatrix = scale.Multiply(translate).Multiply(rotateX).Multiply(rotateY).Multiply(rotateZ);
+    transformationMatrix = translate.Multiply(scale).Multiply(rotateX).Multiply(rotateY).Multiply(rotateZ);
     return transformationMatrix;
 }
 

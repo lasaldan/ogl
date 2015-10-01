@@ -43,17 +43,18 @@ int Game::Run() {
 void Game::InitializeScene() {
     scene.Get("car").Translate(0, .05, 0);
     
-    scene.Get("tire_front_driver").Translate(1.52,-.62,2.2);
+    scene.Get("tire_front_driver").Translate(-.38,.155,-.55);
     scene.Get("tire_front_driver").Scale(-.25);
     scene.Get("tire_front_driver").RotateY(-20);
     
-    scene.Get("tire_rear_driver").Translate(1.52, -.62, -1.96);
+    scene.Get("tire_rear_driver").Translate(-.38, .155, .49);
     scene.Get("tire_rear_driver").Scale(-.25);
     
-    scene.Get("tire_front_passenger").Translate(1.52,.62,-2.2);
+    scene.Get("tire_front_passenger").Translate(.38,.155,-.55);
     scene.Get("tire_front_passenger").Scale(.25);
+    scene.Get("tire_front_passenger").RotateY(-20);
     
-    scene.Get("tire_rear_passenger").Translate(1.52, .62, 1.96);
+    scene.Get("tire_rear_passenger").Translate(.38, .155, .49);
     scene.Get("tire_rear_passenger").Scale(.25);
 
     scene.Get("parking_lot").RotateY(60);
