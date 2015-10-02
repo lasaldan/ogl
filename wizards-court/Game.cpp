@@ -87,9 +87,9 @@ bool Game::Init() {
     glEnable(GL_NORMALIZE);
     glShadeModel(GL_SMOOTH);
     
-    glClearDepth( 1.0f );
+    //glClearDepth( 1.0f );
     glEnable( GL_DEPTH_TEST );
-    glDepthFunc( GL_LEQUAL );
+    //glDepthFunc( GL_LEQUAL );
     
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
     
