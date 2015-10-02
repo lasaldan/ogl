@@ -38,7 +38,7 @@ Matrix Matrix::Multiply(Matrix input) {
         for(int answerCol=0; answerCol < MatrixData[0].size(); answerCol++) {
             float val = 0;
             for(int valCounter=0; valCounter < MatrixData[0].size(); valCounter ++) {
-                val += MatrixData[answerRow][valCounter] * rightSide[valCounter][answerCol];
+                val += (float)MatrixData[answerRow][valCounter] * (float)rightSide[valCounter][answerCol];
             }
             temp[answerRow][answerCol] = val;
         }

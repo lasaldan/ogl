@@ -13,6 +13,7 @@
 #include <OpenGL/gl3.h>
 #include <OpenGL/glu.h>
 #include <vector>
+#include "Matrix.h"
 #include "Vertex.h"
 
 class Camera {
@@ -22,6 +23,10 @@ class Camera {
     std::vector<float> U;
     std::vector<float> N;
     std::vector<float> V;
+    Matrix translation;
+    Matrix changeOfBase;
+    Matrix viewMatrix;
+    Matrix perspective;
 public:
     Camera();
     void setFromLocation(std::vector<float>);
@@ -41,7 +46,7 @@ public:
     vector<float> Normalize(vector<float>);
     void RebuildMatrix();
     
-    void calculateViewportEquivalent(Vertex);
+    Vertex transform(Vertex);
 };
 
 

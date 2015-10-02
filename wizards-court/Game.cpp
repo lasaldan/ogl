@@ -77,16 +77,19 @@ bool Game::Init() {
     
     glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT); // the first parameters adjust location of viewport in window
     
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    gluPerspective(90.0, 1.0, 0.1, 100);
-    glMatrixMode(GL_MODELVIEW);
+    //glMatrixMode(GL_PROJECTION);
+    //glLoadIdentity();
+    //gluPerspective(90.0, 1.0, 0.1, 100);
+    //glMatrixMode(GL_MODELVIEW);
     
-    glEnable(GL_DEPTH_TEST);
     glEnable(GL_TEXTURE_2D);
     
     glEnable(GL_NORMALIZE);
     glShadeModel(GL_SMOOTH);
+    
+    glClearDepth( 1.0f );
+    glEnable( GL_DEPTH_TEST );
+    glDepthFunc( GL_LEQUAL );
     
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
     
@@ -129,6 +132,7 @@ void Game::HandleEvent(SDL_Event &e) {
 }
 
 void Game::Update() {
+    camera.moveHorizontal(1);
     if(inputs & DPAD_LEFT && tireRotation > -30) {
         tireRotation -= 3;
         scene.Get("tire_front_driver").RotateY(-3);
@@ -143,12 +147,12 @@ void Game::Update() {
 
 void Game::Render() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glLoadIdentity();
+    //glLoadIdentity();
     
     // Handle camera inputs
     //camera.AdjustCamera();
     
-    scene.DrawScene();
+    scene.DrawScene(camera);
     
     SDL_GL_SwapWindow(viewport);
 }
@@ -164,8 +168,6 @@ void Game::LoadAssets() {
 
     map<string, GLuint> textures;
 
-    
-    //for (map<string,string>::iterator it=assets.GetTextures().begin(); it!=assets.GetTextures().end(); ++it) {
     for (auto& it: assets.GetTextures()) {
         GLuint tex = SOIL_load_OGL_texture((RESOURCE_ROOT + it.second).c_str(), SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
         pair<string, GLuint> p = pair<string, GLuint>(it.first, tex);
@@ -173,13 +175,12 @@ void Game::LoadAssets() {
     }
     
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);                                    // Return Success
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
     glEnable(GL_TEXTURE_2D);
     glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
 
-    //for(map<string,string>::iterator it=assets.GetModels().begin(); it!=assets.GetModels().end(); ++it) {
     for (auto& it: assets.GetModels()) {
         Item temp = Item();
         parser.parseFile((RESOURCE_ROOT + it.second), &temp);

@@ -16,14 +16,16 @@
 #include <SDL2/SDL.h>
 #include <OpenGL/gl3.h>
 #include <OpenGL/glu.h>
+#include "Camera.h"
 #include <map>
 
 class Scene {
 private:
     std::map<string, PositionedItem> Items;
+    Camera camera;
 public:
     Scene();
-    void DrawScene();
+    void DrawScene(Camera);
     void DrawItem(PositionedItem);
     PositionedItem& Get(string);
     PositionedItem& AddItem(string, Item);

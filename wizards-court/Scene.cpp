@@ -25,8 +25,8 @@ void Scene::DrawItem(PositionedItem posItem) {
         glBegin(GL_POLYGON);
         for(int j=0; j<item.faces[i].vertices.size(); j++) {
             glTexCoord2f(item.faces[i].textureCoordinates[j].x, item.faces[i].textureCoordinates[j].y);
-            Vertex translated = posItem.GetMatrix().Transform(item.faces[i].vertices[j]);;
-            glVertex3f(translated.x-1, translated.y-1, translated.z-2);
+            Vertex translated = camera.transform(posItem.GetMatrix().Transform(item.faces[i].vertices[j]));
+            glVertex3f(translated.x, translated.y, translated.z);
         }
         glEnd();
     }
@@ -37,7 +37,8 @@ PositionedItem& Scene::Get(string i) {
 }
 
 
-void Scene::DrawScene() {
+void Scene::DrawScene(Camera c) {
+    camera = c;
     glClear (GL_COLOR_BUFFER_BIT);
     
     for (map<string, PositionedItem>::iterator it = Items.begin() ; it != Items.end(); ++it)
