@@ -17,6 +17,7 @@
 #include "Vertex.h"
 
 class Camera {
+    float angle;
     std::vector<float> lookFrom;
     std::vector<float> lookAt;
     std::vector<float> up;
@@ -34,7 +35,7 @@ public:
     void setUp(std::vector<float>);
     
     void lookVertical(float);
-    void lookHorizonal(float);
+    void lookHorizontal(float);
     // Omit rolling for now
     
     void moveHorizontal(float);

@@ -77,19 +77,19 @@ bool Game::Init() {
     
     glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT); // the first parameters adjust location of viewport in window
     
-    //glMatrixMode(GL_PROJECTION);
-    //glLoadIdentity();
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
     //gluPerspective(90.0, 1.0, 0.1, 100);
-    //glMatrixMode(GL_MODELVIEW);
+    glMatrixMode(GL_MODELVIEW);
     
-    //glEnable(GL_TEXTURE_2D);
+    glEnable(GL_TEXTURE_2D);
     
-    //glEnable(GL_NORMALIZE);
-    //glShadeModel(GL_SMOOTH);
+    glEnable(GL_NORMALIZE);
+    glShadeModel(GL_SMOOTH);
     
     //glClearDepth( 1.0f );
     glEnable( GL_DEPTH_TEST );
-    //glDepthFunc( GL_LEQUAL );
+    //glDepthFunc( GL_EQUAL );
     
     //glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
     
@@ -132,7 +132,7 @@ void Game::HandleEvent(SDL_Event &e) {
 }
 
 void Game::Update() {
-    camera.moveHorizontal(1);
+    camera.lookHorizontal(1);
     if(inputs & DPAD_LEFT && tireRotation > -30) {
         tireRotation -= 3;
         scene.Get("tire_front_driver").RotateY(-3);

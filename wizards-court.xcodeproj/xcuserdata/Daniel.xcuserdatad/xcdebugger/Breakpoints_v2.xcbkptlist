@@ -231,28 +231,12 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "wizards-court/Camera.cpp"
-            timestampString = "465539012.895823"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "108"
-            endingLineNumber = "108"
-            landmarkName = "Camera::RebuildMatrix()"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "wizards-court/Scene.cpp"
-            timestampString = "465371786.42069"
+            timestampString = "465541685.137336"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "29"
-            endingLineNumber = "29"
+            startingLineNumber = "27"
+            endingLineNumber = "27"
             landmarkName = "Scene::DrawItem(PositionedItem posItem)"
             landmarkType = "5">
          </BreakpointContent>
@@ -264,11 +248,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "wizards-court/Scene.cpp"
-            timestampString = "465372170.173154"
+            timestampString = "465541685.137336"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "28"
-            endingLineNumber = "28"
+            startingLineNumber = "26"
+            endingLineNumber = "26"
             landmarkName = "Scene::DrawItem(PositionedItem posItem)"
             landmarkType = "5">
          </BreakpointContent>
@@ -392,12 +376,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "wizards-court/Camera.cpp"
-            timestampString = "465539012.895823"
+            timestampString = "465545374.749981"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "104"
-            endingLineNumber = "104"
-            landmarkName = "Camera::RebuildMatrix()"
+            startingLineNumber = "144"
+            endingLineNumber = "144"
+            landmarkName = "Camera::transform(Vertex v)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -408,11 +392,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "wizards-court/Camera.cpp"
-            timestampString = "465539012.895823"
+            timestampString = "465545374.749981"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "138"
-            endingLineNumber = "138"
+            startingLineNumber = "145"
+            endingLineNumber = "145"
             landmarkName = "Camera::transform(Vertex v)"
             landmarkType = "5">
          </BreakpointContent>
@@ -424,28 +408,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "wizards-court/Camera.cpp"
-            timestampString = "465539012.895823"
+            timestampString = "465543561.247998"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "139"
-            endingLineNumber = "139"
-            landmarkName = "Camera::transform(Vertex v)"
+            startingLineNumber = "105"
+            endingLineNumber = "105"
+            landmarkName = "Camera::RebuildMatrix()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "wizards-court/Camera.cpp"
-            timestampString = "465539012.895823"
+            timestampString = "465545374.749981"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "106"
-            endingLineNumber = "106"
-            landmarkName = "Camera::RebuildMatrix()"
+            startingLineNumber = "143"
+            endingLineNumber = "143"
+            landmarkName = "Camera::transform(Vertex v)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

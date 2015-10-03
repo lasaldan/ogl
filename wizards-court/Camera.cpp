@@ -12,6 +12,7 @@
 using namespace std;
 
 Camera::Camera() {
+    angle = 0;
     //glTranslatef(0.0f, -1.0f, -2.0f); // Local: +l/-r , -u/+d , +f/-b
     //glRotatef(0, 0.0f, 1.0f, 0.0f);
     /*
@@ -27,13 +28,13 @@ Camera::Camera() {
     
     
     lookFrom = vector<float>(3);
-    lookFrom[0] = 0; lookFrom[1] = 1; lookFrom[2] = -4;
+    lookFrom[0] = 0; lookFrom[1] = 1; lookFrom[2] = 2;
     
     lookAt = vector<float>(3);
     lookAt[0] = 0; lookAt[1] = 0; lookAt[2] = 0;
     
     up = vector<float>(3);
-    up[0] = 0; up[1] = 100; up[2] = 0;
+    up[0] = 0; up[1] = 1000; up[2] = 0;
     
     
     translation = Matrix::Identity();
@@ -42,7 +43,6 @@ Camera::Camera() {
     perspective = Matrix::Identity();
     
     RebuildMatrix();
-    transform(Vertex(-1,1,0));
 }
 
 void Camera::setFromLocation(vector<float> loc) {
@@ -104,25 +104,31 @@ void Camera::RebuildMatrix() {
     
     perspective.Set(2,2,0);
     perspective.Set(3,2,-1/d);
-
-    return;
+    
 }
 
 void Camera::lookVertical(float) {
     
 }
-void Camera::lookHorizonal(float) {
-    
-}
-void Camera::moveHorizontal(float) {
-    lookFrom[0] += 0.01;
+void Camera::lookHorizontal(float) {
+    /*
+    angle += 0.01;
+    lookFrom[0] += 10*sin(angle);
+    lookFrom[1] = 3;
+    lookFrom[2] += 10*cos(angle);
+     */
     RebuildMatrix();
+}
+void Camera::moveHorizontal(float distance) {
+    lookFrom[0] += distance;
 
 }
-void Camera::moveForward(float) {
+void Camera::moveForward(float distance) {
+    lookFrom[2] += distance;
     
 }
-void Camera::moveVertical(float) {
+void Camera::moveVertical(float distance) {
+    lookFrom[1] += distance;
     
 }
 
@@ -133,8 +139,8 @@ Vertex Camera::transform(Vertex v) {
     
     float xx = perspective.Get(0,0) * x + perspective.Get(0,1) * y + perspective.Get(0,2) * z + perspective.Get(0,3);
     float yy = perspective.Get(1,0) * x + perspective.Get(1,1) * y + perspective.Get(1,2) * z + perspective.Get(1,3);
-    float zz = perspective.Get(3,2);
-    float divisor = zz * z + 1;
+    float perspectiveRatio = perspective.Get(3,2);
+    float divisor = perspectiveRatio * z + 1;
     
-    return Vertex(xx / divisor,yy / divisor, 0);
+    return Vertex(xx / divisor,yy / divisor, -z);
 }

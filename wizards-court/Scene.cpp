@@ -18,8 +18,6 @@ Scene::Scene() {
 
 void Scene::DrawItem(PositionedItem posItem) {
     Item item = posItem.GetItem();
-    // move item
-    // rotate item
     glBindTexture(GL_TEXTURE_2D, item.texture);
     for(int i=0; i<item.faces.size(); i++) {
         glBegin(GL_POLYGON);
