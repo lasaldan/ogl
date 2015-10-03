@@ -82,16 +82,16 @@ bool Game::Init() {
     //gluPerspective(90.0, 1.0, 0.1, 100);
     //glMatrixMode(GL_MODELVIEW);
     
-    glEnable(GL_TEXTURE_2D);
+    //glEnable(GL_TEXTURE_2D);
     
-    glEnable(GL_NORMALIZE);
-    glShadeModel(GL_SMOOTH);
+    //glEnable(GL_NORMALIZE);
+    //glShadeModel(GL_SMOOTH);
     
     //glClearDepth( 1.0f );
     glEnable( GL_DEPTH_TEST );
     //glDepthFunc( GL_LEQUAL );
     
-    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+    //glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
     
     camera = Camera();
     

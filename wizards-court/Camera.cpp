@@ -25,15 +25,16 @@ Camera::Camera() {
     up[0] = 0; up[1] = 1; up[2] = 0;
     */
     
+    
     lookFrom = vector<float>(3);
-    lookFrom[0] = 0; lookFrom[1] = 4; lookFrom[2] = 10;
+    lookFrom[0] = 0; lookFrom[1] = 1; lookFrom[2] = -4;
     
     lookAt = vector<float>(3);
-    lookAt[0] = 0; lookAt[1] = 0; lookAt[2] = 1;
+    lookAt[0] = 0; lookAt[1] = 0; lookAt[2] = 0;
     
     up = vector<float>(3);
     up[0] = 0; up[1] = 100; up[2] = 0;
-   
+    
     
     translation = Matrix::Identity();
     changeOfBase = Matrix::Identity();
@@ -99,8 +100,10 @@ void Camera::RebuildMatrix() {
     
     viewMatrix = changeOfBase.Multiply(translation);
     
+    float d = lookFrom[0] * viewMatrix.Get(2,0) + lookFrom[1] * viewMatrix.Get(2,1) + lookFrom[2] * viewMatrix.Get(2,2) + lookFrom[3] * viewMatrix.Get(2,3);
+    
     perspective.Set(2,2,0);
-    perspective.Set(3,2,-1/fabs(viewMatrix.Get(2,3)));
+    perspective.Set(3,2,-1/d);
 
     return;
 }
@@ -112,7 +115,7 @@ void Camera::lookHorizonal(float) {
     
 }
 void Camera::moveHorizontal(float) {
-    lookFrom[2] += 0.05;
+    lookFrom[0] += 0.01;
     RebuildMatrix();
 
 }
