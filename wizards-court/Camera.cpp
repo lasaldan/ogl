@@ -26,12 +26,19 @@ Camera::Camera() {
     up[0] = 0; up[1] = 1; up[2] = 0;
     */
     
-    
+    far = 10000;
+    near = .01;
+    left = 1;
+    right = -1;
+    top = 1;
+    bottom = -1;
+    fov = 45;
+
     lookFrom = vector<float>(3);
-    lookFrom[0] = 0; lookFrom[1] = 1; lookFrom[2] = 2;
+    lookFrom[0] = 0; lookFrom[1] = 5; lookFrom[2] = 20;
     
     lookAt = vector<float>(3);
-    lookAt[0] = 0; lookAt[1] = 0; lookAt[2] = 0;
+    lookAt[0] = 0; lookAt[1] = 0; lookAt[2] = -1;
     
     up = vector<float>(3);
     up[0] = 0; up[1] = 1000; up[2] = 0;
@@ -41,6 +48,38 @@ Camera::Camera() {
     changeOfBase = Matrix::Identity();
     viewMatrix = Matrix::Identity();
     perspective = Matrix::Identity();
+    
+    float aspect = (right-left)/(top-bottom);
+    float rad = PI / 180.0;
+    float yScale = 1.0 / tan(rad * fov / 2);
+    float xScale = yScale / aspect;
+    float nearmfar = near - far;
+
+    perspective.Set(0,0, xScale);
+    
+    perspective.Set(1,1, yScale);
+    
+    perspective.Set(2,2, (far + near) / nearmfar);
+    perspective.Set(2,3, -1);
+    
+    perspective.Set(3,2,2*far*near / nearmfar);
+    perspective.Set(3,3,0);
+    
+    
+    /*
+    
+    perspective.Set(0,0, (2 * near) / (right - left));
+    perspective.Set(0,2, (right + left) / (right - left));
+    
+    perspective.Set(1,1, (2 * near) / (top - bottom));
+    perspective.Set(1,2, (top + bottom) / (top - bottom));
+    
+    perspective.Set(2,2, -(far+near)/(far-near));
+    perspective.Set(2,3, (-2*far*near)/(far-near));
+    
+    perspective.Set(3,2,-1);
+    perspective.Set(3,3,0);
+     */
     
     RebuildMatrix();
 }
@@ -100,10 +139,10 @@ void Camera::RebuildMatrix() {
     
     viewMatrix = changeOfBase.Multiply(translation);
     
-    float d = lookFrom[0] * viewMatrix.Get(2,0) + lookFrom[1] * viewMatrix.Get(2,1) + lookFrom[2] * viewMatrix.Get(2,2) + lookFrom[3] * viewMatrix.Get(2,3);
+    //float d = lookFrom[0] * viewMatrix.Get(2,0) + lookFrom[1] * viewMatrix.Get(2,1) + lookFrom[2] * viewMatrix.Get(2,2) + lookFrom[3] * viewMatrix.Get(2,3);
     
-    perspective.Set(2,2,0);
-    perspective.Set(3,2,-1/d);
+    //perspective.Set(2,2,0);
+    //perspective.Set(3,2,-1/d);
     
 }
 
@@ -137,10 +176,14 @@ Vertex Camera::transform(Vertex v) {
     float y = viewMatrix.Get(1,0) * v.getX() + viewMatrix.Get(1,1) *v.getY() + viewMatrix.Get(1,2) * v.getZ() + viewMatrix.Get(1,3);
     float z = viewMatrix.Get(2,0) * v.getX() + viewMatrix.Get(2,1) *v.getY() + viewMatrix.Get(2,2) * v.getZ() + viewMatrix.Get(2,3);
     
+    //float divisor = 1-z/d;
+    
     float xx = perspective.Get(0,0) * x + perspective.Get(0,1) * y + perspective.Get(0,2) * z + perspective.Get(0,3);
     float yy = perspective.Get(1,0) * x + perspective.Get(1,1) * y + perspective.Get(1,2) * z + perspective.Get(1,3);
     float perspectiveRatio = perspective.Get(3,2);
     float divisor = perspectiveRatio * z + 1;
+     
+    //float divisor = 1;
     
     return Vertex(xx / divisor,yy / divisor, -z);
 }

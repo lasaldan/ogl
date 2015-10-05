@@ -132,7 +132,7 @@ void Game::HandleEvent(SDL_Event &e) {
 }
 
 void Game::Update() {
-    camera.lookHorizontal(1);
+    //camera.lookHorizontal(1);
     if(inputs & DPAD_LEFT && tireRotation > -30) {
         tireRotation -= 3;
         scene.Get("tire_front_driver").RotateY(-3);

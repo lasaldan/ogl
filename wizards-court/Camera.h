@@ -28,6 +28,13 @@ class Camera {
     Matrix changeOfBase;
     Matrix viewMatrix;
     Matrix perspective;
+    float far;
+    float near;
+    float left;
+    float right;
+    float top;
+    float bottom;
+    float fov;
 public:
     Camera();
     void setFromLocation(std::vector<float>);
