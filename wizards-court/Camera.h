@@ -54,7 +54,7 @@ public:
     vector<float> Normalize(vector<float>);
     void RebuildMatrix();
     
-    Vertex transform(Vertex);
+    Vertex WorldToView(Vertex);
 };
 
 

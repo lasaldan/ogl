@@ -22,6 +22,7 @@ private:
     Matrix rotateY;
     Matrix rotateZ;
     Matrix transformationMatrix;
+    Matrix inverseTransformationMatrix;
 public:
     Transformation();
     Matrix Translate(float, float, float);
@@ -29,9 +30,10 @@ public:
     Matrix RotateY(float);
     Matrix RotateZ(float);
     Matrix Scale(float);
-    Vertex Transform(Vertex);
+    Vertex LocalToWorld(Vertex);
+    Vertex WorldToLocal(Vertex);
 private:
-    Matrix CalculateTransformation();
+    Matrix CalculateTransformationMatrices();
 };
 
 

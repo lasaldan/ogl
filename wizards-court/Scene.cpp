@@ -23,7 +23,8 @@ void Scene::DrawItem(PositionedItem posItem) {
         glBegin(GL_POLYGON);
         for(int j=0; j<item.faces[i].vertices.size(); j++) {
             glTexCoord2f(item.faces[i].textureCoordinates[j].x, item.faces[i].textureCoordinates[j].y);
-            Vertex translated = camera.transform(posItem.GetMatrix().Transform(item.faces[i].vertices[j]));
+            Vertex v = item.faces[i].vertices[j];
+            Vertex translated = camera.WorldToView(posItem.LocalToWorld(v));
             glVertex3f(translated.x, translated.y, translated.z);
         }
         glEnd();

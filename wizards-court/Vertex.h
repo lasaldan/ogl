@@ -11,6 +11,7 @@
 
 #include <stdlib.h>
 #include <string>
+#include <vector>
 using namespace std;
 
 class Vertex {
@@ -18,6 +19,7 @@ public:
     float x;
     float y;
     float z;
+    Vertex(vector< float >);
     Vertex(float, float, float);
     string print();
     float getX();

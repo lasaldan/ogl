@@ -25,6 +25,23 @@ vector< vector< float > > Matrix::GetData() {
     return MatrixData;
 }
 
+Matrix Matrix::Transpose(Matrix input) {
+    vector< vector<float> > temp;
+    temp.resize(4);
+    temp[0].resize(4);
+    temp[1].resize(4);
+    temp[2].resize(4);
+    temp[3].resize(4);
+    
+    for(int row=0; row < MatrixData[0].size(); row ++) {
+        for(int col=0; col < MatrixData[0].size(); col++) {
+            temp[col][row] = input.Get(row,col);
+        }
+    }
+    
+    return temp;
+}
+
 Matrix Matrix::Multiply(Matrix input) {
     vector< vector< float > > temp;
     temp.resize(4);

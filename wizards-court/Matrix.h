@@ -23,6 +23,7 @@ public:
     Matrix();
     Matrix(std::vector< std::vector< float > > matrixData);
     Matrix Multiply(Matrix);
+    Matrix Transpose(Matrix);
     std::vector< std::vector< float > > GetData();
     float Get(int, int);
     void Set(int, int, float);

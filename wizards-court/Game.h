@@ -22,6 +22,10 @@
 
 #define DPAD_LEFT 1
 #define DPAD_RIGHT 2
+#define LEFT_JOY_X 0
+#define LEFT_JOY_Y 1
+#define RIGHT_JOY_X 2
+#define RIGHT_JOY_Y 3
 
 const int SCREEN_WIDTH = 1024;
 const int SCREEN_HEIGHT = 768;
@@ -35,6 +39,10 @@ class Game {
 private:
     int inputs;
     float tireRotation;
+    float cameraDX;
+    float cameraDY;
+    float cameraRY;
+    float cameraRZ;
     bool Running;
     SDL_Window* viewport;
     SDL_GLContext context;

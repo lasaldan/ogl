@@ -21,19 +21,28 @@ Transformation& PositionedItem::GetMatrix() {
     return matrix;
 }
 
-void PositionedItem::Translate(float x, float y, float z) {
+PositionedItem& PositionedItem::Translate(float x, float y, float z) {
     matrix.Translate(x, y, z);
+    return *this;
 }
 
-void PositionedItem::RotateX(float deg) {
+PositionedItem& PositionedItem::RotateX(float deg) {
     matrix.RotateX(deg);
+    return *this;
 }
-void PositionedItem::RotateY(float deg) {
+PositionedItem& PositionedItem::RotateY(float deg) {
     matrix.RotateY(deg);
+    return *this;
 }
-void PositionedItem::RotateZ(float deg) {
+PositionedItem& PositionedItem::RotateZ(float deg) {
     matrix.RotateZ(deg);
+    return *this;
 }
-void PositionedItem::Scale(float s) {
+PositionedItem& PositionedItem::Scale(float s) {
     matrix.Scale(s);
+    return *this;
+}
+
+Vertex PositionedItem::LocalToWorld(Vertex v) {
+    return matrix.LocalToWorld(v);
 }

@@ -17,6 +17,11 @@ Vertex::Vertex ( float X, float Y, float Z ) {
     y = Y;
     z = Z;
 };
+Vertex::Vertex ( vector < float > input) {
+    x = input[0];
+    y = input[1];
+    z = input[2];
+}
 
 float Vertex::getX() {
     return x;

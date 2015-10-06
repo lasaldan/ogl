@@ -43,24 +43,16 @@ int Game::Run() {
 void Game::InitializeScene() {
     scene.Get("car").Translate(0, .05, 0);
     
-    scene.Get("tire_front_driver").Translate(-.38,.155,-.55);
-    scene.Get("tire_front_driver").Scale(-.25);
-    scene.Get("tire_front_driver").RotateY(-20);
+    scene.Get("tire_front_driver").Translate(-.38,.155,-.55).Scale(-.25).RotateY(tireRotation);
     
-    scene.Get("tire_rear_driver").Translate(-.38, .155, .49);
-    scene.Get("tire_rear_driver").Scale(-.25);
+    scene.Get("tire_rear_driver").Translate(-.38, .155, .49).Scale(-.25);
     
-    scene.Get("tire_front_passenger").Translate(.38,.155,-.55);
-    scene.Get("tire_front_passenger").Scale(.25);
-    scene.Get("tire_front_passenger").RotateY(-20);
+    scene.Get("tire_front_passenger").Translate(.38,.155,-.55).Scale(.25).RotateY(tireRotation);
     
-    scene.Get("tire_rear_passenger").Translate(.38, .155, .49);
-    scene.Get("tire_rear_passenger").Scale(.25);
+    scene.Get("tire_rear_passenger").Translate(.38, .155, .49).Scale(.25);
 
-    scene.Get("parking_lot").RotateY(60);
-    scene.Get("parking_lot").Translate(-5.2,0,6);
+    scene.Get("parking_lot").RotateY(60).Translate(-5.2,0,6);
     
-
 }
 
 bool Game::Init() {
@@ -78,9 +70,15 @@ bool Game::Init() {
     glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT); // the first parameters adjust location of viewport in window
     
     glMatrixMode(GL_PROJECTION);
+    
     glLoadIdentity();
     //gluPerspective(90.0, 1.0, 0.1, 100);
+    //glTranslatef(1.0f, -1.0f, -1.0f); // Local: +l/-r , -u/+d , +f/-b
+    //glRotatef(0, 20.0f, 30.0f, 50.0f);
+    
+
     glMatrixMode(GL_MODELVIEW);
+    
     
     glEnable(GL_TEXTURE_2D);
     
@@ -113,7 +111,14 @@ void Game::HandleEvent(SDL_Event &e) {
         cout << "Pressing Button: [" << e.jbutton.button << "]" << endl;
     }
     else if(e.type == SDL_JOYAXISMOTION) {
-        cout << "moving joystick" << e.jaxis.axis << endl;
+        if(e.jaxis.axis == LEFT_JOY_X)
+            cameraDX = e.jaxis.value;
+        if(e.jaxis.axis == LEFT_JOY_Y)
+            cameraDY = e.jaxis.value;
+        if(e.jaxis.axis == RIGHT_JOY_X)
+            cameraRY = e.jaxis.value;
+        if(e.jaxis.axis == RIGHT_JOY_Y)
+            cameraRZ = e.jaxis.value;
     }
     else if(e.type == SDL_JOYHATMOTION) {
 
@@ -132,17 +137,24 @@ void Game::HandleEvent(SDL_Event &e) {
 }
 
 void Game::Update() {
-    //camera.lookHorizontal(1);
     if(inputs & DPAD_LEFT && tireRotation > -30) {
         tireRotation -= 3;
-        scene.Get("tire_front_driver").RotateY(-3);
-        scene.Get("tire_front_passenger").RotateY(-3);
+        scene.Get("tire_front_driver").RotateY(tireRotation);
+        scene.Get("tire_front_passenger").RotateY(tireRotation);
     }
     else if(inputs & DPAD_RIGHT && tireRotation < 30) {
         tireRotation += 3;
-        scene.Get("tire_front_driver").RotateY(3);
-        scene.Get("tire_front_passenger").RotateY(3);
+        scene.Get("tire_front_driver").RotateY(tireRotation);
+        scene.Get("tire_front_passenger").RotateY(tireRotation);
     }
+    if(cameraDX > 256 || cameraDX < -256)
+        camera.moveHorizontal(cameraDX/-100000);
+    
+    if(cameraDY > 256 || cameraDY < -256)
+        camera.moveForward(cameraDY/100000);
+    
+    if(cameraRY > 256 || cameraRY < -256)
+        camera.lookHorizontal(cameraRY/100000);
 }
 
 void Game::Render() {
