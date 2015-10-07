@@ -147,14 +147,17 @@ void Game::Update() {
         scene.Get("tire_front_driver").RotateY(tireRotation);
         scene.Get("tire_front_passenger").RotateY(tireRotation);
     }
-    if(cameraDX > 256 || cameraDX < -256)
-        camera.moveHorizontal(cameraDX/-100000);
+    if(cameraDX > 1024 || cameraDX < -1024)
+        camera.moveHorizontal(cameraDX/1000000);
     
-    if(cameraDY > 256 || cameraDY < -256)
-        camera.moveForward(cameraDY/100000);
+    if(cameraDY > 1024 || cameraDY < -1024)
+        camera.moveForward(cameraDY/1000000);
     
-    if(cameraRY > 256 || cameraRY < -256)
-        camera.lookHorizontal(cameraRY/100000);
+    if(cameraRY > 1024 || cameraRY < -1024)
+        camera.lookHorizontal(cameraRY/10000000);
+    
+    if(cameraRZ > 1024 || cameraRZ < -1024)
+        camera.lookVertical(cameraRZ/1000000);
 }
 
 void Game::Render() {

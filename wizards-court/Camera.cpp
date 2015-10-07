@@ -34,13 +34,13 @@ Camera::Camera() {
      
      */
     lookFrom = vector<float>(3);
-    lookFrom[0] = -0; lookFrom[1] = -5; lookFrom[2] = -20;
+    lookFrom[0] = 0; lookFrom[1] = 5; lookFrom[2] = 15;
     
     lookAt = vector<float>(3);
-    lookAt[0] = 0; lookAt[1] = 0; lookAt[2] = -2;
+    lookAt[0] = 0; lookAt[1] = 1; lookAt[2] = 4;
     
     up = vector<float>(3);
-    up[0] = 0; up[1] = 100; up[2] = 0;
+    up[0] = 0; up[1] = 1; up[2] = 0;
     
     translation = Matrix::Identity();
     changeOfBase = Matrix::Identity();
@@ -83,12 +83,12 @@ Camera::Camera() {
     
     // Using matrix from: http://www.songho.ca/opengl/gl_projectionmatrix.html
      
-    far = 2000;
-    near = 1.0f;
-    left = -1;
-    right = 1;
-    top = 1;
-    bottom = -1;
+    far = 10000;
+    near = .01f;
+    left = -.01;
+    right = .01;
+    top = .01;
+    bottom = -.01;
     
     perspective.Set(0,0, (2 * near) / (right - left));
     perspective.Set(0,2, (right + left) / (right - left));
@@ -100,7 +100,7 @@ Camera::Camera() {
     perspective.Set(2,3, (-2*far*near)/(far-near));
     
     perspective.Set(3,2,-1);
-    perspective.Set(3,3,1);
+    perspective.Set(3,3,0);
     
     RebuildMatrix();
     
@@ -166,13 +166,35 @@ void Camera::RebuildMatrix() {
 }
 
 void Camera::lookVertical(float) {
+    RebuildMatrix();
     
 }
-void Camera::lookHorizontal(float amount) {
+void Camera::lookHorizontal(float degree) {
     
     // Convert global coordinate to local camera space
-    Vertex localFacing = WorldToView(lookAt);
+    //Vertex localFacing = WorldToView(lookAt);
     
+    float s = sin(PI*degree/180);
+    float c = cos(PI*degree/180);
+    
+    // translate point back to origin:
+    lookAt[0] -= lookFrom[0];
+    lookAt[2] -= lookFrom[2];
+    
+    // rotate point
+    float xnew = lookAt[0] * c - lookAt[2] * s;
+    float ynew = lookAt[0] * s + lookAt[2] * c;
+    
+    // translate point back:
+    lookAt[0] = xnew + lookFrom[0];
+    lookAt[2] = ynew + lookFrom[2];
+    
+    
+    
+    //lookAt[0] += sin((PI*degree)/180);
+    //lookAt[2] += cos((PI*degree)/180);
+    cout << lookAt[0] << " " << lookAt[1] << " " << lookAt[2] << endl;
+    /*
     Matrix rotation = Matrix::Identity();
     
     rotation.Set(0, 0, cos((PI*amount)/180));
@@ -181,9 +203,11 @@ void Camera::lookHorizontal(float amount) {
     rotation.Set(2, 2, cos((PI*amount)/180));
     
     localFacing = rotation.Transform(localFacing);
+    
     lookAt[0] = localFacing.x;
     lookAt[1] = localFacing.y;
     lookAt[2] = localFacing.z;
+    */
     RebuildMatrix();
 }
 
@@ -222,7 +246,7 @@ Vertex Camera::WorldToView(Vertex v) {
                 viewMatrix.Get(2,3));
 
     // Shift point to new position, based on perspective
-    /*
+    
     float w =   (perspective.Get(3,0) * x +
                 perspective.Get(3,1) * y +
                 perspective.Get(3,2) * z +
@@ -242,6 +266,6 @@ Vertex Camera::WorldToView(Vertex v) {
                  perspective.Get(2,1) * y +
                  perspective.Get(2,2) * z +
                  perspective.Get(2,3)) / w;
-    */
-    return Vertex(x, y, z/30);
+    
+    return Vertex(xx, yy, zz);
 }
