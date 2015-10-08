@@ -14,13 +14,12 @@
 #include "TextureCoordinate.h"
 
 #include <vector>
-using namespace std;
 
 class Face {
 public:
     Face();
-    vector<Vertex> vertices;
-    vector<TextureCoordinate> textureCoordinates;
+    std::vector<Vertex> vertices;
+    std::vector<TextureCoordinate> textureCoordinates;
     void addVertex(Vertex);
     void addTextureCoordinate(TextureCoordinate);
 };

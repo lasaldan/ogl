@@ -22,6 +22,11 @@ Vertex::Vertex ( vector < float > input) {
     y = input[1];
     z = input[2];
 }
+Vertex::Vertex() {
+    x = 0;
+    y = 0;
+    z = 0;
+}
 
 float Vertex::getX() {
     return x;

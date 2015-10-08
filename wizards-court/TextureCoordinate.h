@@ -12,7 +12,6 @@
 
 #include <stdlib.h>
 #include <string>
-using namespace std;
 
 class TextureCoordinate {
 private:
@@ -20,7 +19,7 @@ public:
     float x;
     float y;
     TextureCoordinate(float, float);
-    string print();
+    std::string print();
     float getX();
     float getY();
     float getZ();
