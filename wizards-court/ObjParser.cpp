@@ -35,7 +35,7 @@ void ObjParser::parseFile(string path, Item* i) {
             
             // Look for a texture coordinate on this line
             if(buffer[0] == 'v' && buffer[1] == 't')
-                item->AddTextureCoodinate(parseTextureCoordinate(buffer));
+                item->AddTextureCoordinate(parseTextureCoordinate(buffer));
             
             // Look for a face definition on this line
             if(buffer[0] == 'f' && buffer[1] == ' ')

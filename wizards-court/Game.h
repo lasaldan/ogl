@@ -19,6 +19,7 @@
 #include "Camera.h"
 #include "ManifestParser.h"
 #include "ObjParser.h"
+#include "DGL.h"
 
 #define DPAD_LEFT 1
 #define DPAD_RIGHT 2
@@ -32,7 +33,7 @@ const int SCREEN_HEIGHT = 768;
 const int SCREEN_LOCATION_X = 50;
 const int SCREEN_LOCATION_Y = 50;
 
-const string RESOURCE_ROOT = "/Users/Daniel/workspace/wizards-court/wizards-court/";
+const std::string RESOURCE_ROOT = "/Users/Daniel/workspace/wizards-court/wizards-court/";
 
 class Game {
     
@@ -46,9 +47,9 @@ private:
     bool Running;
     SDL_Window* viewport;
     SDL_GLContext context;
-    Scene scene;
+    Scene parking_lot;
     Camera camera;
-    SDL_Joystick *joystick;
+    SDL_Joystick *gamepad;
     
 public:
     Game();
@@ -61,7 +62,8 @@ private:
     void Update();
     void Render();
     void Cleanup();
-    void LoadAssets();
+    void LoadAssets(std::string, Scene&);
+    void setDefaultTextureSettings();
 };
 
 #endif /* defined(__wizards_court__Game__) */

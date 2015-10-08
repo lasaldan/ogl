@@ -15,6 +15,8 @@
 #include "Face.h"
 #include "Vector.h"
 #include "Vertex.h"
+#include "Scene.h"
+#include "Item.h"
 #include <SDL2/SDL.h>
 #include <OpenGL/gl3.h>
 #include <OpenGL/glu.h>
@@ -26,57 +28,65 @@ class DGL {
     
 private:
     DGL();
-    int mode;
+    static int mode;
     
 public:
-    void setMode(int);
-    void setTexture(unsigned int);
+    static void init();
     
-    void translateX(float);
-    void translateY(float);
-    void translateZ(float);
+    static void setMode(int);
+    static void setTexture(unsigned int);
     
-    void rotateX(float);
-    void rotateY(float);
-    void rotateZ(float);
+    static void translateXYZ(float, float, float);
+    static void translateX(float);
+    static void translateY(float);
+    static void translateZ(float);
     
-    void scaleX(float);
-    void scaleY(float);
-    void scaleZ(float);
+    static void rotateXYZ(float, float, float);
+    static void rotateX(float);
+    static void rotateY(float);
+    static void rotateZ(float);
     
-    void drawFace(Face);
-    void drawFaces(std::vector<Face>);
+    static void scaleXYZ(float, float, float);
+    static void scaleX(float);
+    static void scaleY(float);
+    static void scaleZ(float);
     
-    void setNearClip();
-    void setFarClip();
+    static void drawFace(Face);
+    static void drawFaces(std::vector<Face>);
+    static void drawItem(Item);
+    static void drawScene(Scene);
     
-private:    
-    Matrix objRotateX;
-    Matrix objRotateY;
-    Matrix objRotateZ;
-    Matrix objScale;
-    Matrix objTranslate;
-    Matrix objTransformation;
-    Matrix objInverseTransformation;
+private:
     
-    Matrix viewRotateX;
-    Matrix viewRotateY;
-    Matrix viewRotateZ;
-    Matrix viewScale;
-    Matrix viewTranslate;
-    Matrix viewTransformation;
-    Matrix viewInverseTransformation;
+    static bool objMatrixDirty;
+    static bool viewMatrixDirty;
     
-    Matrix Perspective;
+    static Matrix objRotateX;
+    static Matrix objRotateY;
+    static Matrix objRotateZ;
+    static Matrix objScale;
+    static Matrix objTranslate;
+    static Matrix objTransformation;
+    static Matrix objInverseTransformation;
     
-    Matrix calculateObjectTransformation();
-    Matrix calculateObjectInverseTransformation();
+    static Matrix viewRotateX;
+    static Matrix viewRotateY;
+    static Matrix viewRotateZ;
+    static Matrix viewScale;
+    static Matrix viewTranslate;
+    static Matrix viewTransformation;
+    static Matrix viewInverseTransformation;
     
-    float toRadians(float);
-    float toDegrees(float);
+    static Matrix perspective;
     
-    Vertex objToWorld(Vertex);
-    Vertex worldToView(Vertex);
+    static Matrix calculateObjectTransformation();
+    static Matrix calculateObjectInverseTransformation();
+    
+    static float toRadians(float);
+    static float toDegrees(float);
+    
+    static Vertex objToWorld(Vertex);
+    static Vertex worldToView(Vertex);
     
 };
 

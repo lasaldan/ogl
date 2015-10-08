@@ -16,38 +16,12 @@ Scene::Scene() {
 }
 
 
-void Scene::DrawItem(PositionedItem posItem) {
-    Item item = posItem.GetItem();
-    glBindTexture(GL_TEXTURE_2D, item.texture);
-    for(int i=0; i<item.faces.size(); i++) {
-        glBegin(GL_POLYGON);
-        for(int j=0; j<item.faces[i].vertices.size(); j++) {
-            glTexCoord2f(item.faces[i].textureCoordinates[j].x, item.faces[i].textureCoordinates[j].y);
-            Vertex v = item.faces[i].vertices[j];
-            Vertex translated = camera.WorldToView(posItem.LocalToWorld(v));
-            glVertex3f(translated.x, translated.y, translated.z);
-        }
-        glEnd();
-    }
-}
-
-PositionedItem& Scene::Get(string i) {
+Item& Scene::Get(string i) {
     return Items.at(i);
 }
 
 
-void Scene::DrawScene(Camera c) {
-    camera = c;
-    glClear (GL_COLOR_BUFFER_BIT);
-    
-    for (map<string, PositionedItem>::iterator it = Items.begin() ; it != Items.end(); ++it)
-        DrawItem(it->second);
-    
-    glFlush ();
-}
-
-PositionedItem& Scene::AddItem(string name, Item item) {
-    PositionedItem pi = PositionedItem(item);
-    Items.insert( pair<string, PositionedItem>(name, pi) );
+Item& Scene::AddItem(string name, Item item) {
+    Items.insert( pair<string, Item>(name, item) );
     return Items.at(name);
 }

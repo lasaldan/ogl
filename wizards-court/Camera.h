@@ -49,9 +49,9 @@ public:
     void moveForward(float);
     void moveVertical(float);
     
-    vector<float> Cross(vector<float>, vector<float>);
-    vector<float> Minus(vector<float>, vector<float>);
-    vector<float> Normalize(vector<float>);
+    std::vector<float> Cross(std::vector<float>, std::vector<float>);
+    std::vector<float> Minus(std::vector<float>, std::vector<float>);
+    std::vector<float> Normalize(std::vector<float>);
     void RebuildMatrix();
     
     Vertex WorldToView(Vertex);

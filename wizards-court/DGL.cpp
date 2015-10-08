@@ -9,6 +9,53 @@
 #include "DGL.h"
 using namespace std;
 
+// Initialize all static members
+Matrix DGL::objRotateX;
+Matrix DGL::objRotateY;
+Matrix DGL::objRotateZ;
+Matrix DGL::objScale;
+Matrix DGL::objTranslate;
+Matrix DGL::viewRotateX;
+Matrix DGL::viewRotateY;
+Matrix DGL::viewRotateZ;
+Matrix DGL::viewScale;
+Matrix DGL::viewTranslate;
+Matrix DGL::perspective;
+Matrix DGL::objTransformation;
+Matrix DGL::viewTransformation;
+Matrix DGL::objInverseTransformation;
+Matrix DGL::viewInverseTransformation;
+int DGL::mode;
+bool DGL::objMatrixDirty;
+bool DGL::viewMatrixDirty;
+
+
+/************
+ * Initializes DGL since everything's static and private constructor
+ ************/
+void
+DGL::init() {
+    objMatrixDirty = true;
+    viewMatrixDirty = true;
+    objRotateX = Matrix::Identity();
+    objRotateY = Matrix::Identity();
+    objRotateZ = Matrix::Identity();
+    objScale = Matrix::Identity();
+    objTranslate = Matrix::Identity();
+    objTransformation = Matrix::Identity();
+    objInverseTransformation = Matrix::Identity();
+    
+    viewRotateX = Matrix::Identity();
+    viewRotateY = Matrix::Identity();
+    viewRotateZ = Matrix::Identity();
+    viewScale = Matrix::Identity();
+    viewTranslate = Matrix::Identity();
+    viewTransformation = Matrix::Identity();
+    viewInverseTransformation = Matrix::Identity();
+    
+    perspective = Matrix();
+}
+
 
 /************
  * Sets the mode.
@@ -27,7 +74,7 @@ DGL::setMode(int newMode) {
 
 
 /************
- * Set current texture
+ * Sets current texture
  ************/
 void
 DGL::setTexture(unsigned int id) {
@@ -36,13 +83,32 @@ DGL::setTexture(unsigned int id) {
 
 
 /************
- * Modify the current mode's translation matrix X value
+ * Modifies the current mode's translation matrices
+ ************/
+void
+DGL::translateXYZ(float valX, float valY, float valZ) {
+    switch (mode) {
+        case MODEL:
+            translateX(valX);
+            translateY(valY);
+            translateZ(valZ);
+            break;
+            
+        case CAMERA:
+            break;
+    }
+}
+
+
+/************
+ * Modifies the current mode's translation matrix X value
  ************/
 void
 DGL::translateX(float val) {
     switch (mode) {
         case MODEL:
             objTranslate.Set(0,3,val);
+            objMatrixDirty = true;
             break;
             
         case CAMERA:
@@ -53,13 +119,14 @@ DGL::translateX(float val) {
 
 
 /************
- * Modify the current mode's translation matrix Y value
+ * Modifies the current mode's translation matrix Y value
  ************/
 void
 DGL::translateY(float val) {
     switch (mode) {
         case MODEL:
             objTranslate.Set(1,3,val);
+            objMatrixDirty = true;
             break;
             
         case CAMERA:
@@ -70,24 +137,44 @@ DGL::translateY(float val) {
 
 
 /************
- * Modify the current mode's translation matrix Z value
+ * Modifies the current mode's translation matrix Z value
  ************/
 void
 DGL::translateZ(float val) {
     switch (mode) {
         case MODEL:
-            objTranslate.Set(1,3,val);
+            objTranslate.Set(2,3,val);
+            objMatrixDirty = true;
             break;
             
         case CAMERA:
-            viewTranslate.Set(1,3,val);
+            viewTranslate.Set(2,3,val);
             break;
     }
 }
 
 
 /************
- * Modify the current mode's rotateX matrix
+ * Modifies the current mode's rotation matrices
+ ************/
+void
+DGL::rotateXYZ(float degX, float degY, float degZ) {
+    switch (mode) {
+        case MODEL:
+            rotateX(degX);
+            rotateY(degY);
+            rotateZ(degZ);
+            objMatrixDirty = true;
+            break;
+            
+        case CAMERA:
+            break;
+    }
+}
+
+
+/************
+ * Modifies the current mode's rotateX matrix
  ************/
 void
 DGL::rotateX(float degrees) {
@@ -97,6 +184,7 @@ DGL::rotateX(float degrees) {
             objRotateX.Set(1, 2, sin( toRadians(degrees) ));
             objRotateX.Set(2, 1, -sin( toRadians(degrees) ));
             objRotateX.Set(2, 2, cos( toRadians(degrees) ));
+            objMatrixDirty = true;
             break;
             
         case CAMERA:
@@ -106,7 +194,7 @@ DGL::rotateX(float degrees) {
 
 
 /************
- * Modify the current mode's rotateY matrix
+ * Modifies the current mode's rotateY matrix
  ************/
 void
 DGL::rotateY(float degrees) {
@@ -116,6 +204,7 @@ DGL::rotateY(float degrees) {
             objRotateY.Set(0, 2, -sin( toRadians(degrees) ));
             objRotateY.Set(2, 0, sin( toRadians(degrees) ));
             objRotateY.Set(2, 2, cos( toRadians(degrees) ));
+            objMatrixDirty = true;
             break;
             
         case CAMERA:
@@ -125,7 +214,7 @@ DGL::rotateY(float degrees) {
 
 
 /************
- * Modify the current mode's rotateZ matrix
+ * Modifies the current mode's rotateZ matrix
  ************/
 void
 DGL::rotateZ(float degrees) {
@@ -135,6 +224,7 @@ DGL::rotateZ(float degrees) {
             objRotateZ.Set(0, 1, sin( toRadians(degrees) ));
             objRotateZ.Set(1, 0, -sin( toRadians(degrees) ));
             objRotateZ.Set(1, 1, cos( toRadians(degrees) ));
+            objMatrixDirty = true;
             break;
             
         case CAMERA:
@@ -145,13 +235,32 @@ DGL::rotateZ(float degrees) {
 
 
 /************
- * Modify the current mode's scale matrix X value
+ * Modifies the current mode's scale matrices
+ ************/
+void
+DGL::scaleXYZ(float valX, float valY, float valZ) {
+    switch (mode) {
+        case MODEL:
+            scaleX(valX);
+            scaleY(valY);
+            scaleZ(valZ);
+            break;
+            
+        case CAMERA:
+            break;
+    }
+}
+
+
+/************
+ * Modifies the current mode's scale matrix X value
  ************/
 void
 DGL::scaleX(float val) {
     switch (mode) {
         case MODEL:
             objScale.Set(0,0,val);
+            objMatrixDirty = true;
             break;
             
         case CAMERA:
@@ -162,13 +271,14 @@ DGL::scaleX(float val) {
 
 
 /************
- * Modify the current mode's scale matrix Y value
+ * Modifies the current mode's scale matrix Y value
  ************/
 void
 DGL::scaleY(float val) {
     switch (mode) {
         case MODEL:
             objScale.Set(1,1,val);
+            objMatrixDirty = true;
             break;
             
         case CAMERA:
@@ -179,13 +289,14 @@ DGL::scaleY(float val) {
 
 
 /************
- * Modify the current mode's scale matrix Z value
+ * Modifies the current mode's scale matrix Z value
  ************/
 void
 DGL::scaleZ(float val) {
     switch (mode) {
         case MODEL:
             objScale.Set(2,2,val);
+            objMatrixDirty = true;
             break;
             
         case CAMERA:
@@ -196,10 +307,13 @@ DGL::scaleZ(float val) {
 
 
 /************
- * Draw a single face using current pipeline settings
+ * Draws a single face using current pipeline settings
  ************/
 void
 DGL::drawFace(Face face){
+    
+    if(objMatrixDirty)
+        calculateObjectTransformation();
     
     glBegin(GL_POLYGON);
     
@@ -214,7 +328,7 @@ DGL::drawFace(Face face){
 
 
 /************
- * Draw all faces in vector using current pipeline settings
+ * Draws all faces in vector using current pipeline settings
  ************/
 void
 DGL::drawFaces(vector<Face> faces){
@@ -224,19 +338,69 @@ DGL::drawFaces(vector<Face> faces){
     }
 }
 
-void
-DGL::setNearClip(){
-    
-}
 
+/************
+ * Draws all faces in an item using current pipeline settings
+ ************/
 void
-DGL::setFarClip(){
+DGL::drawItem(Item item){
     
+    for (auto& face: item.faces) {
+        drawFace(face);
+    }
 }
 
 
 /************
- * Convert degrees to radians
+ * Draws all items in the scene using current pipeline settings
+ ************/
+void
+DGL::drawScene(Scene scene){
+    
+    int preMode = mode;
+    mode = 0;
+    
+    for (auto& item: scene.Items) {
+        Item obj = item.second;
+        
+        setTexture(obj.texture);
+        
+        rotateXYZ(obj.rotationX, obj.rotationY, obj.rotationZ);
+        translateXYZ(obj.translationX, obj.translationY, obj.translationZ);
+        scaleXYZ(obj.scalationX, obj.scalationY, obj.scalationZ);
+        
+        drawItem(obj);
+    }
+    
+    mode = preMode;
+}
+
+
+Vertex DGL::objToWorld( Vertex v ) {
+    float x =   (objTransformation.Get(0,0) * v.getX() +
+                 objTransformation.Get(0,1) * v.getY() +
+                 objTransformation.Get(0,2) * v.getZ() +
+                 objTransformation.Get(0,3));
+    
+    float y =   (objTransformation.Get(1,0) * v.getX() +
+                 objTransformation.Get(1,1) * v.getY() +
+                 objTransformation.Get(1,2) * v.getZ() +
+                 objTransformation.Get(1,3));
+    
+    float z =   (objTransformation.Get(2,0) * v.getX() +
+                 objTransformation.Get(2,1) * v.getY() +
+                 objTransformation.Get(2,2) * v.getZ() +
+                 objTransformation.Get(2,3));
+    return Vertex(x,y,z);
+}
+
+Vertex DGL::worldToView( Vertex v ) {
+    return v;
+}
+
+
+/************
+ * Converts degrees to radians
  ************/
 float
 DGL::toRadians(float degrees) {
@@ -245,9 +409,30 @@ DGL::toRadians(float degrees) {
 
 
 /************
- * Convert radians to degrees
+ * Converts radians to degrees
  ************/
 float
 DGL::toDegrees(float radians) {
     return radians * 180 / PI;
 }
+
+
+/************
+ * Calculates object transformation matrix
+ ************/
+Matrix
+DGL::calculateObjectTransformation() {
+    objTransformation = objTranslate.Multiply(objScale).Multiply(objRotateX).Multiply(objRotateY).Multiply(objRotateZ);
+    objMatrixDirty = false;
+    return objTransformation;
+}
+
+
+/************
+ * Calculates object inverse transformation matrix
+ ************/
+Matrix
+DGL::calculateObjectInverseTransformation() {
+    return objInverseTransformation;
+}
+

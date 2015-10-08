@@ -12,6 +12,15 @@ using namespace std;
 
 
 Item::Item() {
+    rotationX = 0;
+    rotationY = 0;
+    rotationZ = 0;
+    scalationX = 1.0f;
+    scalationY = 1.0f;
+    scalationZ = 1.0f;
+    translationX = 0;
+    translationY = 0;
+    translationZ = 0;
 }
 
 void Item::AddVertex(Vertex v){
@@ -19,7 +28,55 @@ void Item::AddVertex(Vertex v){
 
 }
 
-void Item::AddTextureCoodinate(TextureCoordinate t){
+void Item::rotateX(float degrees) {
+    rotationX += degrees;
+}
+
+void Item::rotateY(float degrees) {
+    rotationY += degrees;
+}
+
+void Item::rotateZ(float degrees) {
+    rotationZ += degrees;
+}
+
+void Item::translate(float x, float y, float z) {
+    translateX(x);
+    translateY(y);
+    translateZ(z);
+}
+
+void Item::translateX(float distance) {
+    translationX += distance;
+}
+
+void Item::translateY(float distance) {
+    translationY += distance;
+}
+
+void Item::translateZ(float distance) {
+    translationZ += distance;
+}
+
+void Item::scale(float amount) {
+    scaleX(amount);
+    scaleY(amount);
+    scaleZ(amount);
+}
+
+void Item::scaleX(float amount) {
+    scalationX *= amount;
+}
+
+void Item::scaleY(float amount) {
+    scalationY *= amount;
+}
+
+void Item::scaleZ(float amount) {
+    scalationZ *= amount;
+}
+
+void Item::AddTextureCoordinate(TextureCoordinate t){
     textureCoordinates.push_back(t);
 }
 
