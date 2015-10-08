@@ -41,15 +41,17 @@ int Game::Run() {
 }
 
 void Game::InitializeScene() {
-    scene.Get("car").Translate(0, .05, 0);
     
-    scene.Get("tire_front_driver").Translate(-.38,.155,-.55).Scale(-.25).RotateY(tireRotation);
+    float carOffset = -1;
+    scene.Get("car").Translate(0+carOffset, .05, 0);
     
-    scene.Get("tire_rear_driver").Translate(-.38, .155, .49).Scale(-.25);
+    scene.Get("tire_front_driver").Translate(-.38+carOffset,.155,-.55).Scale(-.25).RotateY(tireRotation);
     
-    scene.Get("tire_front_passenger").Translate(.38,.155,-.55).Scale(.25).RotateY(tireRotation);
+    scene.Get("tire_rear_driver").Translate(-.38+carOffset, .155, .49).Scale(-.25);
     
-    scene.Get("tire_rear_passenger").Translate(.38, .155, .49).Scale(.25);
+    scene.Get("tire_front_passenger").Translate(.38+carOffset,.155,-.55).Scale(.25).RotateY(tireRotation);
+    
+    scene.Get("tire_rear_passenger").Translate(.38+carOffset, .155, .49).Scale(.25);
 
     scene.Get("parking_lot").RotateY(60).Translate(-5.2,0,6);
     
@@ -69,21 +71,21 @@ bool Game::Init() {
     
     glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT); // the first parameters adjust location of viewport in window
     
-    glMatrixMode(GL_PROJECTION);
+    //glMatrixMode(GL_PROJECTION);
     
-    glLoadIdentity();
+    //glLoadIdentity();
     //gluPerspective(90.0, 1.0, 0.1, 100);
     //glTranslatef(1.0f, -1.0f, -1.0f); // Local: +l/-r , -u/+d , +f/-b
     //glRotatef(0, 20.0f, 30.0f, 50.0f);
     
 
-    glMatrixMode(GL_MODELVIEW);
+    //glMatrixMode(GL_MODELVIEW);
     
     
-    glEnable(GL_TEXTURE_2D);
+    //glEnable(GL_TEXTURE_2D);
     
-    glEnable(GL_NORMALIZE);
-    glShadeModel(GL_SMOOTH);
+    //glEnable(GL_NORMALIZE);
+    //glShadeModel(GL_SMOOTH);
     
     //glClearDepth( 1.0f );
     glEnable( GL_DEPTH_TEST );
@@ -95,7 +97,6 @@ bool Game::Init() {
     
     SDL_JoystickEventState(SDL_ENABLE);
     joystick = SDL_JoystickOpen(0);
-    joystick1 = SDL_JoystickOpen(1);
     
     return true;
 }
@@ -148,16 +149,16 @@ void Game::Update() {
         scene.Get("tire_front_passenger").RotateY(tireRotation);
     }
     if(cameraDX > 1024 || cameraDX < -1024)
-        camera.moveHorizontal(cameraDX/1000000);
+        camera.moveHorizontal(cameraDX/100000);
     
     if(cameraDY > 1024 || cameraDY < -1024)
-        camera.moveForward(cameraDY/1000000);
+        camera.moveForward(cameraDY/100000);
     
     if(cameraRY > 1024 || cameraRY < -1024)
-        camera.lookHorizontal(cameraRY/10000000);
+        camera.lookHorizontal(cameraRY/10000);
     
     if(cameraRZ > 1024 || cameraRZ < -1024)
-        camera.lookVertical(cameraRZ/1000000);
+        camera.lookVertical(cameraRZ/10000);
 }
 
 void Game::Render() {

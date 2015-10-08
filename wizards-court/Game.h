@@ -49,7 +49,6 @@ private:
     Scene scene;
     Camera camera;
     SDL_Joystick *joystick;
-    SDL_Joystick *joystick1;
     
 public:
     Game();

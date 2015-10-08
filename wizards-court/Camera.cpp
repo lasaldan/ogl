@@ -13,82 +13,44 @@ using namespace std;
 
 Camera::Camera() {
     angle = 0;
-    /*
-    lookFrom = vector<float>(3);
-    lookFrom[0] = 2; lookFrom[1] = 0; lookFrom[2] = 2;
+
+    lookFrom = vector<float> { 0, 5, 40 };
+    //lookFrom[0] = 0; lookFrom[1] = 2; lookFrom[2] = 15;
     
     lookAt = vector<float>(3);
-    lookAt[0] = 1; lookAt[1] = 0; lookAt[2] = 1;
+    lookAt[0] = 0; lookAt[1] = 2; lookAt[2] = 0;
     
     up = vector<float>(3);
     up[0] = 0; up[1] = 1; up[2] = 0;
     
-    
-    far = 1000;
-    near = .01;
-    left = -10;
-    right = 10;
-    top = 10;
-    bottom = -10;
-    fov = 45;
-     
-     */
-    lookFrom = vector<float>(3);
-    lookFrom[0] = 0; lookFrom[1] = 5; lookFrom[2] = 15;
-    
-    lookAt = vector<float>(3);
-    lookAt[0] = 0; lookAt[1] = 1; lookAt[2] = 4;
-    
-    up = vector<float>(3);
-    up[0] = 0; up[1] = 1; up[2] = 0;
+    //lookHorizontal(10);
+
     
     translation = Matrix::Identity();
     changeOfBase = Matrix::Identity();
     viewMatrix = Matrix::Identity();
     perspective = Matrix::Identity();
-    
-    //perspective.Set(2,2,0);
-    //perspective.Set(3,2,-1/400);
-    
-    
     /*
-    perspective.Set(0,0,atan(fov));
-    perspective.Set(1,1,atan(fov));
+    float fov = 90;
+    float aspect = 4.0f/3.0f;
+    float zfar = 1000;
+    float znear = 0.001;
     
-    perspective.Set(2,2,-1*((far+near)/(far-near)));
-    perspective.Set(2,3,(-1*(2*near*far)/(far-near)));
-    
+    perspective.Set(0,0,(1/tan(fov/2))/aspect);
+    perspective.Set(1,1,1/tan(fov/2));
+    perspective.Set(2,2,(-zfar+znear)/(zfar-znear));
+    perspective.Set(2,3,-(2*zfar*znear)/(zfar-znear));
     perspective.Set(3,2,-1);
-    perspective.Set(3,3,0);
-    
-    
-    float aspect = (right-left)/(top-bottom);
-    float rad = PI / 180.0;
-    float yScale = 1.0 / tan(rad * fov / 2);
-    float xScale = yScale / aspect;
-    float nearmfar = near - far;
-
-    perspective.Set(0,0, xScale);
-    
-    perspective.Set(1,1, yScale);
-    
-    perspective.Set(2,2, (far + near) / nearmfar);
-    perspective.Set(2,3, -1);
-    
-    perspective.Set(3,2,2*far*near / nearmfar);
-    perspective.Set(3,3,0);
-    
-    
-   */
-    
+    */
     // Using matrix from: http://www.songho.ca/opengl/gl_projectionmatrix.html
-     
-    far = 10000;
-    near = .01f;
+    
+    far = 100;
+    near = .1f;
     left = -.01;
     right = .01;
     top = .01;
     bottom = -.01;
+    
     
     perspective.Set(0,0, (2 * near) / (right - left));
     perspective.Set(0,2, (right + left) / (right - left));
@@ -102,9 +64,18 @@ Camera::Camera() {
     perspective.Set(3,2,-1);
     perspective.Set(3,3,0);
     
+    /*
+    perspective.Set(0,0,near/right);
+    perspective.Set(1,1,near/top);
+    
+    perspective.Set(2,2, -(far+near)/(far-near));
+    perspective.Set(2,3, (-2*far*near)/(far-near));
+    
+    perspective.Set(3,2,-1);
+    perspective.Set(3,3,0);
+    */
     RebuildMatrix();
     
-    //transform(Vertex(126,126,-320));
 }
 
 void Camera::setFromLocation(vector<float> loc) {
@@ -134,15 +105,20 @@ vector<float> Camera::Minus(vector<float> left, vector<float> right) {
 }
 
 vector<float> Camera::Normalize(vector<float> v) {
+    vector <float> temp = vector<float>(3);
     float length = sqrt(v[0]*v[0] + v[1]*v[1] + v[2]*v[2]);
-    v[0] = v[0] / length;
-    v[1] = v[1] / length;
-    v[2] = v[2] / length;
-    return v;
+    temp[0] = v[0] / length;
+    temp[1] = v[1] / length;
+    temp[2] = v[2] / length;
+    return temp;
 }
 
 void Camera::RebuildMatrix() {
 
+    //lookFrom = {5,-5,8};
+    //lookAt = {3,4,0};
+    //up = {0,0,1};
+    
     N = Normalize(Minus(lookFrom, lookAt));
     U = Normalize(Cross(up,N));
     V = Normalize(Cross(N,U));
@@ -162,52 +138,22 @@ void Camera::RebuildMatrix() {
     changeOfBase.Set(2,2,N[2]);
     
     viewMatrix = changeOfBase.Multiply(translation);
-    
+    float t = 0;
 }
 
-void Camera::lookVertical(float) {
+void Camera::lookHorizontal(float degree) {
+    cout << lookFrom[0] << " " <<lookFrom[1] << " " << lookFrom[2] << endl;
+    float angle = (degree) * (PI/180); // Convert to radians
+    lookAt[0] = cos(angle) * (lookAt[0] - lookFrom[0]) - sin(angle) * (lookAt[2] - lookFrom[2]) + lookFrom[0];
+    lookAt[2] = sin(angle) * (lookAt[0] - lookFrom[0]) + cos(angle) * (lookAt[2] - lookFrom[2]) + lookFrom[2];
     RebuildMatrix();
     
 }
-void Camera::lookHorizontal(float degree) {
+void Camera::lookVertical(float degree) {
     
-    // Convert global coordinate to local camera space
-    //Vertex localFacing = WorldToView(lookAt);
-    
-    float s = sin(PI*degree/180);
-    float c = cos(PI*degree/180);
-    
-    // translate point back to origin:
-    lookAt[0] -= lookFrom[0];
-    lookAt[2] -= lookFrom[2];
-    
-    // rotate point
-    float xnew = lookAt[0] * c - lookAt[2] * s;
-    float ynew = lookAt[0] * s + lookAt[2] * c;
-    
-    // translate point back:
-    lookAt[0] = xnew + lookFrom[0];
-    lookAt[2] = ynew + lookFrom[2];
-    
-    
-    
-    //lookAt[0] += sin((PI*degree)/180);
-    //lookAt[2] += cos((PI*degree)/180);
-    cout << lookAt[0] << " " << lookAt[1] << " " << lookAt[2] << endl;
-    /*
-    Matrix rotation = Matrix::Identity();
-    
-    rotation.Set(0, 0, cos((PI*amount)/180));
-    rotation.Set(0, 2, -sin((PI*amount)/180));
-    rotation.Set(2, 0, sin((PI*amount)/180));
-    rotation.Set(2, 2, cos((PI*amount)/180));
-    
-    localFacing = rotation.Transform(localFacing);
-    
-    lookAt[0] = localFacing.x;
-    lookAt[1] = localFacing.y;
-    lookAt[2] = localFacing.z;
-    */
+    float angle = (degree) * (PI/180); // Convert to radians
+    lookAt[1] = cos(angle) * (lookAt[1] - lookFrom[1]) - sin(angle) * (lookAt[2] - lookFrom[2]) + lookFrom[1];
+    lookAt[2] = sin(angle) * (lookAt[1] - lookFrom[1]) + cos(angle) * (lookAt[2] - lookFrom[2]) + lookFrom[2];
     RebuildMatrix();
 }
 
