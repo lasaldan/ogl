@@ -11,6 +11,7 @@
 
 #include <stdio.h>
 #include <math.h>
+#include "Vertex.h"
 
 class Vector {
 private:
@@ -18,6 +19,8 @@ private:
     
 public:
     Vector();
+    Vector(Vertex);
+    Vector(float, float, float);
     
     float x;
     float y;

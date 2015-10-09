@@ -21,6 +21,8 @@
 #include <OpenGL/gl3.h>
 #include <OpenGL/glu.h>
 
+#include <iostream>
+
 #define MODEL 0
 #define CAMERA 1
 
@@ -58,6 +60,10 @@ public:
     
 private:
     
+    static Vertex lookAtLocation;
+    static Vertex cameraLocation;
+    static Vector up;
+    
     static bool objMatrixDirty;
     static bool viewMatrixDirty;
     
@@ -81,9 +87,16 @@ private:
     
     static Matrix calculateObjectTransformation();
     static Matrix calculateObjectInverseTransformation();
+    static void calculateViewTransformation();
+    static void calculateViewInverseTransformation();
     
     static float toRadians(float);
     static float toDegrees(float);
+    
+    static void setPerspective();
+    
+    static void lookAt( Vertex );
+    static void setCameraLocation( Vertex );
     
     static Vertex objToWorld(Vertex);
     static Vertex worldToView(Vertex);

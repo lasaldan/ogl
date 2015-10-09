@@ -110,14 +110,14 @@ Game::Init() {
     // Create drawing context for the viewport
     context = SDL_GL_CreateContext(viewport);
     
-    
+    /*
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     gluPerspective( 90.0, 1.0f, .10f, 100.0);
     glTranslatef(0,-1,-2);
     
     glRotatef(30, 0.0f, 1.0f, 0.0f);
-    
+    */
     
     
     // A couple OPENGL defaults here
@@ -153,6 +153,16 @@ Game::HandleEvent(SDL_Event &e) {
     }
     
     
+    // Capture Axis Motion
+    else if(e.type == SDL_JOYAXISMOTION) {
+        if(e.jaxis.axis == LEFT_JOY_X)
+            cameraDX = e.jaxis.value;
+        if(e.jaxis.axis == LEFT_JOY_Y)
+            cameraDY = e.jaxis.value;
+        if(e.jaxis.axis == RIGHT_JOY_X)
+            cameraRY = e.jaxis.value;
+    }
+    
     /*
     // Capture Axis Motion
     else if(e.type == SDL_JOYAXISMOTION) {
@@ -186,6 +196,9 @@ Game::HandleEvent(SDL_Event &e) {
 }
 
 void Game::Update() {
+    
+    DGL::setMode( MODEL );
+    
     if(inputs & DPAD_LEFT && tireRotation > -30) {
         tireRotation -= 3;
         parking_lot.Get("tire_front_driver").rotateY(-3);
@@ -196,6 +209,19 @@ void Game::Update() {
         parking_lot.Get("tire_front_driver").rotateY(3);
         parking_lot.Get("tire_front_passenger").rotateY(3);
     }
+    
+    
+    DGL::setMode( CAMERA );
+    
+    if(cameraRY > 1024 || cameraRY < -1024) {
+        DGL::rotateY(cameraRY / 10000);
+    }
+    if(cameraDX > 1024 || cameraDX < -1024)
+        DGL::translateX( cameraDX / 1000000 );
+    
+    if(cameraDY > 1024 || cameraDY < -1024)
+        DGL::translateZ( cameraDY / 1000000 );
+        
     
     /*
     if(cameraDX > 1024 || cameraDX < -1024)
@@ -225,13 +251,21 @@ void Game::Render() {
 }
 
 
-
 /************
  * Cleans up a few SDL resources
  ************/
 void Game::Cleanup() {
     //SDL_GL_DeleteContext(viewport);
     SDL_Quit();
+}
+
+
+/************
+ * Cleans up a few SDL resources
+ ************/
+void SetupView() {
+    DGL::setMode( CAMERA );
+    
 }
 
 

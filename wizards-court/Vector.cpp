@@ -14,6 +14,16 @@ Vector::Vector() {
     z = 0;
 }
 
+Vector::Vector(float X, float Y, float Z) {
+    x = X;
+    y = Y;
+    z = Z;
+}
+
+Vector::Vector(Vertex v) {
+    Vector(v.x, v.y, v.z);
+}
+
 Vector Vector::Cross(Vector left, Vector right) {
     Vector temp = Vector();
     temp.x = left.y*right.z - left.z*right.y;

@@ -62,6 +62,7 @@ private:
     void Update();
     void Render();
     void Cleanup();
+    void SetupView();
     void LoadAssets(std::string, Scene&);
     void setDefaultTextureSettings();
 };

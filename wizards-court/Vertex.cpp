@@ -40,6 +40,14 @@ float Vertex::getZ() {
     return z;
 }
 
+float Vertex::distanceFrom(Vertex v) {
+    float dx = v.x - x;
+    float dy = v.y - y;
+    float dz = v.z - z;
+    
+    return sqrt( dx*dx + dy*dy + dz*dz );
+}
+
 string Vertex::print() {
     ostringstream ss;
     ss << "Ver: [" << x << "," << y << "," << z << "]";

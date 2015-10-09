@@ -25,9 +25,13 @@ Matrix DGL::objTransformation;
 Matrix DGL::viewTransformation;
 Matrix DGL::objInverseTransformation;
 Matrix DGL::viewInverseTransformation;
+Vertex DGL::cameraLocation;
+Vertex DGL::lookAtLocation;
+Vector DGL::up;
 int DGL::mode;
 bool DGL::objMatrixDirty;
 bool DGL::viewMatrixDirty;
+
 
 
 /************
@@ -53,7 +57,11 @@ DGL::init() {
     viewTransformation = Matrix::Identity();
     viewInverseTransformation = Matrix::Identity();
     
-    perspective = Matrix();
+    perspective = Matrix::Identity();
+    
+    lookAtLocation = Vertex(0,.8,0);
+    cameraLocation = Vertex(0,.8,8);
+    up = Vector(0,1,0);
 }
 
 
@@ -112,7 +120,20 @@ DGL::translateX(float val) {
             break;
             
         case CAMERA:
-            viewTranslate.Set(0,3,val);
+            Vector from = Vector(cameraLocation.x, cameraLocation.y, cameraLocation.z);
+            Vector to = Vector(lookAtLocation.x, lookAtLocation.y, lookAtLocation.z);
+            Vector direction = Vector::Normalize( Vector::Cross( Vector::Minus(to, from), up ) );
+            
+            float shiftX = direction.x * val;
+            float shiftZ = direction.z * val;
+            
+            cameraLocation.x += shiftX;
+            cameraLocation.z += shiftZ;
+            
+            lookAtLocation.x += shiftX;
+            lookAtLocation.z += shiftZ;
+            
+            viewMatrixDirty = true;
             break;
     }
 }
@@ -148,7 +169,21 @@ DGL::translateZ(float val) {
             break;
             
         case CAMERA:
-            viewTranslate.Set(2,3,val);
+            Vector from = Vector(cameraLocation.x, cameraLocation.y, cameraLocation.z);
+            Vector to = Vector(lookAtLocation.x, lookAtLocation.y, lookAtLocation.z);
+            Vector direction = Vector::Normalize( Vector::Cross( up , Vector::Cross( up, Vector::Minus(to, from) ) ) );
+            
+            float shiftX = direction.x * val;
+            float shiftZ = direction.z * val;
+            
+            cameraLocation.x += shiftX;
+            cameraLocation.z += shiftZ;
+            
+            lookAtLocation.x += shiftX;
+            lookAtLocation.z += shiftZ;
+            
+            viewMatrixDirty = true;
+            cout << cameraLocation.z << endl;
             break;
     }
 }
@@ -208,6 +243,24 @@ DGL::rotateY(float degrees) {
             break;
             
         case CAMERA:
+            /*
+            viewRotateY.Set(0, 0, cos( toRadians(degrees) ));
+            viewRotateY.Set(0, 2, -sin( toRadians(degrees) ));
+            viewRotateY.Set(2, 0, sin( toRadians(degrees) ));
+            viewRotateY.Set(2, 2, cos( toRadians(degrees) ));
+            viewMatrixDirty = true;
+            */
+            
+            float atX = lookAtLocation.x;
+            float atZ = lookAtLocation.z;
+            float fromX = cameraLocation.x;
+            float fromZ = cameraLocation.z;
+            
+            lookAtLocation.x = cos(toRadians(degrees)) * (atX - fromX) - sin(toRadians(degrees)) * (atZ - fromZ) + fromX;
+            lookAtLocation.z = sin(toRadians(degrees)) * (atX - fromX) + cos(toRadians(degrees)) * (atZ - fromZ) + fromZ;
+            viewMatrixDirty = true;
+            
+            
             break;
     }
 }
@@ -228,6 +281,14 @@ DGL::rotateZ(float degrees) {
             break;
             
         case CAMERA:
+            float atX = lookAtLocation.x;
+            float atZ = lookAtLocation.z;
+            float fromX = cameraLocation.x;
+            float fromZ = cameraLocation.z;
+            
+            lookAtLocation.x = cos(toRadians(degrees)) * (atX - fromX) - sin(toRadians(degrees)) * (atZ - fromZ) + fromX;
+            lookAtLocation.z = sin(toRadians(degrees)) * (atX - fromX) + cos(toRadians(degrees)) * (atZ - fromZ) + fromZ;
+            viewMatrixDirty = true;
             break;
     }
     
@@ -264,7 +325,6 @@ DGL::scaleX(float val) {
             break;
             
         case CAMERA:
-            viewScale.Set(0,0,val);
             break;
     }
 }
@@ -282,7 +342,6 @@ DGL::scaleY(float val) {
             break;
             
         case CAMERA:
-            viewScale.Set(1,1,val);
             break;
     }
 }
@@ -300,7 +359,6 @@ DGL::scaleZ(float val) {
             break;
             
         case CAMERA:
-            viewScale.Set(2,2,val);
             break;
     }
 }
@@ -311,9 +369,6 @@ DGL::scaleZ(float val) {
  ************/
 void
 DGL::drawFace(Face face){
-    
-    if(objMatrixDirty)
-        calculateObjectTransformation();
     
     glBegin(GL_POLYGON);
     
@@ -376,26 +431,108 @@ DGL::drawScene(Scene scene){
 }
 
 
-Vertex DGL::objToWorld( Vertex v ) {
-    float x =   (objTransformation.Get(0,0) * v.getX() +
-                 objTransformation.Get(0,1) * v.getY() +
-                 objTransformation.Get(0,2) * v.getZ() +
-                 objTransformation.Get(0,3));
+/************
+ * Converts the provided vertex to world coordinates using the current model
+ * transformation matrices.
+ ************/
+Vertex
+DGL::objToWorld( Vertex v ) {
     
-    float y =   (objTransformation.Get(1,0) * v.getX() +
-                 objTransformation.Get(1,1) * v.getY() +
-                 objTransformation.Get(1,2) * v.getZ() +
-                 objTransformation.Get(1,3));
+    if(objMatrixDirty)
+        calculateObjectTransformation();
     
-    float z =   (objTransformation.Get(2,0) * v.getX() +
-                 objTransformation.Get(2,1) * v.getY() +
-                 objTransformation.Get(2,2) * v.getZ() +
-                 objTransformation.Get(2,3));
+    float x = (objTransformation.Get(0,0) * v.getX() +
+               objTransformation.Get(0,1) * v.getY() +
+               objTransformation.Get(0,2) * v.getZ() +
+               objTransformation.Get(0,3));
+    
+    float y = (objTransformation.Get(1,0) * v.getX() +
+               objTransformation.Get(1,1) * v.getY() +
+               objTransformation.Get(1,2) * v.getZ() +
+               objTransformation.Get(1,3));
+    
+    float z = (objTransformation.Get(2,0) * v.getX() +
+               objTransformation.Get(2,1) * v.getY() +
+               objTransformation.Get(2,2) * v.getZ() +
+               objTransformation.Get(2,3));
+    
     return Vertex(x,y,z);
 }
 
-Vertex DGL::worldToView( Vertex v ) {
-    return v;
+
+/************
+ * Converts the provided vertex to view coordinates using the current view
+ * transformation matrices.
+ ************/
+Vertex
+DGL::worldToView( Vertex v ) {
+    
+    if(viewMatrixDirty)
+        calculateViewTransformation();
+    
+    float perspectiveDivisor = perspective.Get(3,2) * v.z + 1;
+    
+    float x =   (viewTransformation.Get(0,0) * v.getX() +
+                 viewTransformation.Get(0,1) * v.getY() +
+                 viewTransformation.Get(0,2) * v.getZ() +
+                 viewTransformation.Get(0,3)) / perspectiveDivisor;
+    
+    float y =   (viewTransformation.Get(1,0) * v.getX() +
+                 viewTransformation.Get(1,1) * v.getY() +
+                 viewTransformation.Get(1,2) * v.getZ() +
+                 viewTransformation.Get(1,3)) / perspectiveDivisor;
+    
+    float z =   (viewTransformation.Get(2,0) * v.getX() +
+                 viewTransformation.Get(2,1) * v.getY() +
+                 viewTransformation.Get(2,2) * v.getZ() +
+                 viewTransformation.Get(2,3)) / perspectiveDivisor;
+    
+    return Vertex(x, y, -z/30); // Invert Y because it's weird
+}
+
+
+/************
+ * Sets camera location
+ ************/
+void
+DGL::setCameraLocation(Vertex v) {
+    cameraLocation = v;
+    viewMatrixDirty = true;
+}
+
+
+/************
+ * Sets camera view's look location
+ ************/
+void
+DGL::lookAt(Vertex v) {
+    lookAtLocation = v;
+    viewMatrixDirty = true;
+}
+
+
+void
+DGL::setPerspective() {
+    
+    float d = cameraLocation.distanceFrom(lookAtLocation);
+    
+    perspective.Set( 3, 2, -1/d );
+    
+    /*
+    perspective.Set(
+
+    perspective.Set(0,0, (2 * near) / (right - left));
+    perspective.Set(0,2, (right + left) / (right - left));
+    
+    perspective.Set(1,1, (2 * near) / (top - bottom));
+    perspective.Set(1,2, (top + bottom) / (top - bottom));
+    
+    perspective.Set(2,2, -(far+near)/(far-near));
+    perspective.Set(2,3, (-2*far*near)/(far-near));
+    
+    perspective.Set(3,2,-1);
+    perspective.Set(3,3,0);
+    */
 }
 
 
@@ -414,6 +551,46 @@ DGL::toRadians(float degrees) {
 float
 DGL::toDegrees(float radians) {
     return radians * 180 / PI;
+}
+
+
+/************
+ * Calculates view transformation matrix
+ ************/
+void
+DGL::calculateViewTransformation() {
+    
+    Matrix changeOfBase = Matrix::Identity();
+    
+    Vector from = Vector(cameraLocation.x, cameraLocation.y, cameraLocation.z);
+    Vector to = Vector(lookAtLocation.x, lookAtLocation.y, lookAtLocation.z);
+    
+    Vector N = Vector::Normalize( Vector::Minus( from, to ));
+    Vector U = Vector::Normalize( Vector::Cross( up, N ));
+    Vector V = Vector::Normalize( Vector::Cross( N, U ));
+    
+    viewTranslate.Set( 0, 3, -lookAtLocation.x);
+    viewTranslate.Set( 1, 3, -lookAtLocation.y);
+    viewTranslate.Set( 2, 3, -lookAtLocation.z);
+    
+    changeOfBase.Set( 0, 0, U.x);
+    changeOfBase.Set( 0, 1, U.y);
+    changeOfBase.Set( 0, 2, U.z);
+    
+    changeOfBase.Set( 1, 0, V.x);
+    changeOfBase.Set( 1, 1, V.y);
+    changeOfBase.Set( 1, 2, V.z);
+    
+    changeOfBase.Set( 2, 0, N.x);
+    changeOfBase.Set( 2, 1, N.y);
+    changeOfBase.Set( 2, 2, N.z);
+    
+    viewTransformation = changeOfBase.Multiply( viewTranslate );
+    
+    // just in case the camera look or positions changed
+    setPerspective();
+    
+    viewMatrixDirty = false;
 }
 
 

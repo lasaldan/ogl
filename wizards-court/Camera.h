@@ -17,6 +17,8 @@
 #include "Vertex.h"
 
 class Camera {
+    
+    Vertex Position;
     float angle;
     std::vector<float> lookFrom;
     std::vector<float> lookAt;
