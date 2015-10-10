@@ -15,6 +15,7 @@
 #include "Face.h"
 #include "Vector.h"
 #include "Vertex.h"
+#include "DGLCamera.h"
 #include "Scene.h"
 #include "Item.h"
 #include <SDL2/SDL.h>
@@ -31,6 +32,7 @@ class DGL {
 private:
     DGL();
     static int mode;
+    static DGLCamera camera;
     
 public:
     static void init();

@@ -41,7 +41,7 @@ private:
     int inputs;
     float tireRotation;
     float cameraDX;
-    float cameraDY;
+    float cameraDZ;
     float cameraRY;
     float cameraRZ;
     bool Running;

@@ -33,12 +33,20 @@ Matrix Matrix::Transpose(Matrix input) {
     temp[2].resize(4);
     temp[3].resize(4);
     
-    for(int row=0; row < MatrixData[0].size(); row ++) {
-        for(int col=0; col < MatrixData[0].size(); col++) {
+    for(int row=0; row < temp[0].size(); row ++) {
+        for(int col=0; col < temp[0].size(); col++) {
             temp[col][row] = input.Get(row,col);
         }
     }
     
+    return temp;
+}
+
+Matrix Matrix::InvertTranslation(Matrix m) {
+    Matrix temp = Matrix::Identity();
+    temp.Set(0,3, -(m.Get(0,3)));
+    temp.Set(1,3, -(m.Get(1,3)));
+    temp.Set(2,3, -(m.Get(2,3)));
     return temp;
 }
 

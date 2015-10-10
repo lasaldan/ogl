@@ -85,6 +85,8 @@ Game::InitializeScene() {
     ground.rotateY(60);
     ground.translateZ(6);
     ground.translateX(-5);
+    
+    //SetupView();
 }
 
 
@@ -110,15 +112,6 @@ Game::Init() {
     // Create drawing context for the viewport
     context = SDL_GL_CreateContext(viewport);
     
-    /*
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    gluPerspective( 90.0, 1.0f, .10f, 100.0);
-    glTranslatef(0,-1,-2);
-    
-    glRotatef(30, 0.0f, 1.0f, 0.0f);
-    */
-    
     
     // A couple OPENGL defaults here
     glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT); // the first parameters adjust location of viewport in window
@@ -143,7 +136,11 @@ Game::HandleEvent(SDL_Event &e) {
 
     // Close the window if the X is clicked
     if (e.type == SDL_QUIT) {
-        Running =  false;
+        Running = false;
+    }
+    
+    if (e.type == SDL_KEYUP) {
+        Running = false;
     }
     
     
@@ -158,9 +155,11 @@ Game::HandleEvent(SDL_Event &e) {
         if(e.jaxis.axis == LEFT_JOY_X)
             cameraDX = e.jaxis.value;
         if(e.jaxis.axis == LEFT_JOY_Y)
-            cameraDY = e.jaxis.value;
+            cameraDZ = e.jaxis.value;
         if(e.jaxis.axis == RIGHT_JOY_X)
             cameraRY = e.jaxis.value;
+        if(e.jaxis.axis == RIGHT_JOY_Y)
+            cameraRZ = e.jaxis.value;
     }
     
     /*
@@ -219,8 +218,11 @@ void Game::Update() {
     if(cameraDX > 1024 || cameraDX < -1024)
         DGL::translateX( cameraDX / 1000000 );
     
-    if(cameraDY > 1024 || cameraDY < -1024)
-        DGL::translateZ( cameraDY / 1000000 );
+    if(cameraDZ > 1024 || cameraDZ < -1024)
+        DGL::translateZ( cameraDZ / 1000000 );
+    
+    if(cameraRZ > 1024 || cameraRZ < -1024)
+        DGL::rotateX(cameraRZ/100000);
         
     
     /*
@@ -242,7 +244,8 @@ void Game::Update() {
 /************
  * Cleans up a few SDL resources
  ************/
-void Game::Render() {
+void
+Game::Render() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
     DGL::drawScene( parking_lot );
@@ -254,7 +257,8 @@ void Game::Render() {
 /************
  * Cleans up a few SDL resources
  ************/
-void Game::Cleanup() {
+void
+Game::Cleanup() {
     //SDL_GL_DeleteContext(viewport);
     SDL_Quit();
 }
@@ -263,9 +267,12 @@ void Game::Cleanup() {
 /************
  * Cleans up a few SDL resources
  ************/
-void SetupView() {
+void
+Game::SetupView() {
     DGL::setMode( CAMERA );
-    
+    DGL::translateZ( 2 );
+    DGL::translateX( 0 );
+    DGL::translateY( -1 );
 }
 
 

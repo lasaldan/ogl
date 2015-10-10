@@ -22,6 +22,7 @@
 		654A172B1BAE333D009500DC /* Controller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 654A17291BAE333D009500DC /* Controller.cpp */; };
 		656436611BC477F200BB0DE3 /* DGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6564365F1BC477F200BB0DE3 /* DGL.cpp */; };
 		656436641BC60B7800BB0DE3 /* Vector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 656436621BC60B7800BB0DE3 /* Vector.cpp */; };
+		656436671BC87A0300BB0DE3 /* DGLCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 656436651BC87A0300BB0DE3 /* DGLCamera.cpp */; };
 		6594EE2D1BAE35F9007C3D66 /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6594EE2C1BAE35F8007C3D66 /* SDL2.framework */; };
 		6597CF421BB26BD80095EA9B /* Transformation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6597CF401BB26BD70095EA9B /* Transformation.cpp */; };
 		6597CF471BB2E5400095EA9B /* ManifestParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6597CF451BB2E5400095EA9B /* ManifestParser.cpp */; };
@@ -73,6 +74,8 @@
 		656436601BC477F200BB0DE3 /* DGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DGL.h; sourceTree = "<group>"; };
 		656436621BC60B7800BB0DE3 /* Vector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Vector.cpp; sourceTree = "<group>"; };
 		656436631BC60B7800BB0DE3 /* Vector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vector.h; sourceTree = "<group>"; };
+		656436651BC87A0300BB0DE3 /* DGLCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DGLCamera.cpp; sourceTree = "<group>"; };
+		656436661BC87A0300BB0DE3 /* DGLCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DGLCamera.h; sourceTree = "<group>"; };
 		6594EE2A1BAE3493007C3D66 /* Frameworks */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Frameworks; path = ../../../../Library/Frameworks; sourceTree = "<group>"; };
 		6594EE2C1BAE35F8007C3D66 /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2.framework; path = ../../../../Library/Frameworks/SDL2.framework; sourceTree = "<group>"; };
 		6597CF401BB26BD70095EA9B /* Transformation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Transformation.cpp; sourceTree = "<group>"; };
@@ -139,8 +142,10 @@
 				6597CF441BB2E2770095EA9B /* manifest */,
 				656436601BC477F200BB0DE3 /* DGL.h */,
 				6564365F1BC477F200BB0DE3 /* DGL.cpp */,
-				656436621BC60B7800BB0DE3 /* Vector.cpp */,
+				656436661BC87A0300BB0DE3 /* DGLCamera.h */,
+				656436651BC87A0300BB0DE3 /* DGLCamera.cpp */,
 				656436631BC60B7800BB0DE3 /* Vector.h */,
+				656436621BC60B7800BB0DE3 /* Vector.cpp */,
 				654A17271BAE332F009500DC /* main.h */,
 				654A17261BAE332F009500DC /* main.cpp */,
 				650031AD1BB11D41003D9259 /* Game.h */,
@@ -161,10 +166,10 @@
 				650EE71D1BA934E2009988E0 /* Item.cpp */,
 				650EE7241BA94132009988E0 /* ObjParser.h */,
 				650EE7231BA94132009988E0 /* ObjParser.cpp */,
-				6597CF451BB2E5400095EA9B /* ManifestParser.cpp */,
 				6597CF461BB2E5400095EA9B /* ManifestParser.h */,
-				654A17291BAE333D009500DC /* Controller.cpp */,
+				6597CF451BB2E5400095EA9B /* ManifestParser.cpp */,
 				654A172A1BAE333D009500DC /* Controller.h */,
+				654A17291BAE333D009500DC /* Controller.cpp */,
 				6597CF411BB26BD80095EA9B /* Transformation.h */,
 				6597CF401BB26BD70095EA9B /* Transformation.cpp */,
 				65FB50AE1BBCEB740024EA40 /* Matrix.h */,
@@ -243,6 +248,7 @@
 				654A17281BAE332F009500DC /* main.cpp in Sources */,
 				650EE7251BA94132009988E0 /* ObjParser.cpp in Sources */,
 				65CBB53E1BB1AA0900FFFDC2 /* Scene.cpp in Sources */,
+				656436671BC87A0300BB0DE3 /* DGLCamera.cpp in Sources */,
 				656436641BC60B7800BB0DE3 /* Vector.cpp in Sources */,
 				650EE7221BA93C98009988E0 /* TextureCoordinate.cpp in Sources */,
 			);

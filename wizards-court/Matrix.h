@@ -23,12 +23,13 @@ public:
     Matrix();
     Matrix(std::vector< std::vector< float > > matrixData);
     Matrix Multiply(Matrix);
-    Matrix Transpose(Matrix);
+    Matrix static Transpose(Matrix);
     std::vector< std::vector< float > > GetData();
     float Get(int, int);
     void Set(int, int, float);
     Vertex Transform(Vertex);
     static Matrix Identity();
+    Matrix static InvertTranslation(Matrix m);
 };
 
 #endif /* defined(__wizards_court__Matrix__) */

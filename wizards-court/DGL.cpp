@@ -28,6 +28,7 @@ Matrix DGL::viewInverseTransformation;
 Vertex DGL::cameraLocation;
 Vertex DGL::lookAtLocation;
 Vector DGL::up;
+DGLCamera DGL::camera;
 int DGL::mode;
 bool DGL::objMatrixDirty;
 bool DGL::viewMatrixDirty;
@@ -41,6 +42,7 @@ void
 DGL::init() {
     objMatrixDirty = true;
     viewMatrixDirty = true;
+    
     objRotateX = Matrix::Identity();
     objRotateY = Matrix::Identity();
     objRotateZ = Matrix::Identity();
@@ -59,9 +61,11 @@ DGL::init() {
     
     perspective = Matrix::Identity();
     
-    lookAtLocation = Vertex(0,.8,0);
-    cameraLocation = Vertex(0,.8,8);
+    lookAtLocation = Vertex(0,1,1);
+    cameraLocation = Vertex(0,2,4);
     up = Vector(0,1,0);
+    
+    camera = DGLCamera();
 }
 
 
@@ -120,6 +124,10 @@ DGL::translateX(float val) {
             break;
             
         case CAMERA:
+            /*
+            camera.position.x += val;
+            viewMatrixDirty = true;
+            */
             Vector from = Vector(cameraLocation.x, cameraLocation.y, cameraLocation.z);
             Vector to = Vector(lookAtLocation.x, lookAtLocation.y, lookAtLocation.z);
             Vector direction = Vector::Normalize( Vector::Cross( Vector::Minus(to, from), up ) );
@@ -134,6 +142,7 @@ DGL::translateX(float val) {
             lookAtLocation.z += shiftZ;
             
             viewMatrixDirty = true;
+            
             break;
     }
 }
@@ -151,7 +160,7 @@ DGL::translateY(float val) {
             break;
             
         case CAMERA:
-            viewTranslate.Set(1,3,val);
+            viewMatrixDirty = true;
             break;
     }
 }
@@ -169,6 +178,10 @@ DGL::translateZ(float val) {
             break;
             
         case CAMERA:
+            lookAtLocation.z += val;
+            cameraLocation.z += val;
+            viewMatrixDirty = true;
+            /*
             Vector from = Vector(cameraLocation.x, cameraLocation.y, cameraLocation.z);
             Vector to = Vector(lookAtLocation.x, lookAtLocation.y, lookAtLocation.z);
             Vector direction = Vector::Normalize( Vector::Cross( up , Vector::Cross( up, Vector::Minus(to, from) ) ) );
@@ -184,6 +197,7 @@ DGL::translateZ(float val) {
             
             viewMatrixDirty = true;
             cout << cameraLocation.z << endl;
+             */
             break;
     }
 }
@@ -223,6 +237,10 @@ DGL::rotateX(float degrees) {
             break;
             
         case CAMERA:
+            if((lookAtLocation.y > -10 && degrees < 0 ) ||
+               (lookAtLocation.y < 10 && degrees > 0))
+                lookAtLocation.y += degrees/2;
+            viewMatrixDirty = true;
             break;
     }
 }
@@ -487,7 +505,7 @@ DGL::worldToView( Vertex v ) {
                  viewTransformation.Get(2,2) * v.getZ() +
                  viewTransformation.Get(2,3)) / perspectiveDivisor;
     
-    return Vertex(x, y, -z/30); // Invert Y because it's weird
+    return Vertex(x, y, -z/20); // Invert Z because it's weird
 }
 
 
@@ -515,6 +533,7 @@ void
 DGL::setPerspective() {
     
     float d = cameraLocation.distanceFrom(lookAtLocation);
+    //float d = 2;
     
     perspective.Set( 3, 2, -1/d );
     
@@ -560,6 +579,7 @@ DGL::toDegrees(float radians) {
 void
 DGL::calculateViewTransformation() {
     
+    
     Matrix changeOfBase = Matrix::Identity();
     
     Vector from = Vector(cameraLocation.x, cameraLocation.y, cameraLocation.z);
@@ -586,11 +606,34 @@ DGL::calculateViewTransformation() {
     changeOfBase.Set( 2, 2, N.z);
     
     viewTransformation = changeOfBase.Multiply( viewTranslate );
+    /*
+    viewTransformation = Matrix::Identity();
+    
+    
+    viewTranslate.Set(0,3, camera.position.x);
+    viewTranslate.Set(1,3, camera.position.y);
+    viewTranslate.Set(2,3, camera.position.z);
+
+    viewTransformation = viewTranslate.Multiply(viewRotateZ).Multiply(viewRotateY).Multiply(viewRotateX);
+
+    calculateViewInverseTransformation();
+     */
     
     // just in case the camera look or positions changed
     setPerspective();
     
     viewMatrixDirty = false;
+}
+
+void
+DGL::calculateViewInverseTransformation() {
+    
+    viewInverseTransformation =
+        Matrix::Transpose(viewRotateZ)
+        .Multiply( Matrix::Transpose(viewRotateY) )
+        .Multiply( Matrix::Transpose(viewRotateX) )
+        .Multiply( Matrix::InvertTranslation( viewTranslate ) );
+
 }
 
 
