@@ -216,7 +216,7 @@ void Game::Update() {
         DGL::rotateY(cameraRY / 10000);
     }
     if(cameraDX > 1024 || cameraDX < -1024)
-        DGL::translateX( cameraDX / 1000000 );
+        DGL::translateX( cameraDX / 100000 );
     
     if(cameraDZ > 1024 || cameraDZ < -1024)
         DGL::translateZ( cameraDZ / 1000000 );

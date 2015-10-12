@@ -178,10 +178,10 @@ DGL::translateZ(float val) {
             break;
             
         case CAMERA:
-            lookAtLocation.z += val;
-            cameraLocation.z += val;
-            viewMatrixDirty = true;
-            /*
+            //lookAtLocation.z += val;
+            //cameraLocation.z += val;
+            //viewMatrixDirty = true;
+            
             Vector from = Vector(cameraLocation.x, cameraLocation.y, cameraLocation.z);
             Vector to = Vector(lookAtLocation.x, lookAtLocation.y, lookAtLocation.z);
             Vector direction = Vector::Normalize( Vector::Cross( up , Vector::Cross( up, Vector::Minus(to, from) ) ) );
@@ -197,7 +197,7 @@ DGL::translateZ(float val) {
             
             viewMatrixDirty = true;
             cout << cameraLocation.z << endl;
-             */
+             
             break;
     }
 }
@@ -488,7 +488,13 @@ DGL::worldToView( Vertex v ) {
     if(viewMatrixDirty)
         calculateViewTransformation();
     
-    float perspectiveDivisor = perspective.Get(3,2) * v.z + 1;
+    //float perspectiveDivisor = perspective.Get(3,2) * v.z + 1;
+    
+    float perspectiveDivisor =
+                (viewTransformation.Get(3,0) * v.getX() +
+                 viewTransformation.Get(3,1) * v.getY() +
+                 viewTransformation.Get(3,2) * v.getZ() +
+                 viewTransformation.Get(3,3));
     
     float x =   (viewTransformation.Get(0,0) * v.getX() +
                  viewTransformation.Get(0,1) * v.getY() +
@@ -532,14 +538,19 @@ DGL::lookAt(Vertex v) {
 void
 DGL::setPerspective() {
     
-    float d = cameraLocation.distanceFrom(lookAtLocation);
+    //float d = cameraLocation.distanceFrom(lookAtLocation);
     //float d = 2;
     
-    perspective.Set( 3, 2, -1/d );
+    //perspective.Set( 3, 2, -1/d );
     
-    /*
-    perspective.Set(
-
+    float right = 1;
+    float left = -1;
+    float top = 1;
+    float bottom = -1;
+    float near = .001;
+    float far = 1000;
+    
+    
     perspective.Set(0,0, (2 * near) / (right - left));
     perspective.Set(0,2, (right + left) / (right - left));
     
@@ -551,7 +562,7 @@ DGL::setPerspective() {
     
     perspective.Set(3,2,-1);
     perspective.Set(3,3,0);
-    */
+    
 }
 
 
