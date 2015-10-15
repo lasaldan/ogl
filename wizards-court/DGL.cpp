@@ -192,8 +192,8 @@ DGL::translateZ(float val) {
             cameraLocation.x += shiftX;
             cameraLocation.z += shiftZ;
             
-            lookAtLocation.x += shiftX;
-            lookAtLocation.z += shiftZ;
+            //lookAtLocation.x += shiftX;
+            //lookAtLocation.z += shiftZ;
             
             viewMatrixDirty = true;
             cout << cameraLocation.z << endl;
@@ -488,8 +488,9 @@ DGL::worldToView( Vertex v ) {
     if(viewMatrixDirty)
         calculateViewTransformation();
     
-    //float perspectiveDivisor = perspective.Get(3,2) * v.z + 1;
-    
+    /*
+    float perspectiveDivisor = perspective.Get(3,2) * v.z + 1;
+    */
     float perspectiveDivisor =
                 (viewTransformation.Get(3,0) * v.getX() +
                  viewTransformation.Get(3,1) * v.getY() +
@@ -540,9 +541,10 @@ DGL::setPerspective() {
     
     //float d = cameraLocation.distanceFrom(lookAtLocation);
     //float d = 2;
+    /*
+    perspective.Set( 3, 2, -1/d );
     
-    //perspective.Set( 3, 2, -1/d );
-    
+    */
     float right = 1;
     float left = -1;
     float top = 1;
