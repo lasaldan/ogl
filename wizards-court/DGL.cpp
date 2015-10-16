@@ -25,6 +25,7 @@ Matrix DGL::objTransformation;
 Matrix DGL::viewTransformation;
 Matrix DGL::objInverseTransformation;
 Matrix DGL::viewInverseTransformation;
+Matrix DGL::transformation;
 Vertex DGL::cameraLocation;
 Vertex DGL::lookAtLocation;
 Vector DGL::up;
@@ -61,8 +62,8 @@ DGL::init() {
     
     perspective = Matrix::Identity();
     
-    lookAtLocation = Vertex(0,1,1);
-    cameraLocation = Vertex(0,2,4);
+    lookAtLocation = Vertex(0,0,0);
+    cameraLocation = Vertex(2,2,40);
     up = Vector(0,1,0);
     
     camera = DGLCamera();
@@ -392,7 +393,7 @@ DGL::drawFace(Face face){
     
     for(int i = 0; i < face.vertices.size(); i ++) {
         glTexCoord2f(face.textureCoordinates[i].x, face.textureCoordinates[i].y);
-        Vertex transformed = worldToView( objToWorld ( face.vertices[i] ) );
+        Vertex transformed = worldToView( objToWorld( face.vertices[i] ) );
         glVertex3f(transformed.x, transformed.y, transformed.z);
     }
     
@@ -448,6 +449,83 @@ DGL::drawScene(Scene scene){
     mode = preMode;
 }
 
+void
+DGL::calculateTransformation() {
+    transformation = perspective.Multiply(viewTransformation.Multiply(objTransformation));
+}
+
+Vertex
+DGL::transform(Vertex v) {
+    
+    bool transformDirty = false;
+    
+    if(objMatrixDirty || viewMatrixDirty)
+        transformDirty = true;
+    
+    if(objMatrixDirty)
+        calculateObjectTransformation();
+    
+    if(viewMatrixDirty)
+        calculateViewTransformation();
+    
+    if(transformDirty)
+        calculateTransformation();
+    
+    
+    float x = (transformation.Get(0,0) * v.getX() +
+               transformation.Get(0,1) * v.getY() +
+               transformation.Get(0,2) * v.getZ() +
+               transformation.Get(0,3));
+    
+    float y = (transformation.Get(1,0) * v.getX() +
+               transformation.Get(1,1) * v.getY() +
+               transformation.Get(1,2) * v.getZ() +
+               transformation.Get(1,3));
+    
+    float z = (transformation.Get(2,0) * v.getX() +
+               transformation.Get(2,1) * v.getY() +
+               transformation.Get(2,2) * v.getZ() +
+               transformation.Get(2,3));
+    
+    return Vertex(x,y,z);
+    
+    
+}
+
+
+
+/************
+ * Converts the provided vertex to world coordinates using the current model
+ * transformation matrices.
+ ************/
+Vertex
+DGL::viewToPerspective( Vertex v ) {
+    
+    
+    float perspectiveDivisor =
+    (perspective.Get(3,0) * v.getX() +
+     perspective.Get(3,1) * v.getY() +
+     perspective.Get(3,2) * v.getZ() +
+     perspective.Get(3,3));
+    
+    float x = (perspective.Get(0,0) * v.getX() +
+               perspective.Get(0,1) * v.getY() +
+               perspective.Get(0,2) * v.getZ() +
+               perspective.Get(0,3)) / perspectiveDivisor;
+    
+    float y = (perspective.Get(1,0) * v.getX() +
+               perspective.Get(1,1) * v.getY() +
+               perspective.Get(1,2) * v.getZ() +
+               perspective.Get(1,3)) / perspectiveDivisor;
+    
+    float z = (perspective.Get(2,0) * v.getX() +
+               perspective.Get(2,1) * v.getY() +
+               perspective.Get(2,2) * v.getZ() +
+               perspective.Get(2,3)) / perspectiveDivisor;
+    
+    return Vertex(x,y,z);
+}
+
 
 /************
  * Converts the provided vertex to world coordinates using the current model
@@ -496,6 +574,7 @@ DGL::worldToView( Vertex v ) {
                  viewTransformation.Get(3,1) * v.getY() +
                  viewTransformation.Get(3,2) * v.getZ() +
                  viewTransformation.Get(3,3));
+    perspectiveDivisor = 1;
     
     float x =   (viewTransformation.Get(0,0) * v.getX() +
                  viewTransformation.Get(0,1) * v.getY() +
@@ -512,7 +591,7 @@ DGL::worldToView( Vertex v ) {
                  viewTransformation.Get(2,2) * v.getZ() +
                  viewTransformation.Get(2,3)) / perspectiveDivisor;
     
-    return Vertex(x, y, -z/20); // Invert Z because it's weird
+    return Vertex(x, y, z); // Invert Z because it's weird
 }
 
 
@@ -618,6 +697,8 @@ DGL::calculateViewTransformation() {
     changeOfBase.Set( 2, 1, N.y);
     changeOfBase.Set( 2, 2, N.z);
     
+    setPerspective();
+    
     viewTransformation = changeOfBase.Multiply( viewTranslate );
     /*
     viewTransformation = Matrix::Identity();
@@ -633,7 +714,6 @@ DGL::calculateViewTransformation() {
      */
     
     // just in case the camera look or positions changed
-    setPerspective();
     
     viewMatrixDirty = false;
 }

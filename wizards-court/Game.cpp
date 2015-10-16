@@ -65,22 +65,25 @@ Game::InitializeScene() {
     Item& fpTire = parking_lot.Get("tire_front_passenger");
 
     car.translateY(.05f);
+    car.rotateY(30);
+    float carRotY = car.rotationY;
     
-    rdTire.rotateY(180);
+    rdTire.rotateY(180 + carRotY);
     rdTire.scale(.25);
     rdTire.translate(-.38, .155, .49);
     
-    fdTire.rotateY(180);
+    fdTire.rotateY(180 + carRotY);
     fdTire.scale(.25);
     fdTire.translate(-.38, .155, -.55);
-    fdTire.rotateY(tireRotation);
+    fdTire.rotateY(tireRotation + carRotY);
     
     rpTire.scale(.25);
+    rpTire.rotateY(carRotY);
     rpTire.translate(.38, .155, .49);
     
     fpTire.scale(.25);
     fpTire.translate(.38, .155, -.55);
-    fpTire.rotateY(tireRotation);
+    fpTire.rotateY(tireRotation + carRotY);
     
     ground.rotateY(60);
     ground.translateZ(6);

@@ -87,10 +87,15 @@ private:
     
     static Matrix perspective;
     
+    static Matrix transformation;
+    
     static Matrix calculateObjectTransformation();
     static Matrix calculateObjectInverseTransformation();
     static void calculateViewTransformation();
     static void calculateViewInverseTransformation();
+    
+    static void calculateTransformation();
+    static Vertex transform(Vertex);
     
     static float toRadians(float);
     static float toDegrees(float);
@@ -102,6 +107,7 @@ private:
     
     static Vertex objToWorld(Vertex);
     static Vertex worldToView(Vertex);
+    static Vertex viewToPerspective(Vertex);
     
 };
 
