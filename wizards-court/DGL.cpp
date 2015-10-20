@@ -63,7 +63,7 @@ DGL::init() {
     perspective = Matrix::Identity();
     
     lookAtLocation = Vertex(0,0,0);
-    cameraLocation = Vertex(2,2,40);
+    cameraLocation = Vertex(0,2,8);
     up = Vector(0,1,0);
     
     camera = DGLCamera();
@@ -193,11 +193,11 @@ DGL::translateZ(float val) {
             cameraLocation.x += shiftX;
             cameraLocation.z += shiftZ;
             
-            //lookAtLocation.x += shiftX;
-            //lookAtLocation.z += shiftZ;
+            lookAtLocation.x += shiftX;
+            lookAtLocation.z += shiftZ;
             
             viewMatrixDirty = true;
-            cout << cameraLocation.z << endl;
+            cout << "Camera At: " << cameraLocation.x << " " << cameraLocation.y << " " << cameraLocation.z << endl;
              
             break;
     }
@@ -248,6 +248,18 @@ DGL::rotateX(float degrees) {
 
 
 /************
+ * Rotates the orbiter point arond the center point by the given amount of degrees (xz plane)
+ ************/
+Vertex
+DGL::rotateAbout(Vertex center, Vertex orbiter, float degrees) {
+    Vertex temp = Vertex(orbiter.x, orbiter.y, orbiter.z);
+    temp.x = cos(toRadians(degrees)) * (orbiter.x - center.x) - sin(toRadians(degrees)) * (orbiter.z - center.z) + center.x;
+    temp.z = sin(toRadians(degrees)) * (orbiter.x - center.x) + cos(toRadians(degrees)) * (orbiter.z - center.z) + center.z;
+    return temp;
+}
+
+
+/************
  * Modifies the current mode's rotateY matrix
  ************/
 void
@@ -269,7 +281,8 @@ DGL::rotateY(float degrees) {
             viewRotateY.Set(2, 2, cos( toRadians(degrees) ));
             viewMatrixDirty = true;
             */
-            
+            lookAtLocation = rotateAbout(cameraLocation, lookAtLocation, degrees);
+            /*
             float atX = lookAtLocation.x;
             float atZ = lookAtLocation.z;
             float fromX = cameraLocation.x;
@@ -277,6 +290,7 @@ DGL::rotateY(float degrees) {
             
             lookAtLocation.x = cos(toRadians(degrees)) * (atX - fromX) - sin(toRadians(degrees)) * (atZ - fromZ) + fromX;
             lookAtLocation.z = sin(toRadians(degrees)) * (atX - fromX) + cos(toRadians(degrees)) * (atZ - fromZ) + fromZ;
+             */
             viewMatrixDirty = true;
             
             
@@ -570,11 +584,10 @@ DGL::worldToView( Vertex v ) {
     float perspectiveDivisor = perspective.Get(3,2) * v.z + 1;
     */
     float perspectiveDivisor =
-                (viewTransformation.Get(3,0) * v.getX() +
-                 viewTransformation.Get(3,1) * v.getY() +
-                 viewTransformation.Get(3,2) * v.getZ() +
-                 viewTransformation.Get(3,3));
-    perspectiveDivisor = 1;
+                (perspective.Get(3,0) * v.getX() +
+                 perspective.Get(3,1) * v.getY() +
+                 perspective.Get(3,2) * v.getZ() +
+                 perspective.Get(3,3));
     
     float x =   (viewTransformation.Get(0,0) * v.getX() +
                  viewTransformation.Get(0,1) * v.getY() +
@@ -591,7 +604,7 @@ DGL::worldToView( Vertex v ) {
                  viewTransformation.Get(2,2) * v.getZ() +
                  viewTransformation.Get(2,3)) / perspectiveDivisor;
     
-    return Vertex(x, y, z); // Invert Z because it's weird
+    return Vertex(x, y, -z/30); // Invert Z because it's weird
 }
 
 
@@ -618,12 +631,13 @@ DGL::lookAt(Vertex v) {
 void
 DGL::setPerspective() {
     
-    //float d = cameraLocation.distanceFrom(lookAtLocation);
+    float d = cameraLocation.distanceFrom(lookAtLocation);
     //float d = 2;
-    /*
+    cout << "d:" << d << endl;
+    
     perspective.Set( 3, 2, -1/d );
     
-    */
+    /*
     float right = 1;
     float left = -1;
     float top = 1;
@@ -643,6 +657,7 @@ DGL::setPerspective() {
     
     perspective.Set(3,2,-1);
     perspective.Set(3,3,0);
+    */
     
 }
 

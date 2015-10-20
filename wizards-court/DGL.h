@@ -59,6 +59,8 @@ public:
     static void drawFaces(std::vector<Face>);
     static void drawItem(Item);
     static void drawScene(Scene);
+    static Vertex rotateAbout(Vertex, Vertex, float);
+
     
 private:
     

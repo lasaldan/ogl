@@ -58,6 +58,10 @@ void Item::translateZ(float distance) {
     translationZ += distance;
 }
 
+Vertex Item::GetCenter() {
+    return Vertex(translationX, translationY, translationZ);
+}
+
 void Item::scale(float amount) {
     scaleX(amount);
     scaleY(amount);

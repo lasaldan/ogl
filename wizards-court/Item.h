@@ -56,6 +56,7 @@ public:
     std::vector<Vertex> GetVertices();
     std::vector<TextureCoordinate> GetTextureCoordinates();
     std::vector<Face> GetFaces();
+    Vertex GetCenter();
 };
 
 

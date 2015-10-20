@@ -66,23 +66,31 @@ Game::InitializeScene() {
 
     car.translateY(.05f);
     car.rotateY(30);
+    
     float carRotY = car.rotationY;
     
     rdTire.rotateY(180 + carRotY);
     rdTire.scale(.25);
-    rdTire.translate(-.38, .155, .49);
+    Vertex tireCenter = Vertex(-.38, .155, .49);
+    Vertex position = DGL::rotateAbout(car.GetCenter(), tireCenter, carRotY);
+    rdTire.translate(position.x, position.y, position.z);
     
-    fdTire.rotateY(180 + carRotY);
+    fdTire.rotateY(180 + carRotY + tireRotation);
     fdTire.scale(.25);
-    fdTire.translate(-.38, .155, -.55);
-    fdTire.rotateY(tireRotation + carRotY);
+    tireCenter = Vertex(-.38, .155, -.55);
+    position = DGL::rotateAbout(car.GetCenter(), tireCenter, carRotY);
+    fdTire.translate(position.x, position.y, position.z);
     
     rpTire.scale(.25);
     rpTire.rotateY(carRotY);
-    rpTire.translate(.38, .155, .49);
+    tireCenter = Vertex(.38, .155, .49);
+    position = DGL::rotateAbout(car.GetCenter(), tireCenter, carRotY);
+    rpTire.translate(position.x, position.y, position.z);
     
     fpTire.scale(.25);
-    fpTire.translate(.38, .155, -.55);
+    tireCenter = Vertex(.38, .155, -.55);
+    position = DGL::rotateAbout(car.GetCenter(), tireCenter, carRotY);
+    fpTire.translate(position.x, position.y, position.z);
     fpTire.rotateY(tireRotation + carRotY);
     
     ground.rotateY(60);
@@ -149,7 +157,13 @@ Game::HandleEvent(SDL_Event &e) {
     
     // Capture Button presses
     else if(e.type == SDL_JOYBUTTONDOWN) {
-        cout << "Pressing Button: [" << e.jbutton.button << "]" << endl;
+        if(e.jbutton.button & GAS_BUTTON)
+            buttons = (0 | GAS_BUTTON);
+        if(e.jbutton.button & BRAKE_BUTTON)
+            buttons = (0 | BRAKE_BUTTON);
+    }
+    else if(e.type == SDL_JOYBUTTONUP) {
+        buttons = 0;
     }
     
     
@@ -200,6 +214,7 @@ Game::HandleEvent(SDL_Event &e) {
 void Game::Update() {
     
     DGL::setMode( MODEL );
+    Item car = parking_lot.Get("car");
     
     if(inputs & DPAD_LEFT && tireRotation > -30) {
         tireRotation -= 3;
@@ -212,6 +227,13 @@ void Game::Update() {
         parking_lot.Get("tire_front_passenger").rotateY(3);
     }
     
+    if(buttons & GAS_BUTTON) {
+        car.translateZ( 1 );
+    }
+    if(buttons & BRAKE_BUTTON) {
+        car.translateZ( car.translationZ - .1 );
+    }
+    
     
     DGL::setMode( CAMERA );
     
@@ -222,7 +244,7 @@ void Game::Update() {
         DGL::translateX( cameraDX / 100000 );
     
     if(cameraDZ > 1024 || cameraDZ < -1024)
-        DGL::translateZ( cameraDZ / 1000000 );
+        DGL::translateZ( cameraDZ / 100000 );
     
     if(cameraRZ > 1024 || cameraRZ < -1024)
         DGL::rotateX(cameraRZ/100000);

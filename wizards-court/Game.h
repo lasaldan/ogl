@@ -28,6 +28,9 @@
 #define RIGHT_JOY_X 2
 #define RIGHT_JOY_Y 3
 
+#define GAS_BUTTON 1
+#define BRAKE_BUTTON 2
+
 const int SCREEN_WIDTH = 1024;
 const int SCREEN_HEIGHT = 768;
 const int SCREEN_LOCATION_X = 50;
@@ -39,6 +42,7 @@ class Game {
     
 private:
     int inputs;
+    int buttons;
     float tireRotation;
     float cameraDX;
     float cameraDZ;
