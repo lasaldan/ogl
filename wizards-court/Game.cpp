@@ -65,39 +65,70 @@ Game::InitializeScene() {
     Item& fpTire = parking_lot.Get("tire_front_passenger");
 
     car.translateY(.05f);
+    car.translateX(.7f);
+    car.translateZ(.3f);
     car.rotateY(30);
-    
     float carRotY = car.rotationY;
     
-    rdTire.rotateY(180 + carRotY);
+    
     rdTire.scale(.25);
-    Vertex tireCenter = Vertex(-.38, .155, .49);
-    Vertex position = DGL::rotateAbout(car.GetCenter(), tireCenter, carRotY);
-    rdTire.translate(position.x, position.y, position.z);
+    rdTire.rotateY(180 + carRotY);
     
     fdTire.rotateY(180 + carRotY + tireRotation);
     fdTire.scale(.25);
-    tireCenter = Vertex(-.38, .155, -.55);
-    position = DGL::rotateAbout(car.GetCenter(), tireCenter, carRotY);
-    fdTire.translate(position.x, position.y, position.z);
     
     rpTire.scale(.25);
     rpTire.rotateY(carRotY);
-    tireCenter = Vertex(.38, .155, .49);
-    position = DGL::rotateAbout(car.GetCenter(), tireCenter, carRotY);
-    rpTire.translate(position.x, position.y, position.z);
     
     fpTire.scale(.25);
-    tireCenter = Vertex(.38, .155, -.55);
-    position = DGL::rotateAbout(car.GetCenter(), tireCenter, carRotY);
-    fpTire.translate(position.x, position.y, position.z);
-    fpTire.rotateY(tireRotation + carRotY);
     
     ground.rotateY(60);
     ground.translateZ(6);
     ground.translateX(-5);
     
+    UpdateTireLocations();
+    
     //SetupView();
+}
+
+void
+Game::UpdateTireLocations() {
+    
+    Item& car = parking_lot.Get("car");
+    Item& rdTire = parking_lot.Get("tire_rear_driver");
+    Item& fdTire = parking_lot.Get("tire_front_driver");
+    Item& rpTire = parking_lot.Get("tire_rear_passenger");
+    Item& fpTire = parking_lot.Get("tire_front_passenger");
+    float carRotY = car.rotationY;
+    
+    Vertex tireCenter = Vertex(-.38+car.translationX, .155, .49+car.translationZ);
+    Vertex position = DGL::rotateAbout(car.GetCenter(), tireCenter, carRotY);
+    rdTire.rotationY = carRotY + 180;
+    rdTire.translationX = position.x;
+    rdTire.translationY = position.y;
+    rdTire.translationZ = position.z;
+    
+    tireCenter = Vertex(-.38+car.translationX, .155, -.55+car.translationZ);
+    position = DGL::rotateAbout(car.GetCenter(), tireCenter, carRotY);
+    fdTire.rotationY = tireRotation + carRotY + 180;
+    fdTire.translationX = position.x;
+    fdTire.translationY = position.y;
+    fdTire.translationZ = position.z;
+    
+    tireCenter = Vertex(.38+car.translationX, .155, .49+car.translationZ);
+    position = DGL::rotateAbout(car.GetCenter(), tireCenter, carRotY);
+    rpTire.rotationY = carRotY;
+    rpTire.translationX = position.x;
+    rpTire.translationY = position.y;
+    rpTire.translationZ = position.z;
+    
+    tireCenter = Vertex(.38+car.translationX, .155, -.55+car.translationZ);
+    position = DGL::rotateAbout(car.GetCenter(), tireCenter, carRotY);
+    fpTire.rotationY = tireRotation + carRotY;
+    fpTire.translationX = position.x;
+    fpTire.translationY = position.y;
+    fpTire.translationZ = position.z;
+    
 }
 
 
@@ -179,21 +210,6 @@ Game::HandleEvent(SDL_Event &e) {
             cameraRZ = e.jaxis.value;
     }
     
-    /*
-    // Capture Axis Motion
-    else if(e.type == SDL_JOYAXISMOTION) {
-        if(e.jaxis.axis == LEFT_JOY_X)
-            cameraDX = e.jaxis.value;
-        if(e.jaxis.axis == LEFT_JOY_Y)
-            cameraDY = e.jaxis.value;
-        if(e.jaxis.axis == RIGHT_JOY_X)
-            cameraRY = e.jaxis.value;
-        if(e.jaxis.axis == RIGHT_JOY_Y)
-            cameraRZ = e.jaxis.value;
-    }
-     */
-    
-    
     // Capture Hat Motion
     else if(e.type == SDL_JOYHATMOTION) {
 
@@ -214,7 +230,7 @@ Game::HandleEvent(SDL_Event &e) {
 void Game::Update() {
     
     DGL::setMode( MODEL );
-    Item car = parking_lot.Get("car");
+    Item& car = parking_lot.Get("car");
     
     if(inputs & DPAD_LEFT && tireRotation > -30) {
         tireRotation -= 3;
@@ -228,10 +244,37 @@ void Game::Update() {
     }
     
     if(buttons & GAS_BUTTON) {
-        car.translateZ( 1 );
+        //car.translateZ(.1);
+        
+        float newX = car.translationX;
+        float newZ = car.translationZ;
+        
+        newX = sin(DGL::toRadians(car.rotationY))/30;
+        newZ = cos(DGL::toRadians(car.rotationY))/30;
+        
+        car.translateX( newX );
+        car.translateZ( -newZ );
+        
+        car.rotateY(tireRotation / 20);
+        
+        UpdateTireLocations();
+        
+
     }
     if(buttons & BRAKE_BUTTON) {
-        car.translateZ( car.translationZ - .1 );
+        
+        float newX = car.translationX;
+        float newZ = car.translationZ;
+        
+        newX = -sin(DGL::toRadians(car.rotationY))/50;
+        newZ = -cos(DGL::toRadians(car.rotationY))/50;
+        
+        car.translateX( newX );
+        car.translateZ( -newZ );
+        
+        car.rotateY(-tireRotation / 40);
+        
+        UpdateTireLocations();
     }
     
     
@@ -248,21 +291,6 @@ void Game::Update() {
     
     if(cameraRZ > 1024 || cameraRZ < -1024)
         DGL::rotateX(cameraRZ/100000);
-        
-    
-    /*
-    if(cameraDX > 1024 || cameraDX < -1024)
-        camera.moveHorizontal(cameraDX/100000);
-    
-    if(cameraDY > 1024 || cameraDY < -1024)
-        camera.moveForward(cameraDY/100000);
-    
-    if(cameraRY > 1024 || cameraRY < -1024)
-        camera.lookHorizontal(cameraRY/10000);
-    
-    if(cameraRZ > 1024 || cameraRZ < -1024)
-        camera.lookVertical(cameraRZ/10000);
-     */
 }
 
 

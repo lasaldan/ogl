@@ -60,7 +60,9 @@ public:
     static void drawItem(Item);
     static void drawScene(Scene);
     static Vertex rotateAbout(Vertex, Vertex, float);
-
+    
+    static float toRadians(float);
+    static float toDegrees(float);
     
 private:
     
@@ -98,9 +100,6 @@ private:
     
     static void calculateTransformation();
     static Vertex transform(Vertex);
-    
-    static float toRadians(float);
-    static float toDegrees(float);
     
     static void setPerspective();
     

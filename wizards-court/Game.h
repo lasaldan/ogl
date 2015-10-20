@@ -69,6 +69,8 @@ private:
     void SetupView();
     void LoadAssets(std::string, Scene&);
     void setDefaultTextureSettings();
+    
+    void UpdateTireLocations();
 };
 
 #endif /* defined(__wizards_court__Game__) */
