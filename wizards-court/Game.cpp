@@ -266,13 +266,13 @@ void Game::Update() {
         float newX = car.translationX;
         float newZ = car.translationZ;
         
-        newX = -sin(DGL::toRadians(car.rotationY))/50;
-        newZ = -cos(DGL::toRadians(car.rotationY))/50;
+        newX = -sin(DGL::toRadians(car.rotationY))/30;
+        newZ = -cos(DGL::toRadians(car.rotationY))/30;
         
         car.translateX( newX );
         car.translateZ( -newZ );
         
-        car.rotateY(-tireRotation / 40);
+        car.rotateY(-tireRotation / 20);
         
         UpdateTireLocations();
     }
